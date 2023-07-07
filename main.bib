@@ -1,0 +1,930 @@
+@inproceedings{10.1145/1480881.1480915,
+author = {Tate, Ross and Stepp, Michael and Tatlock, Zachary and Lerner, Sorin},
+title = {Equality Saturation: A New Approach to Optimization},
+year = {2009},
+isbn = {9781605583792},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1480881.1480915},
+doi = {10.1145/1480881.1480915},
+abstract = {Optimizations in a traditional compiler are applied sequentially, with each optimization destructively modifying the program to produce a transformed program that is then passed to the next optimization. We present a new approach for structuring the optimization phase of a compiler. In our approach, optimizations take the form of equality analyses that add equality information to a common intermediate representation. The optimizer works by repeatedly applying these analyses to infer equivalences between program fragments, thus saturating the intermediate representation with equalities. Once saturated, the intermediate representation encodes multiple optimized versions of the input program. At this point, a profitability heuristic picks the final optimized program from the various programs represented in the saturated representation. Our proposed way of structuring optimizers has a variety of benefits over previous approaches: our approach obviates the need to worry about optimization ordering, enables the use of a global optimization heuristic that selects among fully optimized programs, and can be used to perform translation validation, even on compilers other than our own. We present our approach, formalize it, and describe our choice of intermediate representation. We also present experimental results showing that our approach is practical in terms of time and space overhead, is effective at discovering intricate optimization opportunities, and is effective at performing translation validation for a realistic optimizer.},
+booktitle = {Proceedings of the 36th Annual ACM SIGPLAN-SIGACT Symposium on Principles of Programming Languages},
+pages = {264–276},
+numpages = {13},
+keywords = {compiler optimization, equality reasoning, intermediate representation},
+location = {Savannah, GA, USA},
+series = {POPL '09}
+}
+
+@article{10.1145/1594834.1480915,
+author = {Tate, Ross and Stepp, Michael and Tatlock, Zachary and Lerner, Sorin},
+title = {Equality Saturation: A New Approach to Optimization},
+year = {2009},
+issue_date = {January 2009},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {44},
+number = {1},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/1594834.1480915},
+doi = {10.1145/1594834.1480915},
+abstract = {Optimizations in a traditional compiler are applied sequentially, with each optimization destructively modifying the program to produce a transformed program that is then passed to the next optimization. We present a new approach for structuring the optimization phase of a compiler. In our approach, optimizations take the form of equality analyses that add equality information to a common intermediate representation. The optimizer works by repeatedly applying these analyses to infer equivalences between program fragments, thus saturating the intermediate representation with equalities. Once saturated, the intermediate representation encodes multiple optimized versions of the input program. At this point, a profitability heuristic picks the final optimized program from the various programs represented in the saturated representation. Our proposed way of structuring optimizers has a variety of benefits over previous approaches: our approach obviates the need to worry about optimization ordering, enables the use of a global optimization heuristic that selects among fully optimized programs, and can be used to perform translation validation, even on compilers other than our own. We present our approach, formalize it, and describe our choice of intermediate representation. We also present experimental results showing that our approach is practical in terms of time and space overhead, is effective at discovering intricate optimization opportunities, and is effective at performing translation validation for a realistic optimizer.},
+journal = {SIGPLAN Not.},
+month = {jan},
+pages = {264–276},
+numpages = {13},
+keywords = {intermediate representation, equality reasoning, compiler optimization}
+}
+
+
+@article{10.1145/3434304,
+author = {Willsey, Max and Nandi, Chandrakana and Wang, Yisu Remy and Flatt, Oliver and Tatlock, Zachary and Panchekha, Pavel},
+title = {Egg: Fast and Extensible Equality Saturation},
+year = {2021},
+issue_date = {January 2021},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {5},
+number = {POPL},
+url = {https://doi.org/10.1145/3434304},
+doi = {10.1145/3434304},
+abstract = {An e-graph efficiently represents a congruence relation over many expressions. Although they were originally developed in the late 1970s for use in automated theorem provers, a more recent technique known as equality saturation repurposes e-graphs to implement state-of-the-art, rewrite-driven compiler optimizations and program synthesizers. However, e-graphs remain unspecialized for this newer use case. Equality saturation workloads exhibit distinct characteristics and often require ad-hoc e-graph extensions to incorporate transformations beyond purely syntactic rewrites. This work contributes two techniques that make e-graphs fast and extensible, specializing them to equality saturation. A new amortized invariant restoration technique called rebuilding takes advantage of equality saturation's distinct workload, providing asymptotic speedups over current techniques in practice. A general mechanism called e-class analyses integrates domain-specific analyses into the e-graph, reducing the need for ad hoc manipulation. We implemented these techniques in a new open-source library called egg. Our case studies on three previously published applications of equality saturation highlight how egg's performance and flexibility enable state-of-the-art results across diverse domains.},
+journal = {Proc. ACM Program. Lang.},
+month = {jan},
+articleno = {23},
+numpages = {29},
+keywords = {e-graphs, equality saturation}
+}
+
+@article{10.1145/3571207,
+author = {Cao, David and Kunkel, Rose and Nandi, Chandrakana and Willsey, Max and Tatlock, Zachary and Polikarpova, Nadia},
+title = {Babble: Learning Better Abstractions with E-Graphs and Anti-Unification},
+year = {2023},
+issue_date = {January 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {POPL},
+url = {https://doi.org/10.1145/3571207},
+doi = {10.1145/3571207},
+abstract = {Library learning compresses a given corpus of programs by extracting common structure from the corpus into reusable library functions. Prior work on library learning suffers from two limitations that prevent it from scaling to larger, more complex inputs. First, it explores too many candidate library functions that are not useful for compression. Second, it is not robust to syntactic variation in the input. We propose library learning modulo theory (LLMT), a new library learning algorithm that additionally takes as input an equational theory for a given problem domain. LLMT uses e-graphs and equality saturation to compactly represent the space of programs equivalent modulo the theory, and uses a novel e-graph anti-unification technique to find common patterns in the corpus more directly and efficiently. We implemented LLMT in a tool named babble. Our evaluation shows that babble achieves better compression orders of magnitude faster than the state of the art. We also provide a qualitative evaluation showing that babble learns reusable functions on inputs previously out of reach for library learning.},
+journal = {Proc. ACM Program. Lang.},
+month = {jan},
+articleno = {14},
+numpages = {29},
+keywords = {anti-unification, e-graphs, library learning}
+}
+
+@ARTICLE{2017arXiv171104422S,
+       author = {{Sasnauskas}, Raimondas and {Chen}, Yang and {Collingbourne}, Peter and {Ketema}, Jeroen and {Lup}, Gratian and {Taneja}, Jubi and {Regehr}, John},
+        title = "{Souper: A Synthesizing Superoptimizer}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Programming Languages},
+         year = 2017,
+        month = nov,
+          eid = {arXiv:1711.04422},
+        pages = {arXiv:1711.04422},
+          doi = {10.48550/arXiv.1711.04422},
+archivePrefix = {arXiv},
+       eprint = {1711.04422},
+ primaryClass = {cs.PL},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2017arXiv171104422S},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+
+}
+
+
+@misc{webassembly_runtime,
+  title = {WebAssembly Specification: WebAssembly Runtime},
+  author = {WebAssembly Community Group},
+  year = {2021},
+  note = {Version 1.0},
+  url = {https://webassembly.github.io/spec/core/exec/runtime.html},
+  howpublished = {\url{https://webassembly.github.io/spec/core/exec/runtime.html}}
+}
+
+
+@misc{safeside,
+  title = {SafeSide},
+  author = {Google},
+  year = {2020},
+  url = {https://github.com/PLSysSec/safeside},
+  howpublished = {\url{https://github.com/PLSysSec/safeside}}
+}
+
+
+@article{soto2021comprehensive,
+  title={A comprehensive study of bloated dependencies in the maven ecosystem},
+  author={Soto-Valero, C{\'e}sar and Harrand, Nicolas and Monperrus, Martin and Baudry, Benoit},
+  journal={Empirical Software Engineering},
+  volume={26},
+  number={3},
+  pages={45},
+  year={2021},
+  publisher={Springer}
+}
+
+
+@article{Cohen1993OperatingSP,
+  title={Operating system protection through program evolution},
+  author={Frederick B. Cohen},
+  journal={Comput. Secur.},
+  year={1993},
+  volume={12},
+  pages={565-584}
+}
+
+@inproceedings{10.1145/2810103.2813682,
+author = {Crane, Stephen J. and Volckaert, Stijn and Schuster, Felix and Liebchen, Christopher and Larsen, Per and Davi, Lucas and Sadeghi, Ahmad-Reza and Holz, Thorsten and De Sutter, Bjorn and Franz, Michael},
+title = {It's a TRaP: Table Randomization and Protection against Function-Reuse Attacks},
+year = {2015},
+isbn = {9781450338325},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2810103.2813682},
+doi = {10.1145/2810103.2813682},
+abstract = {Code-reuse attacks continue to evolve and remain a severe threat to modern software. Recent research has proposed a variety of defenses with differing security, efficiency, and practicality characteristics. Whereas the majority of these solutions focus on specific code-reuse attack variants such as return-oriented programming (ROP), other attack variants that reuse whole functions, such as the classic return-into-libc, have received much less attention. Mitigating function-level code reuse is highly challenging because one needs to distinguish a legitimate call to a function from an illegitimate one. In fact, the recent counterfeit object-oriented programming (COOP) attack demonstrated that the majority of code-reuse defenses can be bypassed by reusing dynamically bound functions, i.e., functions that are accessed through global offset tables and virtual function tables, respectively.In this paper, we first significantly improve and simplify the COOP attack. Based on a strong adversarial model, we then present the design and implementation of a comprehensive code-reuse defense which is resilient against reuse of dynamically-bound functions. In particular, we introduce two novel defense techniques: (i) a practical technique to randomize the layout of tables containing code pointers resilient to memory disclosure and (ii) booby trap insertion to mitigate the threat of brute-force attacks iterating over the randomized tables. Booby traps serve the dual purpose of preventing fault-analysis side channels and ensuring that each table has sufficiently many possible permutations. Our detailed evaluation demonstrates that our approach is secure, effective, and practical. We prevent realistic, COOP-style attacks against the Chromium web browser and report an average overhead of 1.1% on the SPEC CPU2006 benchmarks.},
+booktitle = {Proceedings of the 22nd ACM SIGSAC Conference on Computer and Communications Security},
+pages = {243–255},
+numpages = {13},
+keywords = {code reuse, randomization, diversity, C++, COOP, exploits, compilers, mitigations},
+location = {Denver, Colorado, USA},
+series = {CCS '15}
+}
+
+@article{dongarra1979unrolling,
+  title={Unrolling loops in Fortran},
+  author={Dongarra, Jack J and Hinds, A\_R},
+  journal={Software: Practice and Experience},
+  volume={9},
+  number={3},
+  pages={219--226},
+  year={1979},
+  publisher={Wiley Online Library}
+}
+
+
+@inproceedings {Swivel,
+author = {Shravan Narayan and Craig Disselkoen and Daniel Moghimi and Sunjay Cauligi and Evan Johnson and Zhao Gang and Anjo Vahldiek-Oberwagner and Ravi Sahita and Hovav Shacham and Dean Tullsen and Deian Stefan},
+title = {Swivel: Hardening {WebAssembly} against Spectre},
+booktitle = {30th USENIX Security Symposium (USENIX Security 21)},
+year = {2021},
+isbn = {978-1-939133-24-3},
+pages = {1433--1450},
+url = {https://www.usenix.org/conference/usenixsecurity21/presentation/narayan},
+publisher = {USENIX Association},
+month = aug,
+}
+
+@inproceedings {236200,
+author = {Babak Amin Azad and Pierre Laperdrix and Nick Nikiforakis},
+title = {Less is More: Quantifying the Security Benefits of Debloating Web Applications},
+booktitle = {28th USENIX Security Symposium (USENIX Security 19)},
+year = {2019},
+isbn = {978-1-939133-06-9},
+address = {Santa Clara, CA},
+pages = {1697--1714},
+url = {https://www.usenix.org/conference/usenixsecurity19/presentation/azad},
+publisher = {USENIX Association},
+month = aug,
+}
+
+@article{10.1145/2086696.2086702,
+author = {Cleemput, Jeroen V. and Coppens, Bart and De Sutter, Bjorn},
+title = {Compiler Mitigations for Time Attacks on Modern X86 Processors},
+year = {2012},
+issue_date = {January 2012},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {8},
+number = {4},
+issn = {1544-3566},
+url = {https://doi.org/10.1145/2086696.2086702},
+doi = {10.1145/2086696.2086702},
+abstract = {This paper studies and evaluates the extent to which automated compiler techniques can defend against timing-based side channel attacks on modern x86 processors. We study how modern x86 processors can leak timing information through side channels that relate to data flow. We study the efficiency, effectiveness, portability, predictability and sensitivity of several mitigating code transformations that eliminate or minimize key-dependent execution time variations. Furthermore, we discuss the extent to which compiler backends are a suitable tool to provide automated support for the proposed mitigations.},
+journal = {ACM Trans. Archit. Code Optim.},
+month = {jan},
+articleno = {23},
+numpages = {20},
+keywords = {Time-based side channels, x86 architecture, variable latency instructions}
+}
+
+@INPROCEEDINGS{6494997,
+
+  author={Homescu, Andrei and Neisius, Steven and Larsen, Per and Brunthaler, Stefan and Franz, Michael},
+
+  booktitle={Proceedings of the 2013 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)}, 
+
+  title={Profile-guided automated software diversity}, 
+
+  year={2013},
+
+  volume={},
+
+  number={},
+
+  pages={1-11},
+
+  doi={10.1109/CGO.2013.6494997}}
+
+
+@INPROCEEDINGS{Diablo,
+
+  author={Balachandran, Vivek and Keong, Ng Wee and Emmanuel, Sabu},
+
+  booktitle={2014 Eighth International Conference on Complex, Intelligent and Software Intensive Systems}, 
+
+  title={Function Level Control Flow Obfuscation for Software Security}, 
+
+  year={2014},
+
+  volume={},
+
+  number={},
+
+  pages={133-140},
+
+  doi={10.1109/CISIS.2014.20}}
+
+  @INPROCEEDINGS{1577061,
+
+  author={Van Put, L. and Chanet, D. and De Bus, B. and De Sutter, B. and De Bosschere, K.},
+
+  booktitle={Proceedings of the Fifth IEEE International Symposium on Signal Processing and Information Technology, 2005.}, 
+
+  title={DIABLO: a reliable, retargetable and extensible link-time rewriting framework}, 
+
+  year={2005},
+
+  volume={},
+
+  number={},
+
+  pages={7-12},
+
+  doi={10.1109/ISSPIT.2005.1577061}}
+
+
+@INPROCEEDINGS{941405,
+
+  author={Chenxi Wang and Davidson, J. and Hill, J. and Knight, J.},
+
+  booktitle={2001 International Conference on Dependable Systems and Networks}, 
+
+  title={Protection of software-based survivability mechanisms}, 
+
+  year={2001},
+
+  volume={},
+
+  number={},
+
+  pages={193-202},
+
+  doi={10.1109/DSN.2001.941405}}
+
+
+@inproceedings{10.1145/948109.948149,
+author = {Linn, Cullen and Debray, Saumya},
+title = {Obfuscation of Executable Code to Improve Resistance to Static Disassembly},
+year = {2003},
+isbn = {1581137389},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/948109.948149},
+doi = {10.1145/948109.948149},
+abstract = {A great deal of software is distributed in the form of executable code. The ability to reverse engineer such executables can create opportunities for theft of intellectual property via software piracy, as well as security breaches by allowing attackers to discover vulnerabilities in an application. The process of reverse engineering an executable program typically begins with disassembly, which translates machine code to assembly code. This is then followed by various decompilation steps that aim to recover higher-level abstractions from the assembly code. Most of the work to date on code obfuscation has focused on disrupting or confusing the decompilation phase. This paper, by contrast, focuses on the initial disassembly phase. Our goal is to disrupt the static disassembly process so as to make programs harder to disassemble correctly. We describe two widely used static disassembly algorithms, and discuss techniques to thwart each of them. Experimental results indicate that significant portions of executables that have been obfuscated using our techniques are disassembled incorrectly, thereby showing the efficacy of our methods.},
+booktitle = {Proceedings of the 10th ACM Conference on Computer and Communications Security},
+pages = {290–299},
+numpages = {10},
+keywords = {disassembly, code obfuscation},
+location = {Washington D.C., USA},
+series = {CCS '03}
+}
+
+@inproceedings{10.1145/3453483.3454035,
+author = {Ren, Xiaolei and Ho, Michael and Ming, Jiang and Lei, Yu and Li, Li},
+title = {Unleashing the Hidden Power of Compiler Optimization on Binary Code Difference: An Empirical Study},
+year = {2021},
+isbn = {9781450383912},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3453483.3454035},
+doi = {10.1145/3453483.3454035},
+abstract = {Hunting binary code difference without source code (i.e., binary diffing) has compelling applications in software security. Due to the high variability of binary code, existing solutions have been driven towards measuring semantic similarities from syntactically different code. Since compiler optimization is the most common source contributing to binary code differences in syntax, testing the resilience against the changes caused by different compiler optimization settings has become a standard evaluation step for most binary diffing approaches. For example, 47 top-venue papers in the last 12 years compared different program versions compiled by default optimization levels (e.g., -Ox in GCC and LLVM). Although many of them claim they are immune to compiler transformations, it is yet unclear about their resistance to non-default optimization settings. Especially, we have observed that adversaries explored non-default compiler settings to amplify malware differences. This paper takes the first step to systematically studying the effectiveness of compiler optimization on binary code differences. We tailor search-based iterative compilation for the auto-tuning of binary code differences. We develop BinTuner to search near-optimal optimization sequences that can maximize the amount of binary code differences. We run BinTuner with GCC 10.2 and LLVM 11.0 on SPEC benchmarks (CPU2006 &amp; CPU2017), Coreutils, and OpenSSL. Our experiments show that at the cost of 279 to 1,881 compilation iterations, BinTuner can find custom optimization sequences that are substantially better than the general -Ox settings. BinTuner's outputs seriously undermine prominent binary diffing tools' comparisons. In addition, the detection rate of the IoT malware variants tuned by BinTuner falls by more than 50%. Our findings paint a cautionary tale for security analysts that attackers have a new way to mutate malware code cost-effectively, and the research community needs to step back to reassess optimization-resistance evaluations.},
+booktitle = {Proceedings of the 42nd ACM SIGPLAN International Conference on Programming Language Design and Implementation},
+pages = {142–157},
+numpages = {16},
+keywords = {Compiler Optimization, Binary Code Difference},
+location = {Virtual, Canada},
+series = {PLDI 2021}
+}
+
+@inproceedings{10.1145/3062341.3062363,
+author = {Haas, Andreas and Rossberg, Andreas and Schuff, Derek L. and Titzer, Ben L. and Holman, Michael and Gohman, Dan and Wagner, Luke and Zakai, Alon and Bastien, JF},
+title = {Bringing the Web up to Speed with WebAssembly},
+year = {2017},
+isbn = {9781450349888},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3062341.3062363},
+doi = {10.1145/3062341.3062363},
+abstract = {The maturation of the Web platform has given rise to sophisticated and demanding Web applications such as interactive 3D visualization, audio and video software, and games. With that, efficiency and security of code on the Web has become more important than ever. Yet JavaScript as the only built-in language of the Web is not well-equipped to meet these requirements, especially as a compilation target. Engineers from the four major browser vendors have risen to the challenge and collaboratively designed a portable low-level bytecode called WebAssembly. It offers compact representation, efficient validation and compilation, and safe low to no-overhead execution. Rather than committing to a specific programming model, WebAssembly is an abstraction over modern hardware, making it language-, hardware-, and platform-independent, with use cases beyond just the Web. WebAssembly has been designed with a formal semantics from the start. We describe the motivation, design and formal semantics of WebAssembly and provide some preliminary experience with implementations.},
+booktitle = {Proceedings of the 38th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {185–200},
+numpages = {16},
+keywords = {programming languages, just-in-time compilers, type systems, assembly languages, virtual machines},
+location = {Barcelona, Spain},
+series = {PLDI 2017}
+}
+
+@article{10.1145/3140587.3062363,
+author = {Haas, Andreas and Rossberg, Andreas and Schuff, Derek L. and Titzer, Ben L. and Holman, Michael and Gohman, Dan and Wagner, Luke and Zakai, Alon and Bastien, JF},
+title = {Bringing the Web up to Speed with WebAssembly},
+year = {2017},
+issue_date = {June 2017},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {52},
+number = {6},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/3140587.3062363},
+doi = {10.1145/3140587.3062363},
+abstract = {The maturation of the Web platform has given rise to sophisticated and demanding Web applications such as interactive 3D visualization, audio and video software, and games. With that, efficiency and security of code on the Web has become more important than ever. Yet JavaScript as the only built-in language of the Web is not well-equipped to meet these requirements, especially as a compilation target. Engineers from the four major browser vendors have risen to the challenge and collaboratively designed a portable low-level bytecode called WebAssembly. It offers compact representation, efficient validation and compilation, and safe low to no-overhead execution. Rather than committing to a specific programming model, WebAssembly is an abstraction over modern hardware, making it language-, hardware-, and platform-independent, with use cases beyond just the Web. WebAssembly has been designed with a formal semantics from the start. We describe the motivation, design and formal semantics of WebAssembly and provide some preliminary experience with implementations.},
+journal = {SIGPLAN Not.},
+month = {jun},
+pages = {185–200},
+numpages = {16},
+keywords = {just-in-time compilers, type systems, virtual machines, programming languages, assembly languages}
+}
+
+@article{CABRERAARTEAGA2023103296,
+title = {WebAssembly diversification for malware evasion},
+journal = {Computers & Security},
+volume = {131},
+pages = {103296},
+year = {2023},
+issn = {0167-4048},
+doi = {https://doi.org/10.1016/j.cose.2023.103296},
+url = {https://www.sciencedirect.com/science/article/pii/S0167404823002067},
+author = {Javier Cabrera-Arteaga and Martin Monperrus and Tim Toady and Benoit Baudry},
+keywords = {WebAssembly, Cryptojacking, Software diversification, Malware evasion},
+abstract = {WebAssembly has become a crucial part of the modern web, offering a faster alternative to JavaScript in browsers. While boosting rich applications in browser, this technology is also very efficient to develop cryptojacking malware. This has triggered the development of several methods to detect cryptojacking malware. However, these defenses have not considered the possibility of attackers using evasion techniques. This paper explores how automatic binary diversification can support the evasion of WebAssembly cryptojacking detectors. We experiment with a dataset of 33 WebAssembly cryptojacking binaries and evaluate our evasion technique against two malware detectors: VirusTotal, a general-purpose detector, and MINOS, a WebAssembly-specific detector. Our results demonstrate that our technique can automatically generate variants of WebAssembly cryptojacking that evade the detectors in 90% of cases for VirusTotal and 100% for MINOS. Our results emphasize the importance of meta-antiviruses and diverse detection techniques and provide new insights into which WebAssembly code transformations are best suited for malware evasion. We also show that the variants introduce limited performance overhead, making binary diversification an effective technique for evasion.}
+}
+
+@misc{arteaga2020crow,
+    title={CROW: Code Diversification for WebAssembly},
+    author={Cabrera Arteaga,Javier  and Orestis Floros Malivitsis and Oscar Luis Vera Pérez and Benoit Baudry and Martin Monperrus},
+    abstract={The adoption of WebAssembly has rapidly increased in the last few years as it provides a fast and safe model for program execution. However, WebAssembly is not exempt from vulnerabilities that could be exploited by side channels attacks. This class of vulnerabilities that can be addressed by code diversification. In this paper, we present the first fully automated workflow for the diversification of WebAssembly binaries. We present CROW, an open-source tool implementing this workflow. We evaluate CROW's capabilities on 303 C programs and study its use on a real-life security-sensitive program: libsodium, a cryptographic library. Overall, CROW is able to generate diverse variants for 239 out of 303 (79%) small programs. On libsodium, the execution trace changes up to 83.4%. },
+    year={2021},
+    eprint={2008.07185},
+    archivePrefix={arXiv},
+    primaryClass={cs.SE},
+    url = {https://madweb.work/preprints/madweb21-paper4-pre_print_version.pdf},
+    abbr={MADWeb 2021},
+}
+
+@inproceedings{bos2016differential,
+  title={Differential computation analysis: Hiding your white-box designs is not enough},
+  author={Bos, Joppe W and Hubain, Charles and Michiels, Wil and Teuwen, Philippe},
+  booktitle={Cryptographic Hardware and Embedded Systems--CHES 2016: 18th International Conference, Santa Barbara, CA, USA, August 17-19, 2016, Proceedings 18},
+  pages={215--236},
+  year={2016},
+  organization={Springer}
+}
+
+
+@INPROCEEDINGS{10123627,
+
+  author={Breitfelder, Florian and Roth, Tobias and Baumgärtner, Lars and Mezini, Mira},
+
+  booktitle={2023 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+
+  title={WasmA: A Static WebAssembly Analysis Framework for Everyone}, 
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  pages={753-757},
+
+  doi={10.1109/SANER56733.2023.00085}}
+
+@inproceedings{romano2023,
+    author = {Romano, Alan and Wang, Weihang},
+    title = {Automated WebAssembly Function Purpose Identification With Semantics-Aware Analysis},
+    year = {2023},
+    isbn = {9781450394161},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3543507.3583235},
+    doi = {10.1145/3543507.3583235},
+    abstract = {WebAssembly is a recent web standard built for better performance in web applications. The standard defines a binary code format to use as a compilation target for a variety of languages, such as C, C++, and Rust. The standard also defines a text representation for readability, although, WebAssembly modules are difficult to interpret by human readers, regardless of their experience level. This makes it difficult to understand and maintain any existing WebAssembly code. As a result, third-party WebAssembly modules need to be implicitly trusted by developers as verifying the functionality themselves may not be feasible. To this end, we construct WASPur, a tool to automatically identify the purposes of WebAssembly functions. To build this tool, we first construct an extensive collection of WebAssembly samples that represent the state of WebAssembly. Second, we analyze the dataset and identify the diverse use cases of the collected WebAssembly modules. We leverage the dataset of WebAssembly modules to construct semantics-aware intermediate representations (IR) of the functions in the modules. We encode the function IR for use in a machine learning classifier, and we find that this classifier can predict the similarity of a given function against known named functions with an accuracy rate of 88.07\%. We hope our tool will enable inspection of optimized and minified WebAssembly modules that remove function names and most other semantic identifiers.},
+    booktitle = {Proceedings of the ACM Web Conference 2023},
+    pages = {2885–2894},
+    numpages = {10},
+    location = {Austin, TX, USA},
+    series = {WWW '23}
+}
+
+@INPROCEEDINGS{wasmslim,
+
+  author={Wen, Elliott and Dietrich, Jens},
+
+  booktitle={2023 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+
+  title={WasmSlim: Optimizing WebAssembly Binary Distribution via Automatic Module Splitting}, 
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  pages={673-677},
+
+  doi={10.1109/SANER56733.2023.00069}}
+
+
+@INPROCEEDINGS{wang2023Wasm,
+
+  author={Wang, Yue and Zhou, Zhide and Ren, Zhilei and Liu, Dong and Jiang, He},
+
+  booktitle={2023 IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER)}, 
+
+  title={A Comprehensive Study of WebAssembly Runtime Bugs}, 
+
+  year={2023},
+
+  volume={},
+
+  number={},
+
+  pages={355-366},
+
+  doi={10.1109/SANER56733.2023.00041}}
+
+
+@article{he2023eunomia,
+  title={Eunomia: Enabling User-specified Fine-Grained Search in Symbolically Executing WebAssembly Binaries},
+  author={He, Ningyu and Zhao, Zhehao and Wang, Jikai and Hu, Yubin and Guo, Shengjian and Wang, Haoyu and Liang, Guangtai and Li, Ding and Chen, Xiangqun and Guo, Yao},
+  journal={arXiv preprint arXiv:2304.07204},
+  year={2023}
+}
+
+
+@inproceedings{10.1145/3510003.3510070,
+    author = {Sti\'{e}venart, Quentin and Binkley, David W. and De Roover, Coen},
+    title = {Static Stack-Preserving Intra-Procedural Slicing of Webassembly Binaries},
+    year = {2022},
+    isbn = {9781450392211},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    url = {https://doi.org/10.1145/3510003.3510070},
+    doi = {10.1145/3510003.3510070},
+    abstract = {The recently introduced WebAssembly standard aims to be a portable compilation target, enabling the cross-platform distribution of programs written in a variety of languages. We propose an approach to slice WebAssembly programs in order to enable applications in reverse engineering, code comprehension, and security among others. Given a program and a location in that program, program slicing produces a minimal version of the program that preserves the behavior at the given location. Specifically, our approach is a static, intra-procedural, backward slicing approach that takes into account WebAssembly-specific dependences to identify the instructions of the slice. To do so it must correctly overcome the considerable challenges of performing dependence analysis at the binary level. Furthermore, for the slice to be executable, the approach needs to ensure that the stack behavior of its output complies with WebAssembly's validation requirements. We implemented and evaluated our approach on a suite of 8 386 real-world WebAssembly binaries, finding that the average size of the 495 204 868 slices computed is 53\% of the original code, an improvement over the 60\% attained by related work slicing ARM binaries. To gain a more qualitative understanding of the slices produced by our approach, we compared them to 1 956 source-level slices of benchmark C programs. This inspection helps to illustrate the slicer's strengths and to uncover potential future improvements.},
+    booktitle = {Proceedings of the 44th International Conference on Software Engineering},
+    pages = {2031–2042},
+    numpages = {12},
+    keywords = {static program slicing, binary analysis, webassembly},
+    location = {Pittsburgh, Pennsylvania},
+    series = {ICSE '22}
+}
+
+@ARTICLE{madvex,
+       author = {{Loose}, Nils and {M{\"a}chtle}, Felix and {Pott}, Claudius and {Bezsmertnyi}, Volodymyr and {Eisenbarth}, Thomas},
+        title = "{Madvex: Instrumentation-based Adversarial Attacks on Machine Learning Malware Detection}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Cryptography and Security},
+         year = 2023,
+        month = may,
+          eid = {arXiv:2305.02559},
+        pages = {arXiv:2305.02559},
+          doi = {10.48550/arXiv.2305.02559},
+archivePrefix = {arXiv},
+       eprint = {2305.02559},
+ primaryClass = {cs.CR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2023arXiv230502559L},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@ARTICLE{rewritingtool2023,
+       author = {{Cao}, Shangtong and {He}, Ningyu and {Guo}, Yao and {Wang}, Haoyu},
+        title = "{A General Static Binary Rewriting Framework for WebAssembly}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Software Engineering},
+         year = 2023,
+        month = may,
+          eid = {arXiv:2305.01454},
+        pages = {arXiv:2305.01454},
+          doi = {10.48550/arXiv.2305.01454},
+archivePrefix = {arXiv},
+       eprint = {2305.01454},
+ primaryClass = {cs.SE},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2023arXiv230501454C},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@inproceedings{wasabi,
+author = {Lehmann, Daniel and Pradel, Michael},
+title = {Wasabi: A Framework for Dynamically Analyzing WebAssembly},
+year = {2019},
+isbn = {9781450362405},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3297858.3304068},
+doi = {10.1145/3297858.3304068},
+abstract = {WebAssembly is the new low-level language for the web and has now been implemented in all major browsers since over a year. To ensure the security, performance, and correctness of future web applications, there is a strong need for dynamic analysis tools for WebAssembly. However, building such tools from scratch requires knowledge of low-level details of the language and its runtime environment. This paper presents Wasabi, the first general-purpose framework for dynamically analyzing WebAssembly. Wasabi provides an easy-to-use, high-level API that supports heavyweight dynamic analyses. It is based on binary instrumentation, which inserts calls to analysis functions written in JavaScript into a WebAssembly binary. Dynamically analyzing WebAssembly comes with several unique challenges, such as the problem of tracing type-polymorphic instructions with analysis functions that have a fixed type, which we address through on-demand monomorphization. Our evaluation on compute-intensive benchmarks and real-world applications shows that Wasabi (i) faithfully preserves the original program behavior, (ii) imposes an overhead that is reasonable for heavyweight dynamic analysis, and (iii) makes it straightforward to implement various dynamic analyses, including instruction counting, call graph extraction, memory access tracing, and taint analysis.},
+booktitle = {Proceedings of the Twenty-Fourth International Conference on Architectural Support for Programming Languages and Operating Systems},
+pages = {1045–1058},
+numpages = {14},
+location = {Providence, RI, USA},
+series = {ASPLOS '19}
+}
+
+@inproceedings{stievenart2020compositional,
+  title={Compositional information flow analysis for WebAssembly programs},
+  author={Sti{\'e}venart, Quentin and De Roover, Coen},
+  booktitle={2020 IEEE 20th International Working Conference on Source Code Analysis and Manipulation (SCAM)},
+  pages={13--24},
+  year={2020},
+  organization={IEEE}
+}
+
+@article{10.1145/3591224,
+    author = {Watt, Conrad and Trela, Maja and Lammich, Peter and M\"{a}rkl, Florian},
+    title = {WasmRef-Isabelle: A Verified Monadic Interpreter and Industrial Fuzzing Oracle for WebAssembly},
+    year = {2023},
+    issue_date = {June 2023},
+    publisher = {Association for Computing Machinery},
+    address = {New York, NY, USA},
+    volume = {7},
+    number = {PLDI},
+    url = {https://doi.org/10.1145/3591224},
+    doi = {10.1145/3591224},
+    abstract = {We present WasmRef-Isabelle, a monadic interpreter for WebAssembly written in Isabelle/HOL and proven correct with respect to the WasmCert-Isabelle mechanisation of WebAssembly. WasmRef-Isabelle has been adopted and deployed as a fuzzing oracle in the continuous integration infrastructure of Wasmtime, a widely used WebAssembly implementation. Previous efforts to fuzz Wasmtime against WebAssembly's official OCaml reference interpreter were abandoned by Wasmtime's developers after the reference interpreter exhibited unacceptable performance characteristics, which its maintainers decided not to fix in order to preserve the interpreter's close definitional correspondence with the official specification. With WasmRef-Isabelle, we achieve the best of both worlds - an interpreter fast enough to be useable as a fuzzing oracle that also maintains a close correspondence with the specification through a mechanised proof of correctness. We verify the correctness of WasmRef-Isabelle through a two-step refinement proof in Isabelle/HOL. We demonstrate that WasmRef-Isabelle significantly outperforms the official reference interpreter, has performance comparable to a Rust debug build of the industry WebAssembly interpreter Wasmi, and competes with unverified oracles on fuzzing throughput when deployed in Wasmtime's fuzzing infrastructure. We also present several new extensions to WasmCert-Isabelle which enhance WasmRef-Isabelle's utility as a fuzzing oracle: we add support for a number of upcoming WebAssembly features, and fully mechanise the numeric semantics of WebAssembly's integer operations.},
+    journal = {Proc. ACM Program. Lang.},
+    month = {jun},
+    articleno = {110},
+    numpages = {24},
+    keywords = {theorem proving, virtual machine, refinement, WasmCert}
+}
+
+@InProceedings{10.1007/978-3-319-70972-7_13,
+author="Schwarz, Michael
+and Maurice, Cl{\'e}mentine
+and Gruss, Daniel
+and Mangard, Stefan",
+editor="Kiayias, Aggelos",
+title="Fantastic Timers and Where to Find Them: High-Resolution Microarchitectural Attacks in JavaScript",
+booktitle="Financial Cryptography and Data Security",
+year="2017",
+publisher="Springer International Publishing",
+address="Cham",
+pages="247--267",
+abstract="Research showed that microarchitectural attacks like cache attacks can be performed through websites using JavaScript. These timing attacks allow an adversary to spy on users secrets such as their keystrokes, leveraging fine-grained timers. However, the W3C and browser vendors responded to this significant threat by eliminating fine-grained timers from JavaScript. This renders previous high-resolution microarchitectural attacks non-applicable.",
+isbn="978-3-319-70972-7"
+}
+
+@INPROCEEDINGS{10026577,
+
+  author={Daly, Ross and Donovick, Caleb and Melchert, Jackson and Setaluri, Rajsekhar and Bullock, Nestan Tsiskaridze and Raina, Priyanka and Barrett, Clark and Hanrahan, Pat},
+
+  booktitle={2022 Formal Methods in Computer-Aided Design (FMCAD)}, 
+
+  title={Synthesizing Instruction Selection Rewrite Rules from RTL using SMT}, 
+
+  year={2022},
+
+  volume={},
+
+  number={},
+
+  pages={139-150},
+
+  doi={10.34727/2022/isbn.978-3-85448-053-2_20}}
+
+
+@article{10.1145/3571208,
+author = {Michael, Alexandra E. and Gollamudi, Anitha and Bosamiya, Jay and Johnson, Evan and Denlinger, Aidan and Disselkoen, Craig and Watt, Conrad and Parno, Bryan and Patrignani, Marco and Vassena, Marco and Stefan, Deian},
+title = {MSWasm: Soundly Enforcing Memory-Safe Execution of Unsafe Code},
+year = {2023},
+issue_date = {January 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {POPL},
+url = {https://doi.org/10.1145/3571208},
+doi = {10.1145/3571208},
+abstract = {Most programs compiled to WebAssembly (Wasm) today are written in unsafe languages like C and C++. Unfortunately, memory-unsafe C code remains unsafe when compiled to Wasm—and attackers can exploit buffer overflows and use-after-frees in Wasm almost as easily as they can on native platforms. Memory- Safe WebAssembly (MSWasm) proposes to extend Wasm with language-level memory-safety abstractions to precisely address this problem. In this paper, we build on the original MSWasm position paper to realize this vision. We give a precise and formal semantics of MSWasm, and prove that well-typed MSWasm programs are, by construction, robustly memory safe. To this end, we develop a novel, language-independent memory-safety property based on colored memory locations and pointers. This property also lets us reason about the security guarantees of a formal C-to-MSWasm compiler—and prove that it always produces memory-safe programs (and preserves the semantics of safe programs). We use these formal results to then guide several implementations: Two compilers of MSWasm to native code, and a C-to-MSWasm compiler (that extends Clang). Our MSWasm compilers support different enforcement mechanisms, allowing developers to make security-performance trade-offs according to their needs. Our evaluation shows that on the PolyBenchC suite, the overhead of enforcing memory safety in software ranges from 22\% (enforcing spatial safety alone) to 198\% (enforcing full memory safety), and 51.7\% when using hardware memory capabilities for spatial safety and pointer integrity. More importantly, MSWasm’s design makes it easy to swap between enforcement mechanisms; as fast (especially hardware-based) enforcement techniques become available, MSWasm will be able to take advantage of these advances almost for free.},
+journal = {Proc. ACM Program. Lang.},
+month = {jan},
+articleno = {15},
+numpages = {30},
+keywords = {Secure Compilation, WebAssembly, Memory-safety, Semantics}
+}
+
+@article{10.1145/3591265,
+author = {Rao, Xiaojia and Georges, A\"{\i}na Linn and Legoupil, Maxime and Watt, Conrad and Pichon-Pharabod, Jean and Gardner, Philippa and Birkedal, Lars},
+title = {Iris-Wasm: Robust and Modular Verification of WebAssembly Programs},
+year = {2023},
+issue_date = {June 2023},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {7},
+number = {PLDI},
+url = {https://doi.org/10.1145/3591265},
+doi = {10.1145/3591265},
+abstract = {WebAssembly makes it possible to run C/C++ applications on the web with near-native performance. A WebAssembly program is expressed as a collection of higher-order ML-like modules, which are composed together through a system of explicit imports and exports using a host language, enabling a form of higher- order modular programming. We present Iris-Wasm, a mechanized higher-order separation logic building on a specification of Wasm 1.0 mechanized in Coq and the Iris framework. Using Iris-Wasm, we are able to specify and verify individual modules separately, and then compose them modularly in a simple host language featuring the core operations of the WebAssembly JavaScript Interface. Building on Iris-Wasm, we develop a logical relation that enforces robust safety: unknown, adversarial code can only affect other modules through the functions that they explicitly export. Together, the program logic and the logical relation allow us to formally verify functional correctness of WebAssembly programs, even when they invoke and are invoked by unknown code, thereby demonstrating that WebAssembly enforces strong isolation between modules.},
+journal = {Proc. ACM Program. Lang.},
+month = {jun},
+articleno = {151},
+numpages = {25},
+keywords = {WebAssembly, higher-order logic, formal verification, separation logic}
+}
+
+@article{10.1145/3498688,
+author = {Kolosick, Matthew and Narayan, Shravan and Johnson, Evan and Watt, Conrad and LeMay, Michael and Garg, Deepak and Jhala, Ranjit and Stefan, Deian},
+title = {Isolation without Taxation: Near-Zero-Cost Transitions for WebAssembly and SFI},
+year = {2022},
+issue_date = {January 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {6},
+number = {POPL},
+url = {https://doi.org/10.1145/3498688},
+doi = {10.1145/3498688},
+abstract = {Software sandboxing or software-based fault isolation (SFI) is a lightweight approach to building secure systems out of untrusted components. Mozilla, for example, uses SFI to harden the Firefox browser by sandboxing third-party libraries, and companies like Fastly and Cloudflare use SFI to safely co-locate untrusted tenants on their edge clouds. While there have been significant efforts to optimize and verify SFI enforcement, context switching in SFI systems remains largely unexplored: almost all SFI systems use heavyweight transitions that are not only error-prone but incur significant performance overhead from saving, clearing, and restoring registers when context switching. We identify a set of zero-cost conditions that characterize when sandboxed code has sufficient structured to guarantee security via lightweight zero-cost transitions (simple function calls). We modify the Lucet Wasm compiler and its runtime to use zero-cost transitions, eliminating the undue performance tax on systems that rely on Lucet for sandboxing (e.g., we speed up image and font rendering in Firefox by up to 29.7\% and 10\% respectively). To remove the Lucet compiler and its correct implementation of the Wasm specification from the trusted computing base, we (1) develop a static binary verifier, VeriZero, which (in seconds) checks that binaries produced by Lucet satisfy our zero-cost conditions, and (2) prove the soundness of VeriZero by developing a logical relation that captures when a compiled Wasm function is semantically well-behaved with respect to our zero-cost conditions. Finally, we show that our model is useful beyond Wasm by describing a new, purpose-built SFI system, SegmentZero32, that uses x86 segmentation and LLVM with mostly off-the-shelf passes to enforce our zero-cost conditions; our prototype performs on-par with the state-of-the-art Native Client SFI system.},
+journal = {Proc. ACM Program. Lang.},
+month = {jan},
+articleno = {27},
+numpages = {30},
+keywords = {software fault isolation, WebAssembly, verification, sandboxing}
+}
+
+@inproceedings{10.1145/3519939.3523449,
+author = {Lehmann, Daniel and Pradel, Michael},
+title = {Finding the Dwarf: Recovering Precise Types from WebAssembly Binaries},
+year = {2022},
+isbn = {9781450392655},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3519939.3523449},
+doi = {10.1145/3519939.3523449},
+abstract = {The increasing popularity of WebAssembly creates a demand for understanding and reverse engineering WebAssembly binaries. Recovering high-level function types is an important part of this process. One method to recover types is data-flow analysis, but it is complex to implement and may require manual heuristics when logical constraints fall short. In contrast, this paper presents SnowWhite, a learning-based approach for recovering precise, high-level parameter and return types for WebAssembly functions. It improves over prior work on learning-based type recovery by representing the types-to-predict in an expressive type language, which can describe a large number of complex types, instead of the fixed, and usually small type vocabulary used previously. Thus, recovery of a single type is no longer a classification task but sequence prediction, for which we build on the success of neural sequence-to-sequence models. We evaluate SnowWhite on a new, large-scale dataset of 6.3 million type samples extracted from 300,905 WebAssembly object files. The results show the type language is expressive, precisely describing 1,225 types instead the 7 to 35 types considered in previous learning-based approaches. Despite this expressiveness, our type recovery has high accuracy, exactly matching 44.5\% (75.2\%) of all parameter types and 57.7\% (80.5\%) of all return types within the top-1 (top-5) predictions.},
+booktitle = {Proceedings of the 43rd ACM SIGPLAN International Conference on Programming Language Design and Implementation},
+pages = {410–425},
+numpages = {16},
+keywords = {DWARF, WebAssembly, type prediction, type recovery, debugging information, reverse engineering, machine learning, corpus, neural networks, dataset},
+location = {San Diego, CA, USA},
+series = {PLDI 2022}
+}
+
+@article{BRITO2022102745,
+title = {Wasmati: An efficient static vulnerability scanner for WebAssembly},
+journal = {Computers & Security},
+volume = {118},
+pages = {102745},
+year = {2022},
+issn = {0167-4048},
+doi = {https://doi.org/10.1016/j.cose.2022.102745},
+url = {https://www.sciencedirect.com/science/article/pii/S0167404822001407},
+author = {Tiago Brito and Pedro Lopes and Nuno Santos and José Fragoso Santos},
+keywords = {WebAssembly, Vulnerability, Static analysis, CPG, Security},
+abstract = {WebAssembly is a new binary instruction format that allows targeted compiled code written in high-level languages to be executed with near-native speed by the browser’s JavaScript engine. However, given that WebAssembly binaries can be compiled from unsafe languages like C/C++, classical code vulnerabilities such as buffer overflows or format strings can be transferred over from the original programs down to the cross-compiled binaries. As a result, this possibility of incorporating vulnerabilities in WebAssembly modules has widened the attack surface of modern web applications. This paper presents Wasmati, a static analysis tool for finding security vulnerabilities in WebAssembly binaries. It is based on the generation of a code property graph (CPG), a program representation previously adopted for detecting vulnerabilities in various languages but hitherto unapplied to WebAssembly. We formalize the definition of CPG for WebAssembly, introduce techniques to generate CPG for complex WebAssembly, and present four different query specification languages for finding vulnerabilities by traversing a program’s CPG. We implemented ten queries capturing different vulnerability types and extensively tested Wasmati on four heterogeneous datasets. We show that Wasmati can scale the generation of CPGs for large real-world applications and can efficiently find vulnerabilities for all our query types. We have also tested our tool on WebAssembly binaries collected in the wild and identified several potential vulnerabilities, some of which we have manually confirmed to exist unless the enclosing application properly sanitizes the interaction with such affected binaries.}
+}
+
+@inproceedings{stievenart2021security,
+  title={The security risk of lacking compiler protection in WebAssembly},
+  author={Sti{\'e}venart, Quentin and De Roover, Coen and Ghafari, Mohammad},
+  booktitle={2021 IEEE 21st International Conference on Software Quality, Reliability and Security (QRS)},
+  pages={132--139},
+  year={2021},
+  organization={IEEE}
+}
+
+
+@INPROCEEDINGS{8835291,
+
+  author={Protzenko, Jonathan and Beurdouche, Benjamin and Merigoux, Denis and Bhargavan, Karthikeyan},
+
+  booktitle={2019 IEEE Symposium on Security and Privacy (SP)}, 
+
+  title={Formally Verified Cryptographic Web Applications in WebAssembly}, 
+
+  year={2019},
+
+  volume={},
+
+  number={},
+
+  pages={1256-1274},
+
+  doi={10.1109/SP.2019.00064}}
+
+
+@INPROCEEDINGS{Spectre,
+
+  author={Kocher, Paul and Horn, Jann and Fogh, Anders and Genkin, Daniel and Gruss, Daniel and Haas, Werner and Hamburg, Mike and Lipp, Moritz and Mangard, Stefan and Prescher, Thomas and Schwarz, Michael and Yarom, Yuval},
+
+  booktitle={2019 IEEE Symposium on Security and Privacy (SP)}, 
+
+  title={Spectre Attacks: Exploiting Speculative Execution}, 
+
+  year={2019},
+
+  volume={},
+
+  number={},
+
+  pages={1-19},
+
+  doi={10.1109/SP.2019.00002}}
+
+
+
+@article {WasmSpectre
+author = {Mazaheri, Mohammad Erfan and Bayat Sarmadi, Siavash and Taheri Ardakani, Farhad},
+title = {A Study of Timing Side-Channel Attacks and Countermeasures on JavaScript and WebAssembly},
+journal = {The ISC International Journal of Information Security},
+volume = {14},
+number = {1},
+pages = {27-46},
+year  = {2022},
+publisher = {Iranian Society of Cryptology},
+issn = {2008-2045}, 
+eissn = {2008-3076}, 
+doi = {10.22042/isecure.2021.263565.599},
+abstract = {Side-channel attacks are a group of powerful attacks in hardware security that exploit the deficiencies in the implementation of systems. Timing side-channel attacks are one of the main side-channel attack categories that use the time difference of running an operation in different states. Many powerful attacks can be classified into this type of attack, including cache attacks. The limitation of these attacks is the need to run the spy program on the victim's system. Various studies have tried to overcome this limitation by implementing these attacks remotely on JavaScript and WebAssembly. This paper provides the first comprehensive evaluation of timing side-channel attacks on JavaScript and investigates challenges and countermeasures to overcome these attacks. Moreover, by investigating the countermeasures and their strengths and weaknesses, we introduce a detection-based approach, called Lurking Eyes. Our approach has the least reduction in the performance of JavaScript and WebAssembly. The evaluation results show that the Lurking eyes have an accuracy of 0.998, precision of 0.983, and F-measure of 0.983. Considering these values and no limitations, this method can be introduced as an effective way to counter timing side-channel attacks on JavaScript and WebAssembly. Also, we provide a new accurate timer, named Eagle timer, based on WebAssembly memory for implementing these attacks.},
+keywords = {Timing Side-Channel Attacks,JavaScript,WebAssembly,Malicious Code Detection,Timers},	
+url = {https://www.isecure-journal.com/article_136367.html},
+eprint = {https://www.isecure-journal.com/article_136367_a3948a522c7c59c65b65fa87571fde7b.pdf}
+}
+
+
+  @article{nicholson2023wasmizer,
+  title={Wasmizer: Curating WebAssembly-driven Projects on GitHub},
+  author={Nicholson, Alexander and Sti{\'e}venart, Quentin and Mazidi, Arash and Ghafari, Mohammad},
+  journal={arXiv preprint arXiv:2303.09623},
+  year={2023}
+}
+
+
+@INPROCEEDINGS{9152757,
+
+  author={Guarnieri, Marco and Köpf, Boris and Morales, José F. and Reineke, Jan and Sánchez, Andrés},
+
+  booktitle={2020 IEEE Symposium on Security and Privacy (SP)}, 
+
+  title={Spectector: Principled Detection of Speculative Information Flows}, 
+
+  year={2020},
+
+  volume={},
+
+  number={},
+
+  pages={1-19},
+
+  doi={10.1109/SP40000.2020.00011}}
+
+
+@article{Genkin2018DrivebyKC,
+  title={Drive-by Key-Extraction Cache Attacks from Portable Code},
+  author={Daniel Genkin and Lev Pachmanov and Eran Tromer and Yuval Yarom},
+  journal={IACR Cryptol. ePrint Arch.},
+  year={2018},
+  volume={2018},
+  pages={119}
+}
+
+
+@article{cohen1993operating,
+	title   = {Operating system protection through program evolution.},
+	author  = {Cohen, Frederick B},
+	journal = {Computers \& Security},
+	volume  = {12},
+	number  = {6},
+	pages   = {565--584},
+	year    = {1993}
+}
+
+
+@incollection{jackson2011compiler,
+	title     = {Compiler-generated software diversity},
+	author    = {Jackson, Todd and Salamat, Babak and Homescu, Andrei and Manivannan, Karthikeyan and Wagner, Gregor and Gal, Andreas and Brunthaler, Stefan and Wimmer, Christian and Franz, Michael},
+	booktitle = {Moving Target Defense},
+	pages     = {77--98},
+	year      = {2011},
+	publisher = {Springer}
+}
+
+@article{homescu2015large,
+	title     = {Large-scale automated software diversity—program evolution redux},
+	author    = {Homescu, Andrei and Jackson, Todd and Crane, Stephen and Brunthaler, Stefan and Larsen, Per and Franz, Michael},
+	journal   = {IEEE Transactions on Dependable and Secure Computing},
+	volume    = {14},
+	number    = {2},
+	pages     = {158--171},
+	year      = {2015},
+	publisher = {IEEE}
+}
+
+@article{coppens2013feedback,
+	title     = {Feedback-driven binary code diversification},
+	author    = {Coppens, Bart and De Sutter, Bjorn and Maebe, Jonas},
+	journal   = {ACM Transactions on Architecture and Code Optimization (TACO)},
+	volume    = {9},
+	number    = {4},
+	pages     = {1--26},
+	year      = {2013},
+	publisher = {ACM New York, NY, USA}
+}
+@inproceedings{homescu2013profile,
+	title        = {Profile-guided automated software diversity},
+	author       = {Homescu, Andrei and Neisius, Steven and Larsen, Per and Brunthaler, Stefan and Franz, Michael},
+	booktitle    = {Proceedings of the 2013 IEEE/ACM International Symposium on Code Generation and Optimization (CGO)},
+	pages        = {1--11},
+	year         = {2013},
+	organization = {IEEE}
+}
+@inproceedings{jacob2008superdiversifier,
+	title        = {The superdiversifier: Peephole individualization for software protection},
+	author       = {Jacob, Matthias and Jakubowski, Mariusz H and Naldurg, Prasad and Saw, Chit Wei Nick and Venkatesan, Ramarathnam},
+	booktitle    = {International Workshop on Security},
+	pages        = {100--120},
+	year         = {2008},
+	organization = {Springer}
+}
+
+@inproceedings{10.1145/3560828.3564007,
+author = {Cabrera Arteaga, Javier and Laperdrix, Pierre and Monperrus, Martin and Baudry, Benoit},
+title = {Multi-Variant Execution at the Edge},
+year = {2022},
+isbn = {9781450398787},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3560828.3564007},
+doi = {10.1145/3560828.3564007},
+abstract = {Edge-Cloud computing offloads parts of the computations that traditionally occurs in the cloud to edge nodes. The binary format WebAssembly is increasingly used to distribute and deploy services on such platforms. Edge-Cloud computing providers let their clients deploy stateless services in the form of WebAssembly binaries, which are then translated to machine code, sandboxed and executed at the edge. In this context, we propose a technique that (i) automatically diversifies WebAssembly binaries that are deployed to the edge and (ii) randomizes execution paths at runtime. Thus, an attacker cannot exploit all edge nodes with the same payload. Given a service, we automatically synthesize functionally equivalent variants for the functions providing the service. All the variants are then wrapped into a single multivariant WebAssembly binary. When the service endpoint is executed, every time a function is invoked, one of its variants is randomly selected. We implement this technique in the MEWE tool and we validate it with 7 services for which MEWE generates multivariant binaries that embed hundreds of function variants. We execute the multivariant binaries on the world-wide edge platform provided by Fastly, as part as a research collaboration. We show that multivariant binaries exhibit a real diversity of execution traces across the whole edge platform distributed around the globe.},
+booktitle = {Proceedings of the 9th ACM Workshop on Moving Target Defense},
+pages = {11–22},
+numpages = {12},
+keywords = {multivariant execution, diversification, moving target defense, webassembly, edge-cloud computing},
+location = {Los Angeles, CA, USA},
+series = {MTD'22}
+}
+
+@inproceedings{amarilli2011can,
+	title        = {Can code polymorphism limit information leakage?},
+	author       = {Amarilli, Antoine and M{\"u}ller, Sascha and Naccache, David and Page, Daniel and Rauzy, Pablo and Tunstall, Michael},
+	booktitle    = {IFIP International Workshop on Information Security Theory and Practices},
+	pages        = {1--21},
+	year         = {2011},
+	organization = {Springer}
+}
+
+@article{agosta2015meet,
+	title     = {The {MEET} approach: Securing cryptographic embedded software against side channel attacks},
+	author    = {Agosta, Giovanni and Barenghi, Alessandro and Pelosi, Gerardo and Scandale, Michele},
+	journal   = {IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems},
+	volume    = {34},
+	number    = {8},
+	pages     = {1320--1333},
+	year      = {2015},
+	publisher = {IEEE}
+}
+
+
+@inproceedings{crane2015thwarting,
+	title     = {Thwarting Cache Side-Channel Attacks Through Dynamic Software Diversity.},
+	author    = {Crane, Stephen and Homescu, Andrei and Brunthaler, Stefan and Larsen, Per and Franz, Michael},
+	booktitle = {NDSS},
+	pages     = {8--11},
+	year      = {2015}
+}
+
+@inproceedings{courousse2016runtime,
+	title        = {Runtime code polymorphism as a protection against side channel attacks},
+	author       = {Courouss{\'e}, Damien and Barry, Thierno and Robisson, Bruno and Jaillon, Philippe and Potin, Olivier and Lanet, Jean-Louis},
+	booktitle    = {IFIP International Conference on Information Security Theory and Practice},
+	pages        = {136--152},
+	year         = {2016},
+	organization = {Springer}
+}
+
+@article{CABRERAARTEAGA2023103296,
+       title = {WebAssembly Diversification for Malware Evasion},
+       journal = {Computers & Security},
+       pages = {103296},
+       year = {2023},
+       issn = {0167-4048},
+       doi = {https://doi.org/10.1016/j.cose.2023.103296},
+       url = {https://www.sciencedirect.com/science/article/pii/S0167404823002067},
+       author = {Javier Cabrera-Arteaga and Martin Monperrus and Tim Toady and Benoit Baudry},
+       keywords = {WebAssembly, cryptojacking, software diversification, malware evasion}
+}

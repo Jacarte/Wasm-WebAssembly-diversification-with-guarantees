@@ -1,0 +1,83 @@
+
+\lstdefinestyle{watcode}{
+  numbers=none,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  breaklines=true, 
+  showstringspaces=false,
+  moredelim=**[is][{\btHL[fill=black!10]}]{`}{`},
+  moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+{\captionsetup{width=0.39\linewidth}
+\noindent\begin{minipage}[t]{0.4\linewidth}
+  \lstset{
+    language=C,
+    basicstyle=\footnotesize\ttfamily,
+    columns=fullflexible,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    breaklines=true}
+    \begin{lstlisting}[label=example:cprogram,caption={C program containing function declaration, loops, conditionals and memory access.},captionpos=t]{Name}
+int a[100];
+void cc1(){
+    for(int i = 0; i < 100; i++){
+        a[i] = i;
+    }
+}
+
+    \end{lstlisting}
+    
+\end{minipage}\hfill
+\noindent\begin{minipage}[t]{0.6\linewidth}
+\captionsetup{width=0.89\linewidth}
+
+\lstset{
+  language=WAT,
+  style=watcode,
+  breaklines=true, 
+  basicstyle=\footnotesize\ttfamily,
+  %numberstyle=\footnotesize,
+  numbersep=2.5pt,
+  %firstnumber=1,
+  escapeinside={(*@}{@*)},
+  %numbers=left,
+  %postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  }
+    \begin{lstlisting}[label=example:wasmprogram,caption={WebAssembly code for C code in \autoref{example:cprogram}.}, captionpos=t]{Name}
+
+    
+(module
+  (@custom "producer" "llvm.." )
+  (func (;5;) (type 1)
+    (loop  ;; label = @1
+      (if  ;; label = @2
+        (i32.eqz
+          (i32.ge_s
+            (i32.load
+              (local.get 0))
+            (i32.const 100)))
+        (then (i32.store
+            (i32.add
+              (i32.shl
+                (i32.load
+                  (local.get 0))
+                (i32.const 2))
+              (i32.const 1024))
+            (i32.load
+              (local.get 0)))
+          (i32.store
+            (local.get 0)
+            (i32.add
+              (i32.load
+                (local.get 0))
+              (i32.const 1)))
+          (br 1 (;@1;)))))
+    )
+  (memory (;0;) 256)
+  (global (;1;) i32 (i32.const 0))
+  (export "memory" (memory 0)))
+    \end{lstlisting}
+\end{minipage}
+}

@@ -1,0 +1,46 @@
+
+\lstdefinestyle{watcode}{
+  numbers=none,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  breaklines=true, 
+  showstringspaces=false,
+    moredelim=**[is][{\btHL[fill=weborange!40]}]{`}{`},
+    moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+{
+    \lstset{
+        language=ttt,
+        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+        columns=fullflexible,
+        breaklines=true}
+         
+\vspace{8mm}
+        \begin{lstlisting}[]{Name}
+LHS (module (type (func)))
+        \end{lstlisting}
+\noindent\hrulefill
+    \lstset{
+        language=ttt,
+        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+        columns=fullflexible,
+        breaklines=true}
+        \begin{lstlisting}[numbers=none]{Name}
+RHS `- (module (import "" "" (func)))`
+        \end{lstlisting}
+
+\lstset{
+        language=ttt,
+        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+        columns=fullflexible,
+        breaklines=true}
+        \begin{lstlisting}[numbers=none]{Name}
+Cond The removed function is not called, it is not exported, and it is not in the binary _table.
+        \end{lstlisting}
+}

@@ -1,0 +1,29 @@
+Add \texttt{function} 
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none]{Name}
+ (module
+  (type (;0;) (func (param i32 f32) (result i64)))
+        \end{lstlisting}   
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none]{Name}
+ (module
+  (type (;0;) (func (param i32 f32) (result i64)))
+!+(func (;0;) (type 0) ...!
+!+   i64.const 0) !
+        \end{lstlisting}  
+        \vspace{-4mm}
+&   S \\
+%& \multicolumn{3}{l}{
+%\begin{minipage}{0.9\textwidth}
+
+    %\begin{tcolorbox}[boxrule=0.1pt,arc=.1em,boxsep=-1.5mm]
+   %     \textbf{Guarantees:} At the end of the transformation, the type of the function is defined in the type index. The body of the function is correct regarding the state of the stack. \tool recalculates the indexes for the functions of the binary. The added function is not included as a call in the new program. Therefore, during the execution of the program, its state is the same. Thus, the new program is semantically equivalent to the first one.
+    %\end{tcolorbox}
+%\end{minipage}
+%} \\
+%&
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ &
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ \\
+\hline

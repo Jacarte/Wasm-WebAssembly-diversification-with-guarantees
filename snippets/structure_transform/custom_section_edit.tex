@@ -1,0 +1,43 @@
+
+\lstdefinestyle{watcode}{
+  numbers=none,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  breaklines=true, 
+  showstringspaces=false,
+    moredelim=**[is][{\btHL[fill=weborange!40]}]{`}{`},
+    moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+{
+    \lstset{
+        language=ttt,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[]{Name}
+LHS (module
+...
+    `-    (@custom "CS42" "zzz..."`
+        \end{lstlisting}
+\noindent\hrulefill
+        
+{
+    \lstset{
+        language=ttt,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[]{Name}
+RHS (module
+...
+    !+    (@custom "CS42" "xxx...")!
+        \end{lstlisting}
+}
+}

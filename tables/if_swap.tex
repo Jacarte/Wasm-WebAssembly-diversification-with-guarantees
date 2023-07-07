@@ -1,0 +1,44 @@
+If swap
+&  
+        \vspace{-4mm}\begin{lstlisting}[numbers=none,escapechar=?]{Name}
+(module
+    (func ...) (
+bb condition C bb
+        (if
+bb A bb 
+            else 
+bb B bb 
+        end)
+    )
+)
+        \end{lstlisting}   
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none,escapechar=?]{Name}
+(module
+    (func ...) (
+bb condition C bb
+!+ i32.eqz!
+        (if
+bb B bb 
+            else 
+bb A bb 
+        end)
+    )
+)
+        \end{lstlisting}  
+        \vspace{-4mm} 
+&   C \\
+%& \multicolumn{3}{l}{
+%\begin{minipage}{0.85\textwidth}
+
+%    \begin{tcolorbox}[boxrule=0.3pt,arc=.1em,boxsep=-1.5mm]
+%        \textbf{Guarantees:} The condition of the if construction is negated by adding a \texttt{i32.eqz} instruction.
+%        If the if-construction does not have neither a consequence nor and alternative code, \tool replaces the missing code block with a single \texttt{nop} instruction.
+%    \end{tcolorbox}
+%\end{minipage}
+%} \\
+%&
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ &
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ \\
+\hline

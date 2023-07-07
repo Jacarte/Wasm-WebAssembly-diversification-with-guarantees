@@ -1,0 +1,165 @@
+\subsection{WebAssembly Runtime Structure}
+\label{def:state}
+
+The WebAssembly Runtime section of the WebAssembly specification \cite{webassembly_runtime} describes the runtime structure of a WebAssembly program. It covers the runtime components and their interactions during the execution of a WebAssembly program. Its 10 key elements are:
+
+\begin{enumerate}
+    \item Store(St): The WebAssembly store represents the global state and is a collection of instances of functions, tables, memories, and globals. Each of these instances is uniquely identified by an address, which is usually represented as an i32 integer.
+
+    \item Stack(S): The stack structure holds both values and control frames. 
+    Values are of types \texttt{i32,i64,f32,f64}, in this paper we annotate value symbols with lower case characters, e.g., $S=[...,v,...]$..
+    Control frames are used to handle block instructions, loops, and function calls.
+    In this paper, we annotate control frames in the stack with upper case characters, e.g., $S=[...,A,...]$.
+
+    \item Locals(L): Locals are mutable variables that are local to a specific function invocation. They hold values of types: \texttt{i32, i64, f32, f64}.
+
+    \item Module Instances(Mi): A module instance is a runtime representation of a loaded and initialized WebAssembly module. It contains the runtime representation of all the definitions within a module, including functions, tables, memories, and globals, as well as the module's exports and imports.
+
+    \item Function Instances(Fi): A function instance is a closure, which is the pairing of a function's code with a module instance. This pairing is required because the function's code might refer to other definitions within the module instance, such as globals, tables, or memories.
+
+    \item Table Instances(Ti): A table instance is a vector of function elements. WebAssembly tables are used to support indirect function calls. For example, they abstract high-levle language features like dynamic dispatch and function pointers.
+
+    \item  Memory Instances(M): A memory instance is a contiguous array of bytes, representing the linear memory of a WebAssembly program. 
+
+    \item  Global Instances(G): A global instance is a global variable with a value and a mutability flag, indicating whether the global can be modified or is immutable.
+
+    \item Export Instances(E): Export instances represent the functions, tables, elements, globals or memories that are exported by a module. 
+
+    \item Import Instances(I): Import instances represent the functions, tables, elements, globals or memories that are imported into a module from the host. 
+\end{enumerate}
+
+In this paper, we utilize the aforementioned ten components to define the state of a Wasm program during its execution. 
+We refer to the runtime state as a vector $[St, S, L, Mi, Fi, Ti, M, G, E, I]$, representing the Store, Stack, Locals, Module Instances, Function Instances, Table Instances, Memory Instances, Global Instances, Export Instances, and Import Instances, respectively.
+
+
+The following sequence of runtime structures are obtained for a potential program and its modification using an if swap transformation. A and B represent control flow labels for the start of code blocks A and B respectively:
+
+Original program:
+
+\begin{enumerate}
+    \item $[St, [S: B, A, c], L, Mi, Fi, Ti, M, G, E, I]$ the condition $c$ is in the top of the stack.
+    \item $[St, [S: B, A], L, Mi, Fi, Ti, M, G, E, I]$
+    If $v$ is true the program will use the jump label A (the consequence of the if contruction).
+    \item $[St, [N], L, Mi, Fi, Ti, M, G, E, I]$\\
+    The alternative label is discarded and the program ended up with stack N.
+\end{enumerate}
+
+Variant program:
+
+\begin{enumerate}
+    \item $[St, [S: A, B, c == 0], L, Fi, Ti, M, G, E, I]$\\ the original condition $c$ is negated and pushed back on the stack.
+    \item $[St, [S: A], L, Mi, Fi, Ti, M, G, E, I]$
+    By construction, the jump labels are swapped. Since the condition is negated, the first jump label is dropped and the program continues to jump label A. 
+    \item $[St, [N], L, Mi, Fi, Ti, M, G, E, I]$\\
+    The alternative label is discarded and the program ended up with stack N.
+\end{enumerate}
+
+
+
+The following sequence of runtime structures are obtained for a potential program and its modification using the loop unrolling transformation. A, B, A' and B' represent control flow labels for the start of the corresponding code blocks:
+
+
+Original program:
+\begin{enumerate}
+    \item $[St, [S: N,B,A, v.., A], L, Mi, Fi, Ti, M, G, E, I]$ Entering the loop.
+    \item $[St, [S: N,B,A, v], L, Mi, Fi, Ti, M, G, E, I]$ The condition $v$ for continuing the loop is evaluated from the top of the stack, if true the program jumps to label A again and the loop iterates again. Otherwise, the block starting with label B executes.
+    \item $[St, [`n], L, Mi, Fi, Ti, M, G, E, I]$\\
+    The condition is false, the blocks starting with label B executes, the loop ends, the state of the stack is $N$.
+\end{enumerate}
+
+Variant program:
+
+\begin{enumerate}
+    \item $[St, [S: N B',A', v.., A', B'v..A'], L, Mi, Fi, Ti, M, G, E, I]$ Entering the loop.
+    \item $[St, [S: N B',A', v.., A', B'v], L, Mi, Fi, Ti, M, G, E, I]$ The condition $v$ for continuing the loop is evaluated from the top of the stack. In this case, continuing the loop means to jump to A' in the loop construction. Otherwise, if the condition is false, the block starting with label B' is executed, unconditionally breaking, as the dashed arrows in the example shows.
+    \item $[St, [N], L, Mi, Fi, Ti, M, G, E, I]$\\
+    After any of B' codes executes after the loop, the stack state is $N$.
+\end{enumerate}
+
+
+
+\todo{not sure we want to talk about deoptimization, IMHO rules + egraphs is enough. can we move the content here as rewrite rule above? (or we simply remove this subsection)}
+Usually the concepts of rewriting rules and e-graphs are used to optimize the code, i.e. providing better code in terms of size.
+We use both sides of the coin while enabling deoptimization \cite{deoptimization}. 
+\tool considers all possible replacements and not only those that could lead to optimized Wasm variants.
+This phenomenon could be appreciated in the example in \autoref{alg}, where infinitely large codes can be generated.
+Deoptimization enables \tool to generate thousands of variants out of a single Wasm binary in a couple of minutes.
+The concept of deoptimization is implicit in the proposed traversal algorithm (Algorithm \ref{alg}).
+%On the other hand, this can be also controlled through rewriting rules conditions, e.g. not allowing the generation of large code.
+
+We implement deoptimization in \tool by extending the rewriting rules with custom operands and operators.
+One example of a custom operator is a special instruction wrapper, \texttt{(container ...)}, which can have an arbitrary number of instructions as operands, i.e., Wasm code appends its operands one after the other in the bytecode. 
+This custom operator allows us to have rewriting rules, such as: \texttt{(x, (container x nop))}, which set any node in the e-graph to be equivalent to the same node followed by a \texttt{nop} instruction.
+Thus, this concrete rewriting rule allows us to mutate Wasm binaries by inserting arbitrary \texttt{nop} instructions \cite{6494997, 10.1145/2086696.2086702}.
+Therefore, easily extending this fine-grained transformation benefits to an input Wasm binary.
+
+
+
+% Describing the WBC POC
+\pocd:  Differential Computing Analysis(DCA) is considered as a side channel attack even though it actually reads the process memory traces \cite{bos2016differential}.
+Bos and colleagues developed a tool, daredevil, based on the principles of the DCA attack and with it manage to break many of the publicly available white box challenges found online.
+We ported the CHES2016 challenge to \Wasm, making it possible to fully exfiltrate the key by using the daredevil tool.
+
+
+We apply our tool, \tool, to the original POC binary in three distinct configurations to address the proof of concept (\pocd). 
+The first two configurations involve a random stacking of up to 100k transformations utilizing two separate seed values. 
+The third configuration also employs 100k stacked transformations, but it is tailored to the unique needs of the POC attack.
+We evaluate the attacks every 10000 stacked mutations.
+In total, we generate 3x10 different variants out of the original POC binary.
+
+Given that DCA attacks heavily depend on repetitive patterns found in memory traces, we neutralize the impact of symmetric rewriting rules for the third configuration. 
+Specifically, idempotent rewriting rules, like the example one in \autoref{rewriting}, are deactivated. 
+This tweaking not only mitigates the effects of the attack but also demonstrates the versatility of \tool as a robust general rewriting tool for \Wasm.
+
+We also make use of IntelPIN to gather \wasm traces during execution with wasmtime, which are then used to feed the DCA attack tool developed by Bos and his colleagues. 
+To ensure the purity of our data, we hook into wasmtime to filter out IntelPIN traces, thereby excluding any traces originating from host-specific code within wasmtime.
+This step reduces the traces of executing wasmtime in a factor of 100, making the attack easier, thus, making possible the exfiltration of the key from a \Wasm program.
+
+%In addition, this work contributes a novel application: a whitebox cryptography challenge that has been successfully ported to \wasm. This further underscores our commitment to enhancing the capabilities of \Wasm and fortifying its defenses against potential attacks.
+
+
+\begin{table}[]
+    \centering
+    \begin{tabular}{l|c | c | c }
+        POC & Timing & Mem & Pred. \\
+        \hline
+         \poct & X &  &  \\ 
+         \pocd &  & X &   \\ 
+         \pocp & X &  & X \\ 
+    \end{tabular}
+    \caption{Dataset}
+    \label{tab:my_label}
+\end{table}
+
+\todo{Discard port contention. In the end it has the previous component on timing.}
+
+
+\todo{Uncontrolled wasm-mutate makes the inferring of the WBC keys easier sometimes. We already saw this in the  evasion paper. My intuiyion is that if we disable "symetric" transformations, we will obtin better results. Daredevil is looking for "repetitive" patterns, if we use a symetric transformations, we are, indeed, duplicating the binary behavior.}
+
+\todo{The traces might disclose the secret. Yet their collection takes more time due to time overhead. We can call it "traces flooding".}
+\todo{The attack time increases considerably. Add a plot of, attack accuracy + performance + attack time vs stacking. Elaborate then in hardening and not only prevention. We have seen the flooding effect with javy, making daredevil to fail in analysisng traces in the order of the Gb. }
+
+\todo{One single key byte takes almost 1 hour with 200k stacked mutations. On the other hand, daredevil fails due to oom.}
+
+
+\todo{Add only two plots here, the purely random and the controlled.}
+
+
+
+
+\todo{TBD discuss deoptimization}
+% \subsection{Deoptimization}
+
+\subsection{Partial input/output validation}
+
+% We need to talk about this because, we do this checking right noe and it is probably a reason for the low count of variants.
+When \tool generates a variant, it can be executed to check the input/output equivalence.
+If the variant has a \_start function, both binaries, the original and the variant can be initialized. 
+If the state of the memory, the globals and the stack is the same after executing the \_start function, they are partially equivalent.
+%This mechanismm is already implemented in the fuzzing campaign of wasmtime.
+
+The \_start function is easier to execute given its signature.
+It does not receive parameters.
+Therefore, it can be executed directly.
+Yet, since a \Wasm program might contain more than one function that could be indistinctly called with and arbitrary number of parameters, we are not able to validate the whole program.
+Thus, we call the checking of the initialization of a \wasm variant, a partial validation.

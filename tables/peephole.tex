@@ -1,0 +1,31 @@
+Peephole
+&  
+        \vspace{-4mm}\begin{lstlisting}[numbers=none]{Name}
+local.get 0
+local.get 0
+i32.add
+...
+        \end{lstlisting}
+        \vspace{-4mm}   
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none]{Name}
+local.get 0
+!i32.const 2!
+!i32.mul!
+...
+        \end{lstlisting}
+        \vspace{-4mm}  & 
+  P \\
+%& \multicolumn{3}{l}{
+%\begin{minipage}{0.85\textwidth}
+
+%    \begin{tcolorbox}[boxrule=0.1pt,arc=.1em,boxsep=-1.8mm]
+%        \textbf{Guarantees:} Instructions to replace must be deterministic, i.e., instructions that can lead to an undefined behavior are not considered to mutate. Besides, replacement instructions must be semantically equivalent to the original instructions.
+%    \end{tcolorbox}
+%\end{minipage}
+%} \\
+%&
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ &
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ \\
+\hline

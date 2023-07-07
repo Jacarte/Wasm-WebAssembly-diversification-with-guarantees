@@ -1,0 +1,54 @@
+
+\lstdefinestyle{watcode}{
+  numbers=none,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  breaklines=true, 
+  showstringspaces=false,
+    moredelim=**[is][{\btHL[fill=weborange!40]}]{`}{`},
+    moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+
+   \begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=WAT,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[label=example:peeporig,caption={Wasm function.},frame=b, captionpos=b]{Name}
+(module
+    (type (;0;) (func (param i32 f32) (result i64)))
+    (func (;0;) (type 0) (param i32 f32) (result i64)
+        i64.const 1)
+)
+        \end{lstlisting}
+\end{minipage}
+
+
+\begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=WAT,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[label=example:peepapplied,caption={Random peephole mutation using egraph traversal for \autoref{example:peeporig} over e-graph \autoref{e-graph3}. The textual format is folded for better understanding.},frame=b, captionpos=b]{Name}
+(module
+    (type (;0;) (func (param i32 f32) (result i64)))
+    (func (;0;) (type 0) (param i32 f32) (result i64)
+        !(i64.or (!
+            !(i64.add (!
+                !i64.const 0!
+                !i64.const 1!
+            !))!
+            !i64.const 1!
+        !))!
+    )
+        \end{lstlisting}
+\end{minipage}

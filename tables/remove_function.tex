@@ -1,0 +1,26 @@
+Remove \texttt{function} 
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none]{Name}
+`- (module (import "" "" (func)))`
+        \end{lstlisting}   
+&  
+        \vspace{-4mm}
+\begin{lstlisting}[numbers=none]{Name}
+ (module (type (func)))
+
+        \end{lstlisting}  
+        \vspace{-4mm}
+&   S \\
+%& \multicolumn{3}{l}{
+%\begin{minipage}{0.9\textwidth}
+
+%    \begin{tcolorbox}[boxrule=0.1pt,arc=.1em,boxsep=-1.5mm]
+%        \textbf{Guarantees:} All functions that are not used in  calls or exports can be removed. Imported functions can be removed. If a function can be removed, it does not affect the program state during runtime, i.e. there is no possible call to the removed function. Therefore, \wasm guarantees that the original binary is semantically equivalent to the variant.
+%    \end{tcolorbox}
+%\end{minipage}
+%} \\
+%&
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ &
+%$[St, S, L, Mi, Fi, Ti, M, G, E, I]$ \\
+\hline

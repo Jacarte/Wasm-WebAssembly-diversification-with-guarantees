@@ -1,0 +1,92 @@
+
+% Define the WAT language
+\lstdefinelanguage{WAT}{
+    otherkeywords={},
+    morekeywords=[1]{i32,f32,i64,f64,funcref, nop},
+    morekeywords=[2]{0},
+    morekeywords=[3]{add,or,const,mul,eqz,shl,get,rem_s,rem_u,ne,tee,sub,set,store},
+    morekeywords=[4]{},
+    morekeywords=[5]{global, get_global, mut, set_global, export, import,loop, memory, data, get_local,if,element, block,module, function, set_local,call,br_if,end,br, else, all,call_indirect,local,global,module, func, param, result, type, table, memory, elem},
+    morekeywords=[6]{=,;},
+    morekeywords=[7]{(,),[,],.},
+    sensitive=false,
+    morecomment=[l]{;},
+    morecomment=[s]{;}{;},
+    morestring=[b]",
+    keywordstyle=[1]\color{eminence}\bfseries,
+    keywordstyle=[3]\color{frenchplum},
+    keywordstyle=[5]\color{darkgreen}\bfseries,
+    commentstyle=\color{commentgreen}
+}
+\lstdefinestyle{nccode}{
+        numbers=none,
+        firstnumber=2,
+        stepnumber=1,
+        numbersep=10pt,
+        tabsize=4, 
+        showspaces=false,
+        breaklines=true, 
+        showstringspaces=false,
+    %moredelim=**[is][\btHL]{`}{`},
+    moredelim=**[is][{\btHL[fill=weborange!40]}]{`}{`},
+    moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+\lstdefinestyle{WATStyle}{
+  numbers=left,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  showstringspaces=true,
+}
+
+
+\newcommand\tikzmarkWS[4]{%
+\tikz[remember picture, overlay]{%
+        \pgfusepath{use as bounding box}%
+        \node[right=#3 mm, fill=white!0] at (1 mm,2 mm) (#1) {#2};
+      %\node[right=#3 mm, align=center, shape=circle,text=black,draw=black, fill=white,inner sep=0.5pt] (#1) {#2};
+  }
+ }
+
+  
+ \newcommand\tikzmarkPROBE[4]{%
+\tikz[remember picture, overlay]{%
+        \pgfusepath{use as bounding box}%
+        \node[right=#3 mm,text width=2mm,align =center,outer sep=0pt,inner xsep=1pt, inner ysep=0pt, rounded corners=3pt,anchor=north, minimum height=#4 mm, text depth = #4 mm] at (1 mm,2 mm) (#1) {};
+      %\node[right=#3 mm, align=center, shape=circle,text=black,draw=black, fill=white,inner sep=0.5pt] (#1) {#2};
+  }
+ }
+
+ % Replacement of the texttt command
+ \lstdefinelanguage{ttt}{
+    otherkeywords={},
+    morekeywords=[1]{i32,f32,i64,f64,funcref,x,nop},
+    morekeywords=[2]{0},
+    morekeywords=[3]{container, add,const,mul,shl,get,rem_s,eqz,rem_u,ne,tee,sub,set,store,or},
+    morekeywords=[4]{},
+    morekeywords=[5]{global, get_global, mut, set_global, export, import,loop, memory, data, get_local,if, block,module, set_local,call,br_if,end,br, else, ret,all,call_indirect,local,global,module, func, param, result, type, table, (, ), memory, elem},
+    morekeywords=[6]{=,;},
+    morekeywords=[7]{[,],.},
+    morekeywords=[8]{LHS, RHS, Cond},
+    sensitive=false,
+    morecomment=[l]{;},
+    morecomment=[s]{;}{;},
+    morestring=[b]",
+    keywordstyle=[1]\color{eminence}\bfseries,
+    keywordstyle=[3]\color{frenchplum},
+    keywordstyle=[5]\color{darkgreen}\bfseries,
+    keywordstyle=[7]\color{darkgreen}\bfseries,
+    keywordstyle=[8]\color{frenchplum}\bfseries,
+    keywordstyle=[2]\color{darkgreen}\bfseries,
+    commentstyle=\color{commentgreen}
+}
+ \lstset{
+    frameround=fttt,
+    language=ttt,
+    numbers=left,
+    breaklines=true,
+    basicstyle=\small\ttfamily
+    }
+ \renewcommand{\texttt}[1]{\lstinline{#1}}

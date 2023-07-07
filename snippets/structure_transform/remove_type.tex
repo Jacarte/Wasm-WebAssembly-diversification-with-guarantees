@@ -1,0 +1,33 @@
+{\captionsetup{width=\linewidth}
+\noindent\begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=WAT,
+        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+        columns=fullflexible,
+        breaklines=true}
+        \begin{lstlisting}[label=example:addtype,caption={Add type mutation.},frame=b, captionpos=b]{Name}
+(module
+  (type (;0;) (func (param i32) (result i64)))
+!+ (type (;0;) (func (param i64) (result i32 i64)))!
+...
+        \end{lstlisting}
+        %\vspace{0.2cm}
+   \end{minipage}
+
+   
+\noindent\begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=WAT,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[label=example:removetype,caption={Remove type mutation.},frame=b, captionpos=b]{Name}
+...
+(module
+`- (type (;0;) (func (param i32) (result i64)))`
+...   
+        \end{lstlisting}
+\end{minipage}

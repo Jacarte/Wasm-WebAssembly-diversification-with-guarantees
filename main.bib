@@ -104,6 +104,15 @@ archivePrefix = {arXiv},
 }
 
 
+@misc{kmm,
+  title = {Kotlin Wasm},
+  author = {Jetbrain},
+  year = {2023},
+  url = {https://kotlinlang.org/docs/wasm-overview.html},
+  howpublished = {\url{https://kotlinlang.org/docs/wasm-overview.html}}
+}
+
+
 @misc{safeside,
   title = {SafeSide},
   author = {Google},
@@ -590,6 +599,24 @@ abstract="Research showed that microarchitectural attacks like cache attacks can
 isbn="978-3-319-70972-7"
 }
 
+@inproceedings{padding,
+author = {Duck, Gregory J. and Gao, Xiang and Roychoudhury, Abhik},
+title = {Binary Rewriting without Control Flow Recovery},
+year = {2020},
+isbn = {9781450376136},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3385412.3385972},
+doi = {10.1145/3385412.3385972},
+abstract = {Static binary rewriting has many important applications in software security and systems, such as hardening, repair, patching, instrumentation, and debugging. While many different static binary rewriting tools have been proposed, most rely on recovering control flow information from the input binary. The recovery step is necessary since the rewriting process may move instructions, meaning that the set of jump targets in the rewritten binary needs to be adjusted accordingly. Since the static recovery of control flow information is a hard problem in general, most tools rely on a set of simplifying heuristics or assumptions, such as specific compilers, specific source languages, or binary file meta information. However, the reliance on assumptions or heuristics tends to scale poorly in practice, and most state-of-the-art static binary rewriting tools cannot handle very large/complex programs such as web browsers. In this paper we present E9Patch, a tool that can statically rewrite x86_64 binaries without any knowledge of control flow information. To do so, E9Patch develops a suite of binary rewriting methodologies---such as instruction punning, padding, and eviction---that can insert jumps to trampolines without the need to move other instructions. Since this preserves the set of jump targets, the need for control flow recovery and related heuristics is eliminated. As such, E9Patch is robust by design, and can scale to very large (>100MB) stripped binaries including the Google Chrome and FireFox web browsers. We also evaluate the effectiveness of E9Patch against realistic applications such as binary instrumentation, hardening and repair.},
+booktitle = {Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {151–163},
+numpages = {13},
+keywords = {instruction eviction, binary instrumentation, binary patching, static binary rewriting, instruction punning, memory management, binary repair},
+location = {London, UK},
+series = {PLDI 2020}
+}
+
 @INPROCEEDINGS{10026577,
 
   author={Daly, Ross and Donovick, Caleb and Melchert, Jackson and Setaluri, Rajsekhar and Bullock, Nestan Tsiskaridze and Raina, Priyanka and Barrett, Clark and Hanrahan, Pat},
@@ -861,7 +888,7 @@ eprint = {https://www.isecure-journal.com/article_136367_a3948a522c7c59c65b65fa8
 	organization = {Springer}
 }
 
-@inproceedings{10.1145/3560828.3564007,
+@inproceedings{MEWE,
 author = {Cabrera Arteaga, Javier and Laperdrix, Pierre and Monperrus, Martin and Baudry, Benoit},
 title = {Multi-Variant Execution at the Edge},
 year = {2022},
@@ -928,3 +955,143 @@ series = {MTD'22}
        author = {Javier Cabrera-Arteaga and Martin Monperrus and Tim Toady and Benoit Baudry},
        keywords = {WebAssembly, cryptojacking, software diversification, malware evasion}
 }
+
+@article{luk2005pin,
+  title={Pin: building customized program analysis tools with dynamic instrumentation},
+  author={Luk, Chi-Keung and Cohn, Robert and Muth, Robert and Patil, Harish and Klauser, Artur and Lowney, Geoff and Wallace, Steven and Reddi, Vijay Janapa and Hazelwood, Kim},
+  journal={Acm sigplan notices},
+  volume={40},
+  number={6},
+  pages={190--200},
+  year={2005},
+  publisher={ACM New York, NY, USA}
+}
+
+
+@INPROCEEDINGS{7958599,
+
+  author={Wang, Junjie and Chen, Bihuan and Wei, Lei and Liu, Yang},
+
+  booktitle={2017 IEEE Symposium on Security and Privacy (SP)}, 
+
+  title={Skyfire: Data-Driven Seed Generation for Fuzzing}, 
+
+  year={2017},
+
+  volume={},
+
+  number={},
+
+  pages={579-594},
+
+  doi={10.1109/SP.2017.23}}
+
+
+@techreport{WebAssemblyCoreSpecification,
+	title       = {{WebAssembly Core Specification}},
+	author      = {Rossberg, Andreas},
+	editor      = {Rossberg, Andreas},
+	year        = 2019,
+	month       = dec,
+	institution = {{W3C}},
+	url         = {https://www.w3.org/TR/wasm-core-1/},
+	langid      = {english}
+}
+
+
+@inproceedings{haas2017bringing,
+	title     = {Bringing the web up to speed with {WebAssembly}},
+	author    = {Haas, Andreas and Rossberg, Andreas and Schuff, Derek L and Titzer, Ben L and Holman, Michael and Gohman, Dan and Wagner, Luke and Zakai, Alon and Bastien, JF},
+	booktitle = {Proceedings of the 38th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+	pages     = {185--200},
+	year      = {2017}
+}
+
+
+@misc{fastly,
+    title = {{The power of serverless, 72 times over}},
+    url = {
+https://www.fastly.com/blog/the-power-of-serverless-at-the-edge},
+    urldate = {2020-11-01},
+    year={2020}
+}
+
+
+@inproceedings{hilbig2021empirical,
+  title={An Empirical Study of Real-World WebAssembly Binaries: Security, Languages, Use Cases},
+  author={Hilbig, Aaron and Lehmann, Daniel and Pradel, Michael},
+  booktitle={Proceedings of the Web Conference 2021},
+  pages={2696--2708},
+  year={2021}
+}
+
+
+
+@inproceedings{javy,
+author = {Wagner, Linus and Mayer, Maximilian and Marino, Andrea and Soldani Nezhad, Alireza and Zwaan, Hugo and Malavolta, Ivano},
+title = {On the Energy Consumption and Performance of WebAssembly Binaries across Programming Languages and Runtimes in IoT},
+year = {2023},
+isbn = {9798400700446},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3593434.3593454},
+doi = {10.1145/3593434.3593454},
+abstract = {Context. WebAssembly (WASM) is a low-level bytecode format that is gaining traction among Internet of Things (IoT) devices. Because of IoT devices’ resources limitations, using WASM is becoming a popular technique for virtualization on IoT devices. However, it is unclear if the promises of WASM regarding its efficient use of energy and performance gains hold true. Goal. This study aims to determine how different source programming languages and runtime environments affect the energy consumption and performance of WASM binaries. Method. We perform a controlled experiment where we compile three benchmarking algorithms from four different programming languages (i.e., C, Rust, Go, and JavaScript) to WASM and run them using two different WASM runtimes on a Raspberry Pi 3B. Results. The source programming language significantly influences the performance and energy consumption of WASM binaries. We did not find evidence of the impact of the runtime environment. However, certain combinations of source programming language and runtime environment leads to a significant improvement of its energy consumption and performance. Conclusions. IoT developers should choose the source programming language wisely to benefit from better performance and a reduction in energy consumption. Specifically, Javy-compiled JavaScript should be avoided, while C and Rust are better options. We found no conclusive results for the choice of the WASM runtime.},
+booktitle = {Proceedings of the 27th International Conference on Evaluation and Assessment in Software Engineering},
+pages = {72–82},
+numpages = {11},
+location = {Oulu, Finland},
+series = {EASE '23}
+}
+
+
+@misc{WebAssemblySecurity,
+	title        = {{WebAssembly documentation: Security}},
+	url          = {https://webassembly.org/docs/security/},
+	organization = {{W3C}},
+	note         = {{Accessed: 18 June 2020}},
+	author       = {Dominic Chen and {\relax W3C group}},
+    year={2020}
+}
+
+
+@inproceedings{usenixWasm2020,
+	title     = {Everything Old is New Again: Binary Security of WebAssembly},
+	booktitle = {29th USENIX Security Symposium (USENIX Security 20)},
+	year      = {2020},
+    publisher = {USENIX Association},
+	month     = aug,
+	author    = {Lehmann, Daniel and Kinder, Johannes and Pradel, Michael}
+}
+
+
+
+@misc{CVE,
+  title   = {Stop a Wasm Compiler Bug Before it Becomes a Problem | Fastly},
+  howpublished     = {\url{https://www.fastly.com/blog/defense-in-depth-stopping-a-wasm-compiler-bug-before-it-became-a-problem}},
+  urldate = {2021-07-22},
+  year    = {2021}
+}
+
+@article{10.1145/3478520,
+author = {D’Elia, Daniele Cono and Invidia, Lorenzo and Palmaro, Federico and Querzoni, Leonardo},
+title = {Evaluating Dynamic Binary Instrumentation Systems for Conspicuous Features and Artifacts},
+year = {2022},
+issue_date = {June 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {3},
+number = {2},
+issn = {2692-1626},
+url = {https://doi.org/10.1145/3478520},
+doi = {10.1145/3478520},
+abstract = {Dynamic binary instrumentation (DBI) systems are a popular solution for prototyping heterogeneous program analyses and monitoring tools. Several works from academic and practitioner venues have questioned the transparency of DBI systems, with anti-analysis detection sequences being found already in malware and executable protectors. The present Field Note details new and established detection methods and evaluates recent versions of popular DBI systems against them. It also sets out reflections on potential remediations and alternatives available to security researchers for their daily needs. We make available a large collection of implemented detections, hoping it can help the community build better DBI runtimes and tools.},
+journal = {Digital Threats},
+month = {feb},
+articleno = {10},
+numpages = {13},
+keywords = {evasion, packers, Anti-analysis, dynamic binary instrumentation, malware, binary analysis}
+}
+
+  
+

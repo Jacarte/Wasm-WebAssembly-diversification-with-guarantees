@@ -163,3 +163,64 @@ It does not receive parameters.
 Therefore, it can be executed directly.
 Yet, since a \Wasm program might contain more than one function that could be indistinctly called with and arbitrary number of parameters, we are not able to validate the whole program.
 Thus, we call the checking of the initialization of a \wasm variant, a partial validation.
+
+\subsection{Some other works to be cited along with the paper. Mostly in the Intro}
+
+\emph{Spectre and side-channel defenses}
+
+- paper 2021: Read this, since it is super related, \url{https://www.isecure-journal.com/article_136367_a3948a522c7c59c65b65fa87571fde7b.pdf} \cite{WasmSpectre}
+
+
+- A dataset of Wasm programs: \cite{nicholson2023wasmizer}
+
+- Papers 2020
+
+- Papers 2019
+- \cite{10.1145/3510003.3510070}
+
+Selwasm: A code protection mechanism for webassembly
+
+
+Babble
+
+- https://arxiv.org/pdf/2212.04596.pdf
+
+Principled Composition of Function Variants for Dynamic
+Software Diversity and Program Protection
+
+- https://dl.acm.org/doi/10.1145/3551349.3559553
+
+How Far We’ve Come – A Characterization Study of Standalone WebAssembly Runtimes
+
+- https://ieeexplore.ieee.org/document/9975423
+
+Code obfuscation against symbolic execution attacks
+
+Code artificiality: A metric for the code stealth based on an n-gram model
+
+Semantics-aware obfuscation scheme prediction for binary
+
+Wobfuscator: Obfuscating javascript malware via opportunistic translation to webassembly
+
+Synthesizing Instruction Selection Rewrite Rules from RTL using SMT
+"We also synthesize integer rewrite rules from WebAssembly to RISC-V "
+
+Wafl: Binary-only webassembly fuzzing with fast snapshots
+
+
+
+% Move this to conslusions.
+%- Cache tming: \cite{}
+%The original POC programs are wholly vulnerable to attacks. 
+%This risk dramatically escalates when the binary is replicated and potentially executed across a multitude of machines worldwide, such as in a Function-as-a-Service (FaaS) platform like Fastly \cite{MEWE}.
+In concrete, distributing the unmodified binary to 100 machines would, essentially, creates 100 homogeneously vulnerable machines.
+However, let us illustrate the case with a different approach: each time the binary is replicated onto a different machine, we distribute a unique variant instead of the original binary. 
+If we disseminate a unique variant, with X stacked transformations, to each machine, every system would run a distinct \wasm binary. 
+Based on our findings, even when some binaries are still vulnerable, we can confidently say that if 100 variants of a vulnerable program, each furnished with X stacked transformations, are distributed, the impact of any potential attack is considerably mitigated.
+While it's true that some variants may retain their original vulnerabilities, not all of them do. 
+This significantly enhances overall security. 
+Further reinforcing this point, let's consider the case of btb\_leakage. 
+In this scenario, a suite of 100 variants, each featuring at least 200 stacked transformations, ensures full protection against potential threats, effectively securing the entire infrastructure.
+Moreover, considering the results for the ret2spec attack, this property holds for the whole population of generated variants, despite the number of stacked transformations.
+Therefore, \tool as a software diversification tool, is a peemptive solution to potential attacks.
+

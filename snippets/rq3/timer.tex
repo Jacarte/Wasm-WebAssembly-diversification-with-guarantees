@@ -47,9 +47,9 @@
 ...
 (call $readTimer)
 (set_local $end_time)
-<inserted instructions>
+!<inserted instructions>!
 ... access to mem
-<inserted instructions>
+!<inserted instructions>!
 (i64.sub (get_local $end_time ) (get_local $start_time))
 (set_local $duration)
 ...

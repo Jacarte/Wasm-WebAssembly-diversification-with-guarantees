@@ -1,0 +1,41 @@
+
+\lstdefinestyle{watcode}{
+  numbers=none,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  breaklines=true, 
+  showstringspaces=false,
+    moredelim=**[is][{\btHL[fill=weborange!40]}]{`}{`},
+    moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
+}
+
+
+   \begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=TRACE,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[label=example:trace1,caption={Memory trace  with two events out of IntelPIN for the execution of a \wasm program with wasmtime. Trace events record: the type of the operation, read or write, the memory address, the number of bytes affected and the value read or written.},frame=b, captionpos=b]{Name}
+[Writ]                                                           0x555555ed1570 size=4 value=0x10dd0
+[Read]                                                           0x555555ed1570 size=4 value=0x10dd0                      \end{lstlisting}
+\end{minipage}
+
+
+\begin{minipage}[b]{\linewidth}
+    \lstset{
+        language=TRACE,
+                        style=watcode,
+        basicstyle=\footnotesize\ttfamily,
+                        columns=fullflexible,
+                        breaklines=true}
+        
+        \begin{lstlisting}[label=example:trace2,caption={Instructions trace with two events out of IntelPIN for the execution of a \wasm program with wasmtime. Each event records: the offset in memory of the executed instruction and the corresponding machine code.},frame=b, captionpos=b]{Name}
+[I]        160x1000884e    mov rdx, qword ptr [r14+0x100]           
+[I]        170x10008855    mov dword ptr [rdx+0xe64], ecx          
+    \end{lstlisting}
+\end{minipage}

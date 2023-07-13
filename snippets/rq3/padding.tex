@@ -46,16 +46,15 @@
 ;; Variant code
 ...
 ;; train the code to jump here (index 1)
-<inserted instructions>
+!<inserted instructions>!
 (i32.load (i32.const 2000))
-<inserted instructions>
+!<inserted instructions>!
 (i32.store (i32.const 83)) ;; just prevent optimization
 ...
-
 ;; transiently jump here
-<inserted instructions>
+!<inserted instructions>!
 (i32.load (i32.const 339968)) ;; "S"(83) is the secret
-<inserted instructions>
+!<inserted instructions>!
 (i32.store (i32.const 83)) ;; just prevent optimization
 ...
         \end{lstlisting}

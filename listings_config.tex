@@ -90,3 +90,22 @@
     basicstyle=\small\ttfamily
     }
  \renewcommand{\texttt}[1]{\lstinline{#1}}
+
+ \lstdefinelanguage{TRACE}{
+    otherkeywords={},
+    morekeywords=[1]{dword, qword,ptr},
+    morekeywords=[2]{0},
+    morekeywords=[3]{mov, value, size, Write, Read, I},
+    morekeywords=[4]{rdx, ecx, r14},
+    morekeywords=[5]{global, get_global, mut, set_global, export, import,loop, memory, data, get_local,if,element, block,module, function, set_local,call,br_if,end,br, else, all,call_indirect,local,global,module, func, param, result, type, table, memory, elem},
+    morekeywords=[6]{=,;},
+    morekeywords=[7]{(,),[,],.},
+    sensitive=false,
+    morecomment=[l]{;},
+    morecomment=[s]{;}{;},
+    morestring=[b]",
+    keywordstyle=[1]\color{eminence}\bfseries,
+    keywordstyle=[3]\color{frenchplum},
+    keywordstyle=[5]\color{darkgreen}\bfseries,
+    commentstyle=\color{commentgreen}
+}

@@ -224,3 +224,27 @@ In this scenario, a suite of 100 variants, each featuring at least 200 stacked t
 Moreover, considering the results for the ret2spec attack, this property holds for the whole population of generated variants, despite the number of stacked transformations.
 Therefore, \tool as a software diversification tool, is a peemptive solution to potential attacks.
 
+
+
+This is specially true for V8.
+V8 tends to favor rapid compilation over thorough optimizations, resulting in a higher preservation percentage than wasmtime. 
+This trend has been noted in earlier studies involving CROW and MEWE, which demonstrated preservation rates of 99\% and 96\% for V8 and wasmtime, respectively, when using CROW diversification. 
+Wasmtime, on the other hand, places more emphasis on the optimization of machine code generation.
+
+Comparing preservation rates between CROW and \tool variants reveals that CROW generally achieves higher preservation. 
+This can be attributed to CROW's use of a superdiversifier during the synthesis process. 
+Despite taking longer, it crafts variants that compilers cannot undo during optimization. 
+While a lower preservation rate might not appear advantageous at first glance, our observations highlight that unpreserved variants can put certain compiler components under stress, components that remain dormant during the execution of the original binary. 
+In essence, specific optimization implementations may remain idle if the corresponding code isn't included in the \wasm program set for compilation. 
+Importantly, despite considering the smallest population size coupled with the lowest preservation percentage, the range of machine codes executed still encompasses thousands of variants, underscoring the effectiveness of diversification strategies.
+
+
+
+
+\begin{metric}{Compiled population size:}\label{metric:popcomp}
+Given an original \wasm program P a generated corpus of \wasm programs $V=\{v_1, v_2, ..., v_N\}$ where $v_i$ is a semantically equivalent variant of P and a compiler $C$, the compiled population size is defined as:
+$$
+    | set(\{ sha256(C(v_1)),..., sha256(C(v_N)) \})|\text{ } \forall v_i \in V 
+$$
+
+\end{metric}

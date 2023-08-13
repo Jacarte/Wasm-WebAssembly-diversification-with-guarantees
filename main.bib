@@ -1095,3 +1095,89 @@ keywords = {evasion, packers, Anti-analysis, dynamic binary instrumentation, mal
 
   
 
+
+
+@inproceedings{lundquist2016searching,
+  title={Searching for software diversity: attaining artificial diversity through program synthesis},
+  author={Lundquist, Gilmore R and Mohan, Vishwath and Hamlen, Kevin W},
+  booktitle={Proceedings of the 2016 New Security Paradigms Workshop},
+  pages={80--91},
+  year={2016}
+}
+
+
+@article{baudry2015multiple,
+  title={The multiple facets of software diversity: Recent developments in year 2000 and beyond},
+  author={Baudry, Benoit and Monperrus, Martin},
+  journal={ACM Computing Surveys (CSUR)},
+  volume={48},
+  number={1},
+  pages={1--26},
+  year={2015},
+  publisher={ACM New York, NY, USA}
+}
+
+@inproceedings{10.1145/3488932.3517411,
+author = {Rokicki, Thomas and Maurice, Cl\'{e}mentine and Botvinnik, Marina and Oren, Yossi},
+title = {Port Contention Goes Portable: Port Contention Side Channels in Web Browsers},
+year = {2022},
+isbn = {9781450391405},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3488932.3517411},
+doi = {10.1145/3488932.3517411},
+abstract = {Microarchitectural side-channel attacks can derive secrets from the execution of vulnerable programs. Their implementation in web browsers represents a considerable extension of their attack surface, as a user simply browsing a malicious website, or even a malicious third-party advertisement in a benign cross-origin isolated website, can be a victim.In this paper, we present the first port contention side channel running entirely in a web browser, despite a highly challenging environment. Our attack can be used to build a cross-browser covert channel with a bit rate of 200bps, one order of magnitude above the state of the art, and has a spatial resolution of 1024 native instructions in a side-channel attack, a performance on-par with Prime+Probe attacks. We provide a framework to evaluate the port contention caused by WebAssembly instructions on Intel processors, allowing to increase the portability of port contention side channels. We conclude from our work that port contention attacks are not only fast, they are also less susceptible to noise than cache attacks, and are immune to countermeasures implemented in browsers as well as most side channel countermeasures, which target the cache in their vast majority.},
+booktitle = {Proceedings of the 2022 ACM on Asia Conference on Computer and Communications Security},
+pages = {1182–1194},
+numpages = {13},
+keywords = {javascript, side channel, web-assembly, cpu port contention},
+location = {Nagasaki, Japan},
+series = {ASIA CCS '22}
+}
+
+@article{10.1145/2666356.2594334,
+author = {Le, Vu and Afshari, Mehrdad and Su, Zhendong},
+title = {Compiler Validation via Equivalence modulo Inputs},
+year = {2014},
+issue_date = {June 2014},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {49},
+number = {6},
+issn = {0362-1340},
+url = {https://doi.org/10.1145/2666356.2594334},
+doi = {10.1145/2666356.2594334},
+abstract = {We introduce equivalence modulo inputs (EMI), a simple, widely applicable methodology for validating optimizing compilers. Our key insight is to exploit the close interplay between (1) dynamically executing a program on some test inputs and (2) statically compiling the program to work on all possible inputs. Indeed, the test inputs induce a natural collection of the original program's EMI variants, which can help differentially test any compiler and specifically target the difficult-to-find miscompilations.To create a practical implementation of EMI for validating C compilers, we profile a program's test executions and stochastically prune its unexecuted code. Our extensive testing in eleven months has led to 147 confirmed, unique bug reports for GCC and LLVM alone. The majority of those bugs are miscompilations, and more than 100 have already been fixed.Beyond testing compilers, EMI can be adapted to validate program transformation and analysis systems in general. This work opens up this exciting, new direction.},
+journal = {SIGPLAN Not.},
+month = {jun},
+pages = {216–226},
+numpages = {11},
+keywords = {automated testing, equivalent program variants, compiler testing, miscompilation}
+}
+
+  
+
+@inproceedings{10.1145/2594291.2594334,
+author = {Le, Vu and Afshari, Mehrdad and Su, Zhendong},
+title = {Compiler Validation via Equivalence modulo Inputs},
+year = {2014},
+isbn = {9781450327848},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/2594291.2594334},
+doi = {10.1145/2594291.2594334},
+abstract = {We introduce equivalence modulo inputs (EMI), a simple, widely applicable methodology for validating optimizing compilers. Our key insight is to exploit the close interplay between (1) dynamically executing a program on some test inputs and (2) statically compiling the program to work on all possible inputs. Indeed, the test inputs induce a natural collection of the original program's EMI variants, which can help differentially test any compiler and specifically target the difficult-to-find miscompilations.To create a practical implementation of EMI for validating C compilers, we profile a program's test executions and stochastically prune its unexecuted code. Our extensive testing in eleven months has led to 147 confirmed, unique bug reports for GCC and LLVM alone. The majority of those bugs are miscompilations, and more than 100 have already been fixed.Beyond testing compilers, EMI can be adapted to validate program transformation and analysis systems in general. This work opens up this exciting, new direction.},
+booktitle = {Proceedings of the 35th ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {216–226},
+numpages = {11},
+keywords = {compiler testing, automated testing, miscompilation, equivalent program variants},
+location = {Edinburgh, United Kingdom},
+series = {PLDI '14}
+}
+
+  
+
+
+
+  
+

@@ -248,3 +248,23 @@ $$
 $$
 
 \end{metric}
+
+
+
+% Security issues, CVE, how diversification plays
+The \wasm execution model is meticulously designed to be secure, aiming to mitigate a broad spectrum of memory and control flow attacks.
+However, as acknowledged in its official documentation \cite{WebAssemblySecurity}, \wasm is not invulnerable to potential exploitations, neither the tools that generate \Wasm programs \cite{usenixWASM2020, stievenart2021security}.
+On the flip side, code diversification is a significant proactive that notably enforces security by automatic testing and perturbing security sensible side-channels \cite{arteaga2020crow, MEWE, CABRERAARTEAGA2023103296}.
+
+
+However, existing diversification techniques are primarily tailored for LLVM compilers, missing potential places in which code diversification can be achieved.
+Therefore, as previously mentioned, the emerging technologies that generate \wasm binaries may not fully benefit from these techniques.
+As a result, the development of \Wasm to \Wasm diversification tools becomes imperative.
+This work presents a new software diversification tool for \Wasm, \tool.
+\todo{Why is good to have many variants in just a few minutes. Good for testing and fuzzing.}
+
+
+% Now, what is new in tool, what does it offer
+
+
+\todo{Talks about the CVE later.}

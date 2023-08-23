@@ -268,3 +268,31 @@ This work presents a new software diversification tool for \Wasm, \tool.
 
 
 \todo{Talks about the CVE later.}
+
+
+%%% Table Dataset
+
+\begin{table}
+\renewcommand\arraystretch{1.1}
+\begin{adjustbox}{width=\linewidth,totalheight=\textheight, keepaspectratio}
+    \begin{tabular}{p{1.2cm} | l | l | r | r | p{2cm} | p{1cm} }
+        \hline
+        Source & Program & RQ & \#F & \# Ins. & Attack & Comp. \\
+        \hline \hline
+        CROW & 303 & \ref{rq:static}, \ref{rq:dynamic} & 7-103 & 170-36023 & N/A & C to Wasm \\
+        \hline
+        Swivel & btb\_breakout & \ref{rq:defensive} & 16 & 743 & Spectre branch target buffer (btb) & manually crafted \\
+        \hline
+        Swivel & btb\_leakage & \ref{rq:defensive} & 16 & 297 & Spectre branch target buffer(btb) & manually crafted \\
+        \hline
+        Safeside & ret2spec & \ref{rq:defensive} & 2977 & 378894 & Spectre Return Stack Buffer (rsb) & C to Wasm \\
+        \hline
+        Safeside & pht & \ref{rq:defensive} & 2978 & 379058 & Spectre Pattern History Table (pht) & C to Wasm \\
+
+%\end{adjustbox}
+    \end{tabular}
+\end{adjustbox}
+    
+    \caption{\wasm dataset used to evaluate \tool. Each row in the table corresponds to programs, with the columns providing: where the program is sourced from, the number of programs, research question addressed, function count, the total number of instructions found in the original \wasm program, the type of attack that the original program was subjected to and the description of the process employed to convert the source code into the corresponding \wasm programs.}
+    \label{tab:corpus}
+\end{table}

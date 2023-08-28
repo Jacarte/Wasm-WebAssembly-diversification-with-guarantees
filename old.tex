@@ -296,3 +296,37 @@ This work presents a new software diversification tool for \Wasm, \tool.
     \caption{\wasm dataset used to evaluate \tool. Each row in the table corresponds to programs, with the columns providing: where the program is sourced from, the number of programs, research question addressed, function count, the total number of instructions found in the original \wasm program, the type of attack that the original program was subjected to and the description of the process employed to convert the source code into the corresponding \wasm programs.}
     \label{tab:corpus}
 \end{table}
+
+
+
+% Words on the workload of each program
+\todo{different input = different trace is a truism, which might be what would be understood by the reader. I see where you want to go but it's too subtle, and it highlights the weakness of the dataset (no input), so I would remove }
+Notice that, each program and its variants are executed with their initial input.
+In practice, the traces we collect are generated from instantiating the \wasm binary and then executing its main function. 
+For most programs in the CROW suite, their main function carries out a specific algorithm (for instance, \emph{base64 encoding}) using a simple, single-input model. 
+This approach helps to collect execution traces without crafting programs input.
+Yet, it potentially reduce the uniqueness of the traces collected. 
+For instance, sections of the program subject to conditional execution might not be activated, not necessarily due to their 'dead-code' status, but rather due to the limited variety of inputs. 
+However, even with this relatively modest input-testing approach, \tool still succeeds in providing more than one unique execution trace for each program and its variants population.
+it is worth noting that the ratio of unique traces would likely increase given a broader input spectrum.
+
+
+\todo{we have not provided any number, so we should substantiate this with a claim }
+The substantial differences in code preservation between JIT compilers carry notable implications. 
+\todo{not a sentence}
+For example, between wasmtime and V8.
+On one side, high preservation rates signal a possible deficiency in optimizations, as previously underlined in \cite{wasmslim}. 
+Conversely, high preservation may inadvertently allow vulnerable code to persist.
+For instance, although \tool can generate more resilient variants, the compiler's role in mitigating initial vulnerabilities is crucial. 
+High preservation could, therefore, potentially hinder the removal of potential security weaknesses during the compilation process.
+\todo{subsection not convincing I would remove}
+
+
+\subsection{Program Normalization}
+\todo{this paragraph is not at all about wasm-mutate, remove}
+\tool was previously employed successfully for the evasion of malware detection, as outlined in \cite{CABRERAARTEAGA2023103296}. 
+The proposed mitigation in the prior study involved code normalization as a means of reducing the spectrum of malware variants. 
+Our current work provides insights into the potential effectiveness of this approach. 
+Specifically, a practically costless process of pre-compiling Wasm binaries could be employed as a preparatory measure for malware classifiers. 
+In other words, a \wasm binary can first be compiled with wasmtime, effectively eliminating approx. 25\% of malware variants according to our preservation statistics for wasmtime. 
+This approach could substantially enhance the efficiency and precision of malware detection systems.

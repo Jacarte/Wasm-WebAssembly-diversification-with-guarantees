@@ -369,7 +369,7 @@ keywords = {just-in-time compilers, type systems, virtual machines, programming 
 
 @article{CABRERAARTEAGA2023103296,
 title = {WebAssembly diversification for malware evasion},
-journal = {Computers & Security},
+journal = {Computers \& Security},
 volume = {131},
 pages = {103296},
 year = {2023},
@@ -713,7 +713,7 @@ series = {PLDI 2022}
 
 @article{BRITO2022102745,
 title = {Wasmati: An efficient static vulnerability scanner for WebAssembly},
-journal = {Computers & Security},
+journal = {Computers \& Security},
 volume = {118},
 pages = {102745},
 year = {2022},
@@ -755,45 +755,19 @@ abstract = {WebAssembly is a new binary instruction format that allows targeted 
 
 
 @INPROCEEDINGS{Spectre,
-
   author={Kocher, Paul and Horn, Jann and Fogh, Anders and Genkin, Daniel and Gruss, Daniel and Haas, Werner and Hamburg, Mike and Lipp, Moritz and Mangard, Stefan and Prescher, Thomas and Schwarz, Michael and Yarom, Yuval},
-
   booktitle={2019 IEEE Symposium on Security and Privacy (SP)}, 
-
   title={Spectre Attacks: Exploiting Speculative Execution}, 
-
   year={2019},
-
   volume={},
-
   number={},
-
   pages={1-19},
-
   doi={10.1109/SP.2019.00002}}
 
 
 
-@article {WasmSpectre
-author = {Mazaheri, Mohammad Erfan and Bayat Sarmadi, Siavash and Taheri Ardakani, Farhad},
-title = {A Study of Timing Side-Channel Attacks and Countermeasures on JavaScript and WebAssembly},
-journal = {The ISC International Journal of Information Security},
-volume = {14},
-number = {1},
-pages = {27-46},
-year  = {2022},
-publisher = {Iranian Society of Cryptology},
-issn = {2008-2045}, 
-eissn = {2008-3076}, 
-doi = {10.22042/isecure.2021.263565.599},
-abstract = {Side-channel attacks are a group of powerful attacks in hardware security that exploit the deficiencies in the implementation of systems. Timing side-channel attacks are one of the main side-channel attack categories that use the time difference of running an operation in different states. Many powerful attacks can be classified into this type of attack, including cache attacks. The limitation of these attacks is the need to run the spy program on the victim's system. Various studies have tried to overcome this limitation by implementing these attacks remotely on JavaScript and WebAssembly. This paper provides the first comprehensive evaluation of timing side-channel attacks on JavaScript and investigates challenges and countermeasures to overcome these attacks. Moreover, by investigating the countermeasures and their strengths and weaknesses, we introduce a detection-based approach, called Lurking Eyes. Our approach has the least reduction in the performance of JavaScript and WebAssembly. The evaluation results show that the Lurking eyes have an accuracy of 0.998, precision of 0.983, and F-measure of 0.983. Considering these values and no limitations, this method can be introduced as an effective way to counter timing side-channel attacks on JavaScript and WebAssembly. Also, we provide a new accurate timer, named Eagle timer, based on WebAssembly memory for implementing these attacks.},
-keywords = {Timing Side-Channel Attacks,JavaScript,WebAssembly,Malicious Code Detection,Timers},	
-url = {https://www.isecure-journal.com/article_136367.html},
-eprint = {https://www.isecure-journal.com/article_136367_a3948a522c7c59c65b65fa87571fde7b.pdf}
-}
 
-
-  @article{nicholson2023wasmizer,
+@article{nicholson2023wasmizer,
   title={Wasmizer: Curating WebAssembly-driven Projects on GitHub},
   author={Nicholson, Alexander and Sti{\'e}venart, Quentin and Mazidi, Arash and Ghafari, Mohammad},
   journal={arXiv preprint arXiv:2303.09623},
@@ -944,17 +918,6 @@ series = {MTD'22}
 	organization = {Springer}
 }
 
-@article{CABRERAARTEAGA2023103296,
-       title = {WebAssembly Diversification for Malware Evasion},
-       journal = {Computers & Security},
-       pages = {103296},
-       year = {2023},
-       issn = {0167-4048},
-       doi = {https://doi.org/10.1016/j.cose.2023.103296},
-       url = {https://www.sciencedirect.com/science/article/pii/S0167404823002067},
-       author = {Javier Cabrera-Arteaga and Martin Monperrus and Tim Toady and Benoit Baudry},
-       keywords = {WebAssembly, cryptojacking, software diversification, malware evasion}
-}
 
 @article{luk2005pin,
   title={Pin: building customized program analysis tools with dynamic instrumentation},
@@ -1175,9 +1138,109 @@ location = {Edinburgh, United Kingdom},
 series = {PLDI '14}
 }
 
+@INPROCEEDINGS{595185,
+
+  author={Forrest, S. and Somayaji, A. and Ackley, D.H.},
+
+  booktitle={Proceedings. The Sixth Workshop on Hot Topics in Operating Systems (Cat. No.97TB100133)}, 
+
+  title={Building diverse computer systems}, 
+
+  year={1997},
+
+  volume={},
+
+  number={},
+
+  pages={67-72},
+
+  doi={10.1109/HOTOS.1997.595185}}
+
+
+
   
 
 
+
+  
+
+
+@ARTICLE{wasmixer,
+       author = {{Cao}, Shangtong and {He}, Ningyu and {Guo}, Yao and {Wang}, Haoyu},
+        title = "{WASMixer: Binary Obfuscation for WebAssembly}",
+      journal = {arXiv e-prints},
+     keywords = {Computer Science - Cryptography and Security},
+         year = 2023,
+        month = aug,
+          eid = {arXiv:2308.03123},
+        pages = {arXiv:2308.03123},
+          doi = {10.48550/arXiv.2308.03123},
+archivePrefix = {arXiv},
+       eprint = {2308.03123},
+ primaryClass = {cs.CR},
+       adsurl = {https://ui.adsabs.harvard.edu/abs/2023arXiv230803123C},
+      adsnote = {Provided by the SAO/NASA Astrophysics Data System}
+}
+
+
+@inproceedings{10.1145/3597926.3598104,
+author = {Lehmann, Daniel and Thalakottur, Michelle and Tip, Frank and Pradel, Michael},
+title = {That’s a Tough Call: Studying the Challenges of Call Graph Construction for WebAssembly},
+year = {2023},
+isbn = {9798400702211},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3597926.3598104},
+doi = {10.1145/3597926.3598104},
+abstract = {WebAssembly is a low-level bytecode format that powers applications and libraries running in browsers, on the server side, and in standalone runtimes. Call graphs are at the core of many interprocedural static analysis and optimization techniques. However, WebAssembly poses some unique challenges for static call graph construction. Currently, these challenges are neither well understood, nor is it clear to what extent existing techniques address them. This paper presents the first systematic study of WebAssembly-specific challenges for static call graph construction and of the state-of-the-art in call graph analysis. We identify and classify 12 challenges, encode them into a suite of 24 executable microbenchmarks, and measure their prevalence in real-world binaries. These challenges reflect idiosyncrasies of WebAssembly, such as indirect calls via a mutable function table, interactions with the host environment, and unmanaged linear memory. We show that they commonly occur across a set of more than 8,000 real-world binaries. Based on our microbenchmarks and a set of executable real-world binaries, we then study the soundness and precision of four existing static analyses. Our findings include that, surprisingly, all of the existing techniques are unsound, without this being documented anywhere. We envision our work to provide guidance for improving static call graph construction for WebAssembly. In particular, the presented microbenchmarks will enable future work to check whether an analysis supports challenging language features, and to quantify its soundness and precision.},
+booktitle = {Proceedings of the 32nd ACM SIGSOFT International Symposium on Software Testing and Analysis},
+pages = {892–903},
+numpages = {12},
+keywords = {precision, WebAssembly, soundness, call graphs, debloating, static analysis},
+location = {Seattle, WA, USA},
+series = {ISSTA 2023}
+}
+
+  
+
+
+
+@INPROCEEDINGS{4197960,
+
+  author={Bruschi, Danilo and Cavallaro, Lorenzo and Lanzi, Andrea},
+
+  booktitle={2007 IEEE International Performance, Computing, and Communications Conference}, 
+
+  title={Diversified Process Replicæ for Defeating Memory Error Exploits}, 
+
+  year={2007},
+
+  volume={},
+
+  number={},
+
+  pages={434-441},
+
+  doi={10.1109/PCCC.2007.358924}}
+
+
+@inproceedings{10.1145/3321705.3329819,
+author = {D'Elia, Daniele Cono and Coppa, Emilio and Nicchi, Simone and Palmaro, Federico and Cavallaro, Lorenzo},
+title = {SoK: Using Dynamic Binary Instrumentation for Security (And How You May Get Caught Red Handed)},
+year = {2019},
+isbn = {9781450367523},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3321705.3329819},
+doi = {10.1145/3321705.3329819},
+abstract = {Dynamic binary instrumentation (DBI) techniques allow for monitoring and possibly altering the execution of a running program up to the instruction level granularity. The ease of use and flexibility of DBI primitives has made them popular in a large body of research in different domains, including software security. Lately, the suitability of DBI for security has been questioned in light of transparency concerns from artifacts that popular frameworks introduce in the execution: while they do not perturb benign programs, a dedicated adversary may detect their presence and defeat the analysis. The contributions we provide are two-fold. We first present the abstraction and inner workings of DBI frameworks, how DBI assisted prominent security research works, and alternative solutions. We then dive into the DBI evasion and escape problems, discussing attack surfaces, transparency concerns, and possible mitigations. We make available to the community a library of detection patterns and stopgap measures that could be of interest to DBI users.},
+booktitle = {Proceedings of the 2019 ACM Asia Conference on Computer and Communications Security},
+pages = {15–27},
+numpages = {13},
+keywords = {dynamic binary instrumentation, escape, transparent monitoring, dynamic binary translation, evasion, interposition},
+location = {Auckland, New Zealand},
+series = {Asia CCS '19}
+}
 
   
 

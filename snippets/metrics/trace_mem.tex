@@ -34,8 +34,8 @@
                         columns=fullflexible,
                         breaklines=true}
         
-        \begin{lstlisting}[label=example:trace2,caption={Instructions trace with two events out of IntelPIN for the execution of a \wasm program with wasmtime. Each event records: the offset in memory of the executed instruction and the corresponding machine code.},frame=b, captionpos=b]{Name}
-[I]        160x1000884e    mov rdx, qword ptr [r14+0x100]           
-[I]        170x10008855    mov dword ptr [rdx+0xe64], ecx          
+        \begin{lstlisting}[label=example:trace2,caption={Instructions trace with two events out of IntelPIN for the execution of a \wasm program with wasmtime. Each event records the corresponding machine code that executes.},frame=b, captionpos=b]{Name}
+[I]          mov rdx, qword ptr [r14+0x100]           
+[I]          mov dword ptr [rdx+0xe64], ecx          
     \end{lstlisting}
 \end{minipage}

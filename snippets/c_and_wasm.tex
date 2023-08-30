@@ -10,29 +10,8 @@
   moredelim=**[is][{\btHL[fill=black!10]}]{`}{`},
   moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
 }
-
-{\captionsetup{width=0.39\linewidth}
-\noindent\begin{minipage}[t]{0.4\linewidth}
-  \lstset{
-    language=C,
-    basicstyle=\footnotesize\ttfamily,
-    columns=fullflexible,
-  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
-    breaklines=true}
-    \begin{lstlisting}[label=example:cprogram,caption={C program containing function declaration, loops, conditionals and memory access.},captionpos=t]{Name}
-int a[100];
-void cc1(){
-    for(int i = 0; i < 100; i++){
-        a[i] = i;
-    }
-}
-
-    \end{lstlisting}
-    
-\end{minipage}\hfill
-\noindent\begin{minipage}[t]{0.6\linewidth}
-\captionsetup{width=0.89\linewidth}
-
+{
+\captionsetup{width=0.9\linewidth}
 \lstset{
   language=WAT,
   style=watcode,
@@ -41,43 +20,60 @@ void cc1(){
   %numberstyle=\footnotesize,
   numbersep=2.5pt,
   %firstnumber=1,
-  escapeinside={(*@}{@*)},
+  escapeinside={``},
   %numbers=left,
   %postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
   }
-    \begin{lstlisting}[label=example:wasmprogram,caption={WebAssembly code for C code in \autoref{example:cprogram}.}, captionpos=t]{Name}
-
-    
+    \begin{lstlisting}[label=example:wasmprogram,caption={Simplified WebAssembly code for Rust code in \autoref{example:cprogram}.}, captionpos=b]{Name}
 (module
   (@custom "producer" "llvm.." )
-  (func (;5;) (type 1)
-    (loop  ;; label = @1
-      (if  ;; label = @2
-        (i32.eqz
-          (i32.ge_s
-            (i32.load
-              (local.get 0))
-            (i32.const 100)))
-        (then (i32.store
-            (i32.add
-              (i32.shl
-                (i32.load
-                  (local.get 0))
-                (i32.const 2))
-              (i32.const 1024))
-            (i32.load
-              (local.get 0)))
-          (i32.store
-            (local.get 0)
-            (i32.add
-              (i32.load
-                (local.get 0))
-              (i32.const 1)))
-          (br 1 (;@1;)))))
-    )
-  (memory (;0;) 256)
-  (global (;1;) i32 (i32.const 0))
-  (export "memory" (memory 0)))
-    \end{lstlisting}
-\end{minipage}
+  (import "env" "println" (func $println (param i32)))
+  (memory 1)
+  (export "memory" (memory 0))
+  (func $main
+    (local $sum i32)
+    (local $i i32)
+    (local $arr_offset i32)
+    ; Initialize sum to 0 ;
+    i32.const 0
+    local.set $sum
+    ; Initialize arr_offset to point to start of the array in memory ;
+    i32.const 0
+    local.set $arr_offset
+    ; Initialize the array in memory;
+    i32.const 0
+    i32.const 1
+    i32.store
+    ...
+    i32.store
+    ...
+    loop
+      local.get $i
+      i32.const 5
+      i32.lt_s
+      if
+        ; Load array[i] and add to sum ;
+        local.get $arr_offset
+        local.get $i
+        ...
+        ; Increment i ;
+        local.get $i
+        i32.const 1
+        i32.add
+        local.set $i
+        br 0
+      else
+        ; End loop ;
+        i32.const 0
+      end
+    end
+    
+    ; Call external function to print sum ;
+    local.get $sum
+    call $println
+  )
+  ; Start the main function ;
+  (start $main)
+  )
+\end{lstlisting}
 }

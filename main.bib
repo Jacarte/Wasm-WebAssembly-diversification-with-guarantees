@@ -75,6 +75,15 @@ numpages = {29},
 keywords = {anti-unification, e-graphs, library learning}
 }
 
+@inproceedings{superwasm,
+ title = {Superoptimization of WebAssembly Bytecode},
+ booktitle = {Proceedings of MoreVMs: Workshop on Modern Language Runtimes},
+ year = {2020},
+ doi = {10.1145/3397537.3397567},
+ author = {Javier Cabrera-Arteaga and Shrinish Donde and Jian Gu and Orestis Floros and Lucas Satabin and Benoit Baudry and Martin Monperrus},
+ url = {http://arxiv.org/pdf/2002.10213},
+}
+
 @ARTICLE{2017arXiv171104422S,
        author = {{Sasnauskas}, Raimondas and {Chen}, Yang and {Collingbourne}, Peter and {Ketema}, Jeroen and {Lup}, Gratian and {Taneja}, Jubi and {Regehr}, John},
         title = "{Souper: A Synthesizing Superoptimizer}",
@@ -973,10 +982,10 @@ series = {MTD'22}
 
 @misc{fastly,
     title = {{The power of serverless, 72 times over}},
-    url = {
-https://www.fastly.com/blog/the-power-of-serverless-at-the-edge},
+    url = {https://www.fastly.com/blog/the-power-of-serverless-at-the-edge},
     urldate = {2020-11-01},
-    year={2020}
+    year={2020},
+    author={Fastly}
 }
 
 
@@ -1033,6 +1042,7 @@ series = {EASE '23}
   title   = {Stop a Wasm Compiler Bug Before it Becomes a Problem | Fastly},
   howpublished     = {\url{https://www.fastly.com/blog/defense-in-depth-stopping-a-wasm-compiler-bug-before-it-became-a-problem}},
   urldate = {2021-07-22},
+    author={Fastly},
   year    = {2021}
 }
 
@@ -1240,6 +1250,45 @@ numpages = {13},
 keywords = {dynamic binary instrumentation, escape, transparent monitoring, dynamic binary translation, evasion, interposition},
 location = {Auckland, New Zealand},
 series = {Asia CCS '19}
+}
+
+  
+
+@INPROCEEDINGS{avengers,
+
+  author={Kim, Minseo and Jang, Hyerean and Shin, Youngjoo},
+
+  booktitle={2022 IEEE 15th International Conference on Cloud Computing (CLOUD)}, 
+
+  title={Avengers, Assemble! Survey of WebAssembly Security Solutions}, 
+
+  year={2022},
+
+  volume={},
+
+  number={},
+
+  pages={543-553},
+
+  doi={10.1109/CLOUD55607.2022.00077}}
+
+@article{10.1145/3547622,
+author = {Koppel, James and Guo, Zheng and de Vries, Edsko and Solar-Lezama, Armando and Polikarpova, Nadia},
+title = {Searching Entangled Program Spaces},
+year = {2022},
+issue_date = {August 2022},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {6},
+number = {ICFP},
+url = {https://doi.org/10.1145/3547622},
+doi = {10.1145/3547622},
+abstract = {Many problem domains, including program synthesis and rewrite-based optimization, require searching astronomically large spaces of programs. Existing approaches often rely on building specialized data structures—version-space algebras, finite tree automata, or e-graphs—to compactly represent such spaces. At their core, all these data structures exploit independence of subterms; as a result, they cannot efficiently represent more complex program spaces, where the choices of subterms are entangled. We introduce equality-constrained tree automata (ECTAs), a new data structure, designed to compactly represent large spaces of programs with entangled subterms. We present efficient algorithms for extracting programs from ECTAs, implemented in a performant Haskell library, ecta. Using the ecta library, we construct Hectare, a type-driven program synthesizer for Haskell. Hectare significantly outperforms a state-of-the-art synthesizer Hoogle+—providing an average speedup of 8\texttimes{}—despite its implementation being an order of magnitude smaller.},
+journal = {Proc. ACM Program. Lang.},
+month = {aug},
+articleno = {91},
+numpages = {29},
+keywords = {type systems, Haskell, program synthesis, e-graphs}
 }
 
   

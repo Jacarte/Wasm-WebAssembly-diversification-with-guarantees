@@ -330,3 +330,10 @@ Our current work provides insights into the potential effectiveness of this appr
 Specifically, a practically costless process of pre-compiling Wasm binaries could be employed as a preparatory measure for malware classifiers. 
 In other words, a \wasm binary can first be compiled with wasmtime, effectively eliminating approx. 25\% of malware variants according to our preservation statistics for wasmtime. 
 This approach could substantially enhance the efficiency and precision of malware detection systems.
+
+
+This paper unveils \tool, an innovative, compiler-independent method for \Wasm software diversification. \tool, built atop an e-graph, encompasses 135 artfully designed rewriting rules catering to diversification from granular to broad levels. 
+Our approach enables the generation of ten of thousands of equivalent program variants within minutes. 
+\tool excels in swiftly creating a vast array of unique, highly preserved \wasm programs, demonstrating significant variations in execution traces, including memory. 
+Notably, \tool enhances the resilience of \wasm programs initially vulnerable to Spectre attacks, thereby offering a promising defensive strategy against such threats. 
+Hence, \tool, with its contribution to the wider \wasm ecosystem, paves the way for safer and more robust \wasm applications.

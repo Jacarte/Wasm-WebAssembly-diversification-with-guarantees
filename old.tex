@@ -1,3 +1,33 @@
+
+Let us illustrate this with an example.
+Assume two programs $P$ and $P'$ (\autoref{example:state1} and \autoref{example:state2} respectively) where $P'$ is the result of modifying a code in the first instruction of its unique function.
+The program $P'$ has two extra instructions right before returning from the function.
+The remaining components of the original binary are not modified.
+
+
+\input{snippets/state_example/state_mini}
+
+The state of the program $P$ when entering the function is its stack $[S]$, 
+the program $P'$ has the same state before executing the function.
+The input values of the function for both programs are $L$, their outputs are the top of the stack at the end of the execution.
+
+
+Program $P$ has the state $[[S:i32.const\ 1]]$ just before returning from the function execution.
+When we trace the states of the program $P'$, we can construct the following sequence of states:
+\begin{enumerate}
+    \item $[[S: i32.const\ 1]]$ the integer constant 1 is now on the top of the stack.
+    \item $[[S: i32.const\ 1, i32.const\ 42]]$ the integer constant 32 is  the top of the stack.
+    \item $[[S: i32.const\ 1]]$ the top of the stack is dropped. The function execution stops.
+\end{enumerate}
+Notice that, the stack state of program $P'$ is the same as program $P$.
+Thus, we can say that these two programs are semantically equivalent.
+Even though the programs share semantic equivalence, they display differences during execution. 
+Specifically, $P'$ stresses more on the stack by adding and subsequently dropping more values.
+These subtle yet significant differences form the crux of the diversification approaches discussed in this study.
+
+
+
+
 \subsection{WebAssembly Runtime Structure}
 \label{def:state}
 
@@ -213,16 +243,6 @@ Wafl: Binary-only webassembly fuzzing with fast snapshots
 %- Cache tming: \cite{}
 %The original POC programs are wholly vulnerable to attacks. 
 %This risk dramatically escalates when the binary is replicated and potentially executed across a multitude of machines worldwide, such as in a Function-as-a-Service (FaaS) platform like Fastly \cite{MEWE}.
-In concrete, distributing the unmodified binary to 100 machines would, essentially, creates 100 homogeneously vulnerable machines.
-However, let us illustrate the case with a different approach: each time the binary is replicated onto a different machine, we distribute a unique variant instead of the original binary. 
-If we disseminate a unique variant, with X stacked transformations, to each machine, every system would run a distinct \wasm binary. 
-Based on our findings, even when some binaries are still vulnerable, we can confidently say that if 100 variants of a vulnerable program, each furnished with X stacked transformations, are distributed, the impact of any potential attack is considerably mitigated.
-While it's true that some variants may retain their original vulnerabilities, not all of them do. 
-This significantly enhances overall security. 
-Further reinforcing this point, let's consider the case of btb\_leakage. 
-In this scenario, a suite of 100 variants, each featuring at least 200 stacked transformations, ensures full protection against potential threats, effectively securing the entire infrastructure.
-Moreover, considering the results for the ret2spec attack, this property holds for the whole population of generated variants, despite the number of stacked transformations.
-Therefore, \tool as a software diversification tool, is a peemptive solution to potential attacks.
 
 
 

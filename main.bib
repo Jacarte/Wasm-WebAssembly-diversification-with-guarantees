@@ -1292,4 +1292,44 @@ keywords = {type systems, Haskell, program synthesis, e-graphs}
 }
 
   
+@inproceedings{10.1145/3385412.3386001,
+author = {Premtoon, Varot and Koppel, James and Solar-Lezama, Armando},
+title = {Semantic Code Search via Equational Reasoning},
+year = {2020},
+isbn = {9781450376136},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3385412.3386001},
+doi = {10.1145/3385412.3386001},
+abstract = {We present a new approach to semantic code search based on equational reasoning, and the Yogo tool implementing this approach. Our approach works by considering not only the dataflow graph of a function, but also the dataflow graphs of all equivalent functions reachable via a set of rewrite rules. In doing so, it can recognize an operation even if it uses alternate APIs, is in a different but mathematically-equivalent form, is split apart with temporary variables, or is interleaved with other code. Furthermore, it can recognize when code is an instance of some higher-level concept such as iterating through a file. Because of this, from a single query, Yogo can find equivalent code in multiple languages. Our evaluation further shows the utility of Yogo beyond code search: encoding a buggy pattern as a Yogo query, we found a bug in Oracle’s Graal compiler which had been missed by a hand-written static analyzer designed for that exact kind of bug. Yogo is built on the Cubix multi-language infrastructure, and currently supports Java and Python.},
+booktitle = {Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {1066–1082},
+numpages = {17},
+keywords = {equational reasoning, code search},
+location = {London, UK},
+series = {PLDI 2020}
+}
+
+  
+
+
+@inproceedings{10.1145/3385412.3386012,
+author = {Nandi, Chandrakana and Willsey, Max and Anderson, Adam and Wilcox, James R. and Darulova, Eva and Grossman, Dan and Tatlock, Zachary},
+title = {Synthesizing Structured CAD Models with Equality Saturation and Inverse Transformations},
+year = {2020},
+isbn = {9781450376136},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3385412.3386012},
+doi = {10.1145/3385412.3386012},
+abstract = {Recent program synthesis techniques help users customize CAD models(e.g., for 3D printing) by decompiling low-level triangle meshes to Constructive Solid Geometry (CSG) expressions. Without loops or functions, editing CSG can require many coordinated changes, and existing mesh decompilers use heuristics that can obfuscate high-level structure. This paper proposes a second decompilation stage to robustly "shrink" unstructured CSG expressions into more editable programs with map and fold operators. We present Szalinski, a tool that uses Equality Saturation with semantics-preserving CAD rewrites to efficiently search for smaller equivalent programs. Szalinski relies on inverse transformations, a novel way for solvers to speculatively add equivalences to an E-graph. We qualitatively evaluate Szalinski in case studies, show how it composes with an existing mesh decompiler, and demonstrate that Szalinski can shrink large models in seconds.},
+booktitle = {Proceedings of the 41st ACM SIGPLAN Conference on Programming Language Design and Implementation},
+pages = {31–44},
+numpages = {14},
+keywords = {Program Synthesis, Decompilation, Computer-Aided Design, Equality Saturation},
+location = {London, UK},
+series = {PLDI 2020}
+}
+
+  
 

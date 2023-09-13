@@ -11,7 +11,7 @@
   moredelim=**[is][{\btHL[fill=celadon!40]}]{!}{!}
 }
 {
-\captionsetup{width=0.9\linewidth}
+%\captionsetup{width=0.9\linewidth}
 \lstset{
   language=WAT,
   style=watcode,
@@ -24,7 +24,7 @@
   %numbers=left,
   %postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
   }
-    \begin{lstlisting}[label=example:wasmprogram,caption={Simplified WebAssembly code for Rust code in \autoref{example:cprogram}.}, captionpos=b]{Name}
+    \begin{lstlisting}[label=example:wasmprogram,caption={Simplified WebAssembly code for the program of \autoref{example:cprogram}.}, captionpos=b]{Name}
 (module
   (@custom "producer" "llvm.." )
   (import "env" "println" (func $println (param i32)))

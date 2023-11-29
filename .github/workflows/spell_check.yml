@@ -28,7 +28,7 @@ jobs:
           WIDOW=$(cat ./.github/widow.tex)
           # escape WIDOW
           WIDOW=$(echo $WIDOW | sed 's/\//\\\//g')
-          sed -i "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/"  main.tex > fix.tex
+          sed "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/"  main.tex > fix.tex
           echo "Compiling without widows"
           cat fix.tex
 

@@ -44,9 +44,9 @@ jobs:
 
       - name: Spell checking report
         run: |
-          mkdir -p ./github/rois
+          mkdir -p ./.github/rois
           pip3 install readability
-          python3 ./github/spell_check.py main.pdf dico.text
+          python3 ./.github/spell_check.py main.pdf dico.text
         
       - name: GIT
         run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"
@@ -57,10 +57,10 @@ jobs:
           git config --global --add safe.directory /__w/main/main
           ls -R .
           
-          cp -r ./build_images/rois ./rois
-          cp ./build_images/report.json ./report.json
+          cp -r ./.github/rois ./rois
+          cp ./.github/report.json ./report.json
 
-          python3 ./build_images/create_html_report.py report.json index.html
+          python3 ./.github/create_html_report.py report.json index.html
 
 
           git rm -rf . && git checkout -b gh-pages

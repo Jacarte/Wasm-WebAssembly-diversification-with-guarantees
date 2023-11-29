@@ -28,15 +28,15 @@ jobs:
           WIDOW=$(cat ./.github/widow.tex)
           # escape WIDOW
           WIDOW=$(echo $WIDOW | sed 's/\//\\\//g')
-          sed  "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/" -i  main.tex > main.fix.tex
+          sed  "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/" -i  main.tex > fix.tex
 
-          pdflatex -interaction=nonstopmode -shell-escape main.fix.tex || true
+          pdflatex -interaction=nonstopmode -shell-escape fix.tex || true
           sleep 30
-          bibtex main.fix.aux || true
+          bibtex fix.aux || true
           sleep 30
-          pdflatex -shell-escape -interaction=nonstopmode main.fix.tex || true
+          pdflatex -shell-escape -interaction=nonstopmode fix.tex || true
           sleep 15
-          pdflatex -shell-escape -interaction=nonstopmode main.fix.tex || true
+          pdflatex -shell-escape -interaction=nonstopmode fix.tex || true
           sleep 15
         env:
           ADDCONTRIB: "False"  
@@ -46,14 +46,14 @@ jobs:
       - name: Upload assets to artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: main.pdf 
-          path: main.pdf 
+          name: fix.pdf 
+          path: fix.pdf 
 
       - name: Spell checking report
         run: |
           mkdir -p ./.github/rois
           pip3 install readability
-          python3 ./.github/spell_check.py main.pdf dico.text
+          python3 ./.github/spell_check.py fix.pdf dico.text
         
       - name: GIT
         run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"

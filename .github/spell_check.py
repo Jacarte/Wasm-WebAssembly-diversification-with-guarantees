@@ -66,7 +66,7 @@ def get_paragraphs_from_image(imagefile, sizemin=10000):
     thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Create rectangular structuring element and dilate
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (10,3))
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,3))
     dilate = cv2.dilate(thresh, kernel, iterations=13)
 
     # Find contours and draw rectangle
@@ -284,7 +284,7 @@ def process_pdf(pdffile, ignore):
     ID = 0
 
     STEP=5
-    DPI=400
+    DPI=250
     for page in range(1, maxPages+1, STEP):
         print("Processing pages", page, min(page + STEP - 1, maxPages))
         images = convert_from_path(pdffile, dpi=DPI, first_page=page, last_page=min(page + STEP - 1, maxPages))
@@ -316,7 +316,7 @@ def process_pdf(pdffile, ignore):
                         text += " " +  data['text'][i]
                     
                         
-                    # cv2.imwrite(f"{OUT}/rois/roi_{i}_{pagen}_{s}.png", roi)
+                    cv2.imwrite(f"{OUT}/rois/roi_{i}_{pagen}_{s}.png", roi)
                     # Some sanitization
                     text = text.replace("\n", " ")
                     text = text.replace(". ", ".\n")

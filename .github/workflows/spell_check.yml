@@ -23,13 +23,20 @@ jobs:
         run: |
           apt-get update
           apt-get install -y curl
-          pdflatex -interaction=nonstopmode -shell-escape main.tex || true
+
+          # Remove widows from the document
+          WIDOW=$(cat ./.github/widow.tex)
+          # escape WIDOW
+          WIDOW=$(echo $WIDOW | sed 's/\//\\\//g')
+          sed  "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/" -i  main.tex > main.fix.tex
+
+          pdflatex -interaction=nonstopmode -shell-escape main.fix.tex || true
           sleep 30
-          bibtex main.aux || true
+          bibtex main.fix.aux || true
           sleep 30
-          pdflatex -shell-escape -interaction=nonstopmode main.tex || true
+          pdflatex -shell-escape -interaction=nonstopmode main.fix.tex || true
           sleep 15
-          pdflatex -shell-escape -interaction=nonstopmode main.tex || true
+          pdflatex -shell-escape -interaction=nonstopmode main.fix.tex || true
           sleep 15
         env:
           ADDCONTRIB: "False"  

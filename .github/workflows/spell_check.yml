@@ -58,7 +58,7 @@ jobs:
 
       - name: Annotate new pdf on a new branch
         run: |
-          git config --global --add safe.directory /__w/main/main
+          git config --global --add safe.directory /__w/Wasm-WebAssembly-diversification-with-guarantees/Wasm-WebAssembly-diversification-with-guarantees
           ls -R .
           
           cp -r ./.github/rois ./rois

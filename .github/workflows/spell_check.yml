@@ -29,6 +29,7 @@ jobs:
           # escape WIDOW
           WIDOW=$(echo $WIDOW | sed 's/\//\\\//g')
           sed -i "s/%%FOR_WIDOW%%/\\\\input{.github\/widow.tex}/"  main.tex > fix.tex
+          cat fix.tex
 
           pdflatex -interaction=nonstopmode -shell-escape fix.tex || true
           sleep 30

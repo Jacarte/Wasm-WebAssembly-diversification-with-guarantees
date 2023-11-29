@@ -357,3 +357,33 @@ Our approach enables the generation of ten of thousands of equivalent program va
 \tool excels in swiftly creating a vast array of unique, highly preserved \wasm programs, demonstrating significant variations in execution traces, including memory. 
 Notably, \tool enhances the resilience of \wasm programs initially vulnerable to Spectre attacks, thereby offering a promising defensive strategy against such threats. 
 Hence, \tool, with its contribution to the wider \wasm ecosystem, paves the way for safer and more robust \wasm applications.
+
+
+
+%We can say that the Wasm bin relative size is quite stochastic.
+The left-most plot of \autoref{performance:impact} shows the distribution of the relative sizes of the generated \Wasm variants.
+We have observed that in the worst-case scenario, a variant may be seven times the size of the original binary.
+On the other hand, \tool produces variants smaller than the original.
+A minimum observed size is 0.05 times the original.
+For each original program, \tool always generates variants that are smaller than the original program.
+Overall, 22\% of the generated variants across all programs are smaller than their original program.
+\tool can generate \Wasm variants across the entire size spectrum.
+Therefore, if necessary, practitioners could balance the number of generated variants with their size to avoid bandwidth issues with extremely large variants.
+
+% Adding garbage as we do, actually affect the compilation time (subplot 2), but it gets normalised in the end, and the worst case is x4 compilation time Wasm 2 MachineCode.
+The \tool variants influence the compilation time when processed through the wasmtime compiler. 
+We have noted that 96\% of these variants require more compilation time. 
+Yet, in the most severe scenario, the compilation time increases to four times the original. 
+Moreover, the production of smaller variants results in a decrease in their compilation time. 
+Specifically, the 4\% of the generated variants have a shorter compilation duration. 
+The primary cause of this phenomenon is that some of the transformations performed by \tool remove bloat from the original binary, e.g. unneeded functions and custom sections.
+
+
+\revision{
+    - In the case of the vulnerable applications, we can find some variants that are slower. The reason is that the cache sampling needs more gathering. Since WASM-MUTATE is able of disrupting timers, that is why they are slower.
+    -Time overhead can be introduced at any location in the executed instructions. Yet, if the timer is affected, we have two options.
+    The threshold is reached with a wrong inference, the wrong secret is printed, which is slow naturally. Then the execution time is larger. In any case the printing forms part of the malicious part of the program.
+    The second option is that the timer is affected but the threshold comparison is never met, therefore, no printing, therefore, we have a decrease in the execution time overall !.
+    - But overall, the execution time overhead depends on the complexity of the program and is completely random. In some cases, there is no overhead. In others the overhead is x4.
+    - We should see this in RQ2. 
+}

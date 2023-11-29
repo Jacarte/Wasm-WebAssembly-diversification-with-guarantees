@@ -4,32 +4,34 @@
 \begin{adjustbox}{width=\linewidth,totalheight=\textheight, keepaspectratio}
 {
 \color{blue}
-    \begin{tabular}{p{1.5cm} | l | l | r | r | p{2cm}  }
+    \begin{tabular}{p{1.5cm} | l | p{1cm} | l| p{2cm}  }
         \hline
-        Source & Program & RQ & \#F & \# Ins. & Attack  \\
+        Source & Programs & RQ & \ Mean \# Ins. & Note  \\
         \hline \hline
-        CROW \cite{arteaga2020crow} & 303 & \ref{rq:static}, \ref{rq:dynamic} & 7-103 & 170-36,023 & N/A  \\
+        
+        CROW \cite{arteaga2020crow} & 303 prog. & \ref{rq:static}, \ref{rq:dynamic} &  8451 & Rosetta  \\
         \hline
 
-        wasmbench \cite{hilbig2021empirical} & 134 & \ref{rq:performance} & 1-8,375 & 11-1,162,469 & N/A \\
+        wasmbench \cite{hilbig2021empirical} & 134 prog. & \ref{rq:performance} & 12665 & Real world \\
         
         \hline
 
-        Swivel \cite{Swivel} & btb\_breakout & \ref{rq:defensive} & 16 & 743 & Spectre branch target buffer (btb)  \\
+        Swivel \cite{Swivel} & 2 prog. & \ref{rq:defensive} & 297;743 & Spectre BTB  \\
         \hline
-        Swivel \cite{Swivel}  & btb\_leakage & \ref{rq:defensive} & 16 & 297 & Spectre branch target buffer(btb)  \\
-        \hline
-        Safeside \cite{Swivel, safeside}  & ret2spec & \ref{rq:defensive} & 2,977 & 378,894 & Spectre Return Stack Buffer (rsb)  \\
-        \hline
-        Safeside  \cite{Swivel, safeside} & pht & \ref{rq:defensive} & 2,978 & 379,058 & Spectre Pattern History Table (pht)  \\
+        Safeside \cite{Swivel, safeside}  & 2 prog. & \ref{rq:defensive} & 378894;379058 & Spectre RSB \& Spectre PHT  \\
 
         
 
-%\end{adjustbox}
     \end{tabular}
 }
 \end{adjustbox}
     
-    \caption{The dataset we use to evaluate \tool. Each row in the table corresponds to programs, with the columns providing: where the program is sourced from, the number of programs, research question addressed, function count, the total number of instructions found in the original \wasm program and the type of attack that the original program was subjected to.}
+    \caption{ \revision{
+        Dataset of 441 programs that we use to evaluate \tool. Each row in the table corresponds to programs, with the columns providing: where the program is sourced from, the number of programs, research question addressed, function count, the total number of instructions found in the original \wasm program and the type of attack that the original program was subjected to.}}
     \label{tab:corpus}
 \end{table}
+
+
+
+    
+%\todo{remove column \# F and put median nb of instructions, put the caption in blue. Add total number of programs in the caption and in the abstract.}

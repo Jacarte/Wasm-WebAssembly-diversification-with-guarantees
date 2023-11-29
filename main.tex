@@ -196,15 +196,22 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-WebAssembly is renowned for its efficiency and security-focused design in browser environments and servers alike. 
-The burgeoning ecosystem of WebAssembly compilers and tools lacks  robust software diversification systems.
-We introduce \tool, a compiler-agnostic WebAssembly diversification engine. It is engineered to fulfill the following key criteria: 
-1) the rapid generation of semantically equivalent yet behaviorally diverse WebAssembly variants, 
-2) universal applicability to any  WebAssembly programs regardless of the source programming language, and 
-3) the capability to counter high-risk security threats. 
-Utilizing an e-graph data structure, \tool is both fast and effective.
-Our experiments reveal that \tool can efficiently generate tens of thousands of unique WebAssembly variants in a matter of minutes.
-Notably, \tool can protect \wasm binaries against timing side-channel attacks, specifically, Spectre. 
+\begin{revision1}
+    
+    WebAssembly, acknowledged as the fourth officially accepted Web language, stands out for its efficiency and emphasis on security. 
+    Yet, its rapidly growing ecosystem of compilers and tools lack of robust software diversification systems. 
+    We present \tool, a diversification engine designed specifically for WebAssembly. 
+    Our engine fulfills several crucial criteria: 
+    1) It can rapidly create semantically identical but behaviorally diverse WebAssembly variants, 
+    2) It can be applied universally to any WebAssembly programs, regardless of the source programming language, and 
+    3) It possesses the ability to counter side-channels. 
+    By utilizing an e-graph data structure, \tool demonstrates both speed and effectiveness.
+    Our experiments revealed that \tool is capable of generating tens of thousands of unique and efficient WebAssembly variants in minutes.
+    Importantly, \tool can protect \wasm binaries from timing side-channel attacks, particularly those of the Spectre type.
+
+    \todo{Add number of programs.}
+    
+\end{revision1} 
 \end{abstract}
 
 %%
@@ -234,35 +241,36 @@ Notably, \tool can protect \wasm binaries against timing side-channel attacks, s
 
 \section{Introduction}
 
-\todo{Add new RQ in intro}
+
 % Sota of Wasm
-\Wasm is the fourth official language of the web, complementing HTML, CSS and JavaScript as a fast, platform-independent binary format  \cite{haas2017bringing, WebAssemblyCoreSpecification}. 
-Since its introduction in 2015, it has seen rapid adoption, with support from all major browsers, including Firefox, Safari and Chrome. 
-\wasm has also been adopted outside of browsers, platforms like Fastly and Cloudflare using it as their core technology \cite{fastly}.
-In addition to major ones like LLVM, more and more compilers and tools can output \wasm binaries \cite{hilbig2021empirical, javy, kmm}. With this prevalence, it is of utmost importance to design software protection techniques for \wasm \cite{avengers}.
+\Wasm is the fourth official language of the web, complementing HTML, CSS and JavaScript as a fast, platform-independent bytecode  \cite{haas2017bringing, WebAssemblyCoreSpecification}. 
+Since its introduction in 2015, it has seen rapid adoption, with support from all major browsers. 
+\wasm has also been adopted outside of browsers, e.g., platforms like Fastly and Cloudflare use it as their core technology \cite{fastly}.
+In addition to major ones like LLVM, more and more compilers and tools can output \wasm binaries \cite{hilbig2021empirical, javy, kmm}. 
+With this prevalence, software protection techniques for \wasm are remarkably needed \cite{avengers}.
 
 % What is software diversification
 Software diversification is a well-known software protection technique \cite{cohen1993operating, 4197960, 595185}, consisting of producing numerous variants of an original program, each retaining equivalent functionality. 
-Software diversification in \wasm has many important application domains, such as optimization \cite{superwasm} and malware evasion \cite{CABRERAARTEAGA2023103296}. 
-It can also been used for fuzzing, a salient example of this was the discovery of a CVE in Fastly in 2021 \cite{CVE}, achieved through automated transformations to a \wasm binary.
+Software diversification in \wasm has many important application domains, such as optimization \cite{superwasm} and malware evasion \cite{CABRERAARTEAGA2023103296} research. 
+It can also been used for fuzzing, a salient example of this was the discovery of a CVE in Fastly in 2021 \cite{CVE}, achieved through transforming \wasm binary with functionally equivalent code replacements.
 
 % 3rd paragraph: requirements on a tool
 %\todo{requirements: work for any source language (the solution we discuss in the next paragraph  is to wasm2wasm transforms), sound (preserve behavior),  fast (for MTD, e.g. MEWE), effective (able to mitigate serious attack vectors).}
 To develop an effective \wasm diversification engine, several key requirements must be met. 
 First, the engine should be language-agnostic, enabling diversification of any \Wasm code, regardless or the source programming language and compiler toolchain.
-Second, it must have the capability to swiftly generate semantically equivalent variants of the original code. 
+Second, it must have the capability to swiftly generate functionally equivalent variants of the original code. 
 The speed at which this diversification occurs holds potential for real-time applications, including  moving target defense \cite{MEWE}. 
-The engine should also possess the ability to counter attackers by producing sufficiently distinct code variants.
+The engine should also possess the ability to harden potential attacks by producing sufficiently distinct code variants.
 This paper present an original system, \tool, that addresses all these requirements.
 
 %\todo{Merge this and the foll paragraph into one, stress, take time on egraphs.}
 % pagraph about wasm-mutate
 % Wasm-mutate guanrantees are based on two aspects: manually verified rw and usage of components such as battle tested parsing and encoding.
-\tool is a tool to automatically transforms a \wasm binary program into a variant binary program that preserves the original functionality. The core of the diversification engine relies on an e-graph data structure \cite{10.1145/3434304}.
+\tool is a tool to automatically transforms a \wasm binary program into variant binary programs that preserves the original functionality. 
+The core of the diversification engine relies on an e-graph data structure \cite{10.1145/3434304}.
 To the best of our knowledge, this work is the first to use an e-graph  for software diversification in \Wasm. An e-graph offers one essential property for diversification:  every path through the e-graph represents a functionally equivalent variant of the input program \cite{10.1145/3434304, 10.1145/3385412.3386001}.  
-A random e-graph traversal can also be very efficient, supporting the generation of tens of thousands of equivalent variants from a single seed program in minutes \cite{10.1145/3547622}. 
+A random e-graph traversal is virtually costless, supporting the generation of tens of thousands of equivalent variants from a single seed program in minutes \cite{10.1145/3547622}. 
 Consequently, the choice of e-graphs is the key to build a diversification tool that is both effective and fast.
-We have designed 135 rewriting rules in \tool, which can transform the e-graph from fine to coarse grained levels. 
 %In our design process, we prioritized semantic equivalence, drawing insights from several well-established software diversification techniques. 
 %This includes the seminal works by Cohen et al. \cite{cohen1993operating} and Forrest et al. \cite{595185}, which laid the foundation for our methodology.
 %\tool is poised to be a tool for: protecting \Wasm binaries against side-channel attacks and testing \Wasm compilers, validators and interpreters. 
@@ -273,21 +281,31 @@ We have designed 135 rewriting rules in \tool, which can transform the e-graph f
 
 %\todo{Redo goal, and how we do/measure so.}
 % Evaluation and hits to results
-We assess the effectiveness of \tool with respect to its capacity at generating variants, which code is different from the original and which execution exhibit diverse instruction and memory traces.
-Our empirical evaluation reuses an existing corpus from the diversification literature \cite{arteaga2020crow}.
-We also measure the speed at which \tool is able to generate the first variant that exhibits a trace different from the original.
-Our security assessment of  \tool consists in evaluating the degree to which diversification can mitigate Spectre attacks. This assessment is made with \wasm programs that have been previously identified as vulnerable to Spectre attacks \cite{Swivel}.
+\begin{revision1}
+    
+    We evaluate \tool by examining its ability to generate \Wasm variants.
+    These variants differ in code from the original and display diverse instruction and memory traces.
+    We have based our empirical evaluation on an existing corpus from the diversification literature \cite{arteaga2020crow, hilbig2021empirical, Swivel}.
+    Additionally, we measure the speed at which \tool can produce the first variant that demonstrates a trace different from the original.
+    Significantly, we present evidence of the performance impact on generated variants of real-world \Wasm programs \cite{hilbig2021empirical}.
+    Our security assessment of \tool involves determining the extent to which diversification can safeguard against Spectre attacks. 
+    We carry out this assessment using \wasm programs previously identified as susceptible to Spectre attacks \cite{Swivel}.
+\end{revision1}
 
 
 Our results demonstrate that \tool can generate thousands of variants in minutes. These variants have unique machine code after compilation with Cranelift (static diversity) and the variants exhibit different traces at runtime (dynamic diversity).
-Our experiments also provide evidence that the generated variants are hardened against Spectre attacks.
+\revision{Moreover, we empirically demonstrate that, in the worst scenario, the performance impact on the generated variants is maintained within the same order of magnitude as the original program.}
+Remarkably, our experiments provide evidence that the generated variants are hardened against Spectre attacks.
 %Therefore, \tool emerges as a potent strategy in combating Spectre and similar security threats, adding an extra layer of protection to complement existing security measures.
 %The insights gleaned from this thorough evaluation not only confirm the effectiveness of \tool but also contribute valuable knowledge to the ongoing development of more secure and robust WebAssembly applications.
 To sum up, the contributions of this work are:
 
 \begin{itemize}
-    \item The design and implementation of a \Wasm diversification pipeline, based on semantic-preserving binary rewriting rules.
+    \item The design and implementation of a \Wasm diversification engine, based on semantic-preserving binary rewriting rules.
     \item Empirical evidence of the diversity of variants created by \tool, both in terms of static binaries and execution traces.
+    \revision{
+        \item Empirical evidence of the performance impact of the variants created by \tool in terms of size and execution time.
+    }
     \item A clearcut demonstration that \tool can protect \wasm binaries against timing side-channel attacks, specifically, Spectre.
     \item An open-source repository, where \tool is publicly available for future research \repourl.    
 \end{itemize}
@@ -303,14 +321,26 @@ We finalize with our conclusions \autoref{conc}.
 \section{Background}
 \label{background}
 
-In this section, we define and formulate the foundation of this work: WebAssembly and its runtime structure, semantic equivalence modulo input, rewriting rules and e-graphs.
+In this section, we define and formulate the foundation of this work: WebAssembly and its runtime structure, and rewriting rules.
 
 \subsection{WebAssembly}
 
-WebAssembly (Wasm) is a binary instruction set initially  meant for the web, and now also used in the backend. 
+WebAssembly (Wasm) is a binary instruction set initially  meant for the web. 
 It was adopted as a standardized language by the W3C in 2017, building upon the work of Haas et al. \cite{haas2017bringing}. One of Wasm's primary advantages is that it defines its own Instruction Set Architecture (ISA), making it platform-independent. 
 As a result, a Wasm binary can execute on virtually any platform, including web browsers and server-side environments. 
 WebAssembly programs are compiled ahead-of-time from source languages such as C/C++, Rust, and Go, utilizing compilation pipelines like LLVM. 
+A \Wasm binary packages a collection of sections.
+Each one of these sections could be optional, yet, if present contains specific restrictions and roles.
+For example, some sections must follow a relative order in the binary location.
+The organization of the \Wasm binary into sections favors the fast validation and compilation of the binary once on the host engines.
+
+
+At runtime, WebAssembly programs operate on a virtual stack that holds primitive data types.
+Such data is then operated by typed stack instructions.
+% These same data types are used to annotate instructions in the WebAssembly code.
+%Additionally, a WebAssembly program might include several custom sections.
+%For example, binary producers such as compilers use custom sections to store metadata, such as the name of the compiler that generates the Wasm code.
+A WebAssembly program also declares linear memory and globals, which are used to store, manipulate and share data during program execution, e.g. to share data with the host engine of the WebAssembly binary.
 
 {
 %\captionsetup{width=0.8\linewidth}
@@ -338,26 +368,33 @@ fn main() {
 
 \input{snippets/c_and_wasm}
 
-% We do not enumerate the types, lets try to be as much agnostic to the version of Wasm as possible
-WebAssembly programs operate on a virtual stack that allows primitive data types.
-% These same data types are used to annotate instructions in the WebAssembly code.
-Additionally, a WebAssembly program might include several custom sections.
-For example, binary producers such as compilers use custom sections to store metadata, such as the name of the compiler that generates the Wasm code.
-A WebAssembly program also declares memory sections and globals, which are used to store, manipulate and share data during program execution, e.g. to share data with the host engine of the WebAssembly binary.
 
-WebAssembly is designed with isolation as a primary consideration. For instance, a WebAssembly binary cannot access the memory of other binaries or cannot interact directly with browser's APIs, such as the DOM or the network. Instead, communication with these features is constrained to functions imported from the host engine, ensuring a secure and safe WebAssembly environment.
+
+WebAssembly is designed with isolation as a primary consideration. 
+For instance, a WebAssembly binary cannot access the memory of other binaries or cannot interact directly with browser's APIs, such as the DOM or the network. Instead, communication with these features is constrained to functions imported from the host engine, ensuring a secure and safe WebAssembly environment.
+\revision{
+Besides, the "least privilege" principle is a fundamental security requirement. 
+This principle is deeply ingrained in WebAssembly’s design, which is reflected in its lack of certain features that are common in other programming environments.
+For example, reflection, a feature available in many high-level programming languages like Java and C\#, is not possible in \Wasm. 
+}
 Moreover, control flow in WebAssembly is managed through explicit labels and well-defined blocks, which means that jumps in the program can only occur inside blocks, unlike regular assembly code \cite{10.1145/3062341.3062363}. 
 %\todo{Change the example to Rust}
 In \autoref{example:cprogram}, we provide an example of a Rust program that contains a function declaration, a loop, a loop conditional, and a memory access. When the Rust code is compiled to WebAssembly, it produces the code shown in \autoref{example:wasmprogram}. The stack operations are folded with parentheses.
 The module in the example contains the components described previously.
+
+
 
 % Now we talk a bit about what is the state of a WebAssembly program.
 %\todo{The following text should be revised. }
 
 The WebAssembly runtime structure is described in the WebAssembly specification and it includes 10 key elements: the Store, Stack, Locals, Module Instances, Function Instances, Table Instances, Memory Instances, Global Instances, Export Instances, and Import Instances. These components interact during the execution of a WebAssembly program, collectively defining the state of a program during its runtime.
 
-Two of these elements, the Stack and Memory instances, are particularly significant in maintaining the state of a WebAssembly program during its execution. The Stack holds both values and control frames, with control frames handling block instructions, loops, and function calls. Meanwhile, Memory Instances represent the linear memory of a WebAssembly program, consisting of a contiguous array of bytes.
-In this paper, we highlight the aforementioned two components to define, compare and validate the state of two WebAssembly programs during their execution. 
+Three of the previous runtime components, the Stack, Memory and Globals, are particularly significant in maintaining the state of a WebAssembly program during its execution. 
+The Stack holds both values and control frames, with control frames handling block instructions, loops, and function calls. 
+The Memory represents the linear memory of a WebAssembly program, consisting of a contiguous array of bytes.
+The Globals save data that is globally accessible by the any code inside the \Wasm program and that can be optionally accessed by the host engine.
+In this paper, we highlight the aforementioned three components to define, compare and validate the state of WebAssembly programs during their execution. 
+
 
 
 \subsection{Rewriting rules}
@@ -365,8 +402,11 @@ In this paper, we highlight the aforementioned two components to define, compare
 
 Our definition of a rewriting rule draws from the one proposed by Sasnauskas et al. \cite{2017arXiv171104422S}, and integrates a predicate to specify the replacement condition.
 Concretely, a rewriting rule is defined as a tuple, denoted as \texttt{(LHS, RHS, Cond)}. Here, \texttt{LHS} refers to the code segment slated for replacement, \texttt{RHS} is the proposed replacement, and \texttt{Cond} stipulates the conditions under which the replacement is acceptable.
-Importantly, \texttt{LHS} and \texttt{RHS} are meant to be semantically equivalent, per the definition of previous section.
+Importantly, \texttt{LHS} and \texttt{RHS} are meant to be functionally equivalent.
 
+We focus on rewriting rules that guarantee functional equivalence. 
+Functional equivalence refers to the notion that two programs or functions are considered equivalent if, for a given specified input domain, they produce the same output\cite{10.1145/2594291.2594334}. 
+%In other words, the semantics of the two programs are equivalent when the input-output relationship (w/ possibly some abstraction), even if the internal implementation details or the structure of the programs differ.
 
 For example, the rewriting rule \texttt{(x,\ x\ i32.or\ x, \{\})} implies that the \texttt{LHS} 'x' is to be replaced by an idempotent bitwise \texttt{i32.or} operation with itself, absent any specific conditions.
 Notice that, for this specific rule, the commutative property shared by \texttt{LHS} and \texttt{RHS}, symbolized as \texttt{(LHS, RHS) = (RHS, LHS)}.
@@ -377,9 +417,6 @@ Based on our understanding, our research is one of the first to apply the concep
 This will expand the potential use cases of \tool. 
 Beyond its role as a diversification tool, it can also be used as a standard tool for conducting program transformations in WebAssembly.
 
-
-We focus on rewriting rules that guarantee functional equivalence. Functional equivalence refers to the notion that two programs or functions are considered equivalent if, for a given specified input domain, they produce the same output values or have the same observable behavior \cite{10.1145/2594291.2594334}. 
-%In other words, the semantics of the two programs are equivalent when the input-output relationship (w/ possibly some abstraction), even if the internal implementation details or the structure of the programs differ.
 
 
 
@@ -402,9 +439,9 @@ WebAssembly binaries and produce semantically equivalent variants.
 
 
 \subsection{Overview}
-The primary objective of \tool is to perform diversification, i.e., generate semantically equivalent variants from a given WebAssembly binary input. 
+The primary objective of \tool is to perform diversification, i.e., generate functionally equivalent variants from a given WebAssembly binary input. 
 \tool's central approach involves synthesizing these variants by substituting parts of the original binary using rewrite rules. 
-It leverages a comprehensive set of rewrite rules, boosted by a diversification space traversals using e-graphs(refer to \autoref{alg}).
+It leverages a comprehensive set of rewriting rules, boosted by a diversification space traversals using e-graphs.
 
 
 In \autoref{fig:wasm-mutate} we illustrate the workflow of \tool: it starts with a WebAssembly binary as input \step{1}.
@@ -413,9 +450,9 @@ Using the defined rewriting rules, \tool builds an e-graph \step{3} for the orig
 An e-graph packages every possible equivalent code derivable from the given rewriting rules  \cite{10.1145/3434304, 10.1145/3385412.3386001}.
 Thus, at this stage, \tool exploits a key property of e-graphs:
 any path traversal through the e-graph results in a semantically equivalent code.
-Then, the diversification process starts, with parts of the original program being randomly replaced by traversal of the e-graph \step{4}.
-The outcome of \tool is a semantically equivalent variant of the original binary \step{5}.
-The tool guarantees semantically equivalent variants because each individual rewrite rule is semantic preserving.
+Then, the diversification process starts, with parts of the original program being randomly replaced by the result of traversing the e-graph \step{4}.
+The outcome of \tool is a functionally equivalent variant of the original binary \step{5}.
+The tool guarantees functionally equivalent variants because each individual rewrite rule is semantic preserving.
 %% Move this to the new in practice section
 %Notice that, the output result in step \step{5} can be connected again to step \step{1}, enabling the stacking of multiple transforms with several iterations of \tool. 
 
@@ -440,23 +477,22 @@ The tool guarantees semantically equivalent variants because each individual rew
 In total, there are 135 possible rewriting rules implemented in \tool, those rules are grouped under several categories, called hereafter meta-rules.
 For example, 125 rewriting rules are implemented as part of a peephole meta-rule.
 %\todo{that's a lot of rules. are they all implemented manually, or do we have some 'meta' rules, i.e. rules that actually can be applied in different ways}
-There are 7 meta-rules that we present next.
+In the following, we present 7 meta-rules.
 
 \textbf{Add type:}
 In WebAssembly, the type section wraps definitions of signatures for the binary functions.
-\tool implements two rewrite rules, one of which is illustrated in the following rewriting rule. 
+\tool implements two rewriting rules, one of which is illustrated in the following. 
 
 \input{snippets/structure_transform/add_type}
 
 This transformation generates random function signatures with a random number of parameters and results count.
 This rewriting rule does not affect the runtime behavior of the  variant.
-It also guarantees that the index of the already defined types is consistent after the addition of a new type. This is because WebAssembly programs cannot access or use a type definition during runtime, they are only used to validate the signature of a function during compilation and validation from the host engine.
+It also guarantees that the index of the already defined types is consistent after the addition of a new type. This is because WebAssembly programs cannot access or use a type definition during runtime, they are only used to validate the signature of a function during compilation and validation in the host engine.
 From the security perspective, this transformation prevents against static binary analysis. 
 For example, to avoid malware detection based on signature set \cite{CABRERAARTEAGA2023103296}.
 
 \textbf{Add function:} The function and code sections of a WebAssembly binary contain function  declarations and the code body of the declared functions, respectively.
-\tool add new functions, through mutations in the two mentioned sections.
-To add a new function, \tool creates a random type signature.
+To add a new function, \tool first creates a random type signature.
 Then, the random function body is created.
 The body of the function consists of returning the default value of the result type.
 The following example illustrates this rewriting rule.
@@ -467,17 +503,17 @@ The following example illustrates this rewriting rule.
 So in practice, the new function is never executed.
 Therefore, executing both, the original binary and the mutated one with the same input, lead to the same final state.
 This strategy follows the work of Cohen, advocating the insertion of harmless `garbage' code into a program \cite{cohen1993operating}. 
-These transformations do not impact the program's functionality; they increase its static complexity.
+These transformations increase the static complexity of the generated variant.
 
 \textbf{Remove dead code:} \tool can randomly remove dead code.
 In particular \tool removes: \emph{functions, types, custom sections, imports, tables, memories, globals, data segments and elements} that can be validated as dead code with guarantees.
 For instance, to delete a memory declaration, the binary code must not contain a memory access operation. 
-Separate mutators are included within \tool for each of the aforementioned elements.
+Separated rewriting rules are included within \tool for each of the aforementioned elements.
 For a more concrete example, the following listing illustrates the case of a function removal.
 
 \input{snippets/structure_transform/remove_function}
 
-When removing a function, \tool ensures that the resulting binary remains valid and semantically identical to the original binary: it checks  that the deleted function was neither called within the binary code nor exported in the binary external interface. 
+In the context of the previous rewriting rule, when removing a function, \tool ensures that the resulting binary remains valid and functionally identical to the original binary: it checks  that the deleted function was neither called within the binary code nor exported in the binary external interface. 
 As exemplified above, \tool might also eliminate a function import while removing the function. 
 
 Eliminating dead code serves a dual purpose: it minimizes the attack surface available to potential malicious actors \cite{236200} and strengthens the resilience of security protocols. 
@@ -487,10 +523,10 @@ On the other hand, the act of removing dead code  reduces the binary's size, imp
 
 
 \textbf{Edit custom sections:}
-The custom section in WebAssembly is used to store metadata, such as the name of the compiler that produces the binary or the symbol information for debugging.
+Custom sections in WebAssembly are used to store metadata, such as the name of the compiler that produces the binary or the symbol information for debugging.
 Thus, this section does not affect the execution of the WebAssembly program.
-\tool includes one mutator to edit custom sections. 
-This is exemplified in the following rewriting rule. 
+\tool includes one transformation to edit custom sections. 
+This is illustrated in the following rewriting rule. 
 
 \input{snippets/structure_transform/custom_section_edit}
 
@@ -501,8 +537,9 @@ This strategy ultimately aids in shrinking the identification and fingerprinting
 
 
 
-\textbf{If swapping:} In WebAssembly, an if-construction consists of a consequence and an alternative. The branching condition is executed right before the \texttt{if} instruction; if the value at the top of the stack is greater than \texttt{0}, then the consequence-code is executed, otherwise the alternative-code is run.
-The \emph{if swapping} rewriting swaps the consequence and alternative codes of an if-construction.
+\textbf{If swapping:} In WebAssembly, an if-construction consists of a consequence and an alternative. The branching condition is executed right before the \texttt{if} instruction.
+If the value at the top of the stack is greater than \texttt{0}, then the consequence-code is executed, otherwise the alternative-code is run.
+The \emph{if swapping} transformation swaps the consequence and alternative codes of an if-construction.
 % This strategy has been employed in other software stacks as well.
 % This strategy increases the difficulty for an attacker to predict the program's control-flow, making it more challenging to exploit vulnerabilities.
 
@@ -515,13 +552,10 @@ In the following rewriting rule we show how \tool performs this rewriting.
 \input{snippets/code_motion/if_swap}
 The consequence and alternative codes are annotated with the letters \texttt{A} and \texttt{B}, respectively.
 The condition of the if-construction is denoted as \texttt{C}.
-The negation of the condition is achieved by adding the \texttt{i32.eqz} instruction in the RHS part of the rewriting rule.
+The negation of the condition is achieved by adding the \texttt{i32.eqz} instruction in the \texttt{RHS} part of the rewriting rule.
 The \texttt{i32.eqz} instruction compares the top value of the stack with zero, pushing the value \texttt{1} if the comparison is true.
 Some if-constructions may not have either a consequence or an alternative code.
 In such cases, \tool replaces the missing code block with a single \texttt{nop} instruction.
-In the context of ROP \cite{Swivel}, this transformation can protect a victim binary to be exploited. 
-
-
 
 \textbf{Loop Unrolling:} 
 Loop unrolling is a technique employed to enhance the performance of programs by reducing loop control overhead \cite{dongarra1979unrolling}. 
@@ -536,10 +570,10 @@ These replicated groups of instructions mirror the original ones, except for bra
 In the following text we illustrate the rewriting rule for a function that contains a loop. 
 \input{snippets/code_motion/loop_unroll}
 
-The loop in the LHS part features a single first-order break, indicating that its execution will cause the program to continue iterating through the loop. 
+The loop in the \texttt{LHS} part features a single first-order break, indicating that its execution will cause the program to continue iterating through the loop. 
 The loop body concludes right before the \texttt{end} instruction, which highlights the point at which the original loop breaks and resumes program execution.
 Upon selecting the loop for unrolling, its instructions are divided into two groups, labeled \texttt{A} and \texttt{B}. 
-As illustrated in the RHS part, the unrolling process entails creating two new WebAssembly blocks. 
+As illustrated in the \texttt{RHS} part, the unrolling process entails creating two new WebAssembly blocks. 
 The outer block encompasses both the original loop structure and the duplicated loop body, while the inner blocks, denoted as \texttt{A'} and \texttt{B'}, represent modifications of the jump instructions in groups \texttt{A} and \texttt{B}, respectively.
 Notice that, any jump instructions within \texttt{A'} and \texttt{B'} that originally leaped outside the loop must have their jump indices incremented by one. 
 This adjustment accounts for the new block scope introduced around the loop body during the unrolling process. 
@@ -554,18 +588,18 @@ Our rewriting rule has the same advantages, it unrolls loops while 1) incorporat
 
 
 \textbf{Peephole:} 
-This transformation category is about rewriting instruction sequences within function bodies, signifying the most granular level of rewriting. 
+This meta-rule is about rewriting peephole instruction sequences within function bodies, signifying the most granular level of rewriting. 
 We implement 125 rewriting rules for this group in \tool. 
 We include rewriting rules that affects the memory of the binary.
 For example, we include rewriting rules that creates random assignments to newly created global variables.
 For these rules, we incorporate several conditions, denoted by \texttt{Cond}, to ensure successful replacement. 
-These conditions can be utilized interchangeably and combined to constrain transformations (see \autoref{alg}).
+These conditions can be utilized interchangeably and combined to constrain transformations.
 
 For instance, \tool is designed to guarantee that instructions marked for replacement are deterministic. 
 We specifically exclude instructions that could potentially cause undefined behavior, such as function calls, from being mutated. 
 For this rewriting type, \tool only alters stack and memory operations, leaving the control frame labels unaffected.
 
-The peephole category rewriting rules are meticulously designed and manually verified. 
+The peephole rewriting rules are meticulously designed and manually verified. 
 An instance of such streamlined transformation can is illustrated in \autoref{rewriting}, \texttt{(\ x\ i32.or\ x, x, \{\})} implies that the \texttt{LHS} 'x' is to be replaced by an idempotent bitwise \texttt{i32.or} operation with itself, in the absence of any specific conditions.
 Therefore, this category continues to uphold the benefits previously discussed under the \emph{Remove Dead Code} category.
 
@@ -701,25 +735,47 @@ The traversal result applied to the original WebAssembly code can observed in \a
 \begin{revision1}
     
 \subsection{\tool in the loop}
-In practice, \tool serves as a  module within a broader process. This process starts from  a \wasm binary as input and iterates over the variants generated by \tool in order to provide guarantees. In particular, it ensures that the output variant exhibits a different machine code per the JIT engine that executes it and unique execution traces when running.
-This process is explicitly laid out in Algorithm \autoref{toolinpractice}.
-One of the key elements in this algorithm is line 8, which activates \tool's diversification engine.
+In practice, we use \tool as a crucial component within a wider process. 
+This process includes an additional validation and verification of the generated variants. 
+It starts with a \wasm binary as the input and iterates over the variants created by \tool to offer guarantees. 
+These guarantees are ensured through five specific components: 1) e-graphs traversals by \tool, 2) a static validation of the variants, 3) a dynamic verification of the variant's state after execution by the host engine, 4) the assessment of different machine code according to the JIT engine, and 5) the detection of unique execution traces during the run. 
+Notice that the composition of these components minimizes the number of variants that \tool can generate without functional equivalence, due to the potential incorrect implementation of the tool. 
+We detail these components in Algorithm \autoref{toolinpractice} and discuss them subsequently.
 
-The algorithm starts by running the original \wasm program and recording its original execution traces, as denoted in line 5.
-These initial traces act as a reference for evaluating subsequent variants.
-A budget-based loop then initiates, as marked by lines 8 and 9, aiming to apply a series of code transformations.
-Upon the successful creation of a unique variant, line 11 triggers a JIT compilation within the \wasm engine.
+
+
+The algorithm starts by executing the original \wasm program and recording its original state, as indicated in line 5.
+This initial state serves as a reference for validating and evaluating subsequent variants.
+The state includes 1) the linear memory after the program initialization (e.g., by invoking the \texttt{_start} function of the initial \wasm binary if it exists), 2) the value and type of the global variables, and 3) the standard output of the program.
+
+
+We start \tool in line 8 of the algorithm, initiating the loop for finding a new variant.
+If a variant is generated, static validation is invoked in line 9.
+This static validation is performed by the wasmtime parser \footnote{https://crates.io/crates/wasmparser}.
+The static validation step ensures the stack's soundness.
+For instance, the static validator verifies that a function call does not refer to a non-existent function index.
+It also ensures the correctness of the execution stack, i.e., a non-returning block should leave the stack in the same state as before execution.
+
+Upon successful static validation of a unique variant, line 11 triggers a JIT compilation within the \wasm engine.
 This step compiles the variant into machine code.
-The algorithm next assesses whether this machine code diverges from the original, thus confirming the actual diversity.
-If this condition is satisfied, the algorithm executes the variant to collect its low-level execution traces.
-The loop ends when a variant is found with new traces that are distinct from the original, as validated in line 15.
-The algorithm then returns the generated variant, which guarantees that both diversified machine code and traces are different from the original.
+The algorithm then checks whether this machine code differs from the original, thus confirming diversity at the machine code level.
+If this condition is met, we execute the variant to collect its state.
 
-\todo{Test based validation. The runtime will capture a lot of ill formed variants. 1- Static verification, 2- Rewriting rules, 3- Execution if possible. Emphasize more the validation steps. }
+Then, the variant's state is compared to the original state for dynamic validation.
+This process is demonstrated in line 14.
+We perform a fine-grained comparison of the variant's globals, linear memory, and output according to a validation workload.
+For example, the variant and the original are considered identical for the linear memory if all bytes are equal and in the same order.
+If there is any difference in these state components, the variant is discarded because they are not equivalent.
+
+The loop ends when a unique variant with new traces distinct from the original is found, as validated in line 17.
+The algorithm then returns the generated variant, ensuring that both diversified machine code and traces differ from the original.
+If this condition is not met, the transformation is stacked in line 19 and the loop restarts.
+
 
 
 \algdef{S}[FOR]{ForEach}[1]{\algorithmicforeach\ #1\ \algorithmicdo}
-\begin{algorithm*}
+\begin{algorithm*}{
+    \color{blue}
     %\footnotesize
 	\begin{algorithmic}[1]
 	%	\Procedure{MyProcedure}{}
@@ -756,10 +812,10 @@ The algorithm then returns the generated variant, which guarantees that both div
         \EndWhile
         \EndProcedure
 	\end{algorithmic} 
-	\caption{\tool in practice.} 
+	\caption{\tool in the loop.} 
 	\label{toolinpractice}
+}
 \end{algorithm*}
-
 \end{revision1}
 
 \subsection{Implementation}
@@ -794,7 +850,7 @@ Our experiments are conducted in Standard F4s-v2(Skylake) Azure machines with 4 
 \newcommand\rqdefensive{To what extent does \tool prevent side-channel attacks on \Wasm programs?\xspace}
 
 
-\newcommand\rqperformance{To what extent does \tool affects the performance of real-world \Wasm program variants?\xspace}
+\newcommand\rqperformance{To what extent does \tool affect the performance of real-world \Wasm program variants?\xspace}
 
 
 \newcommand\rqtesting{To what extent can \tool be used to perform differential testing of \Wasm tools?\xspace}
@@ -839,33 +895,33 @@ Each row in the table corresponds to the used programs, with the columns providi
 We answer \ref{rq:static} and \ref{rq:dynamic} with corpus of programs from Cabrera \etal \cite{arteaga2020crow}, it is shown in the first row of \autoref{tab:corpus}.
 The corpus contains \nProgramsRosetta programs.
 The programs in the corpus perform a range of tasks, from simple ones, such as sorting, to complex algorithms like a compiler lexer. 
-The number of functions for each program ranges from 7 to 103 and, the number of total instructions ranges from 170 to 36023.
+The number of total instructions ranges from 170 to 36023 with a median of 8451 instructions.
 All programs in corpus: 
 1) do not require input from user, \ie do not  functions like \texttt{scanf}, 2) terminate, 3) are deterministic, \ie given the same input, provide the same output and 4) compile to \wasm using \texttt{wasi-clang} to compile them.
+The size if the binaries ranges from 465 to 92114 bytes. 
 
 \begin{revision1}
-To address \ref{rq:performance}, we evaluate the performance impact of the variants generated by \tool through a set of 134 real-world programs. 
+To address \ref{rq:performance}, we evaluate the performance impact of the \tool variants for 134 real-world programs. 
 We gather these programs from the wasmbench dataset \cite{hilbig2021empirical}. 
-The wasmbench dataset consists of over 8000 \Wasm binaries, which were gathered from the internet in 2021. 
-Our filtering criteria select binaries capable of running independently, without user interaction or reliance on external resources such as complementary JavaScript code. 
-More specifically, we chose binaries with \texttt{_start} functions that could be executed directly with wasmtime+WASI in under 60 seconds. 
-This filtering process yields 134 \Wasm binaries, spanning from simple testing programs to barcode reader implementations. 
-As visible in the second row of \autoref{tab:corpus}, the number of functions per program varies between 1 and 8,375, while the total number of instructions ranges from 1 to 1,162,469.
+The wasmbench dataset consists of 8461 \Wasm binaries, which were gathered from the internet in 2021. 
+For our experiment, we need binaries that can execute without user interaction and that do not rely on external resources such as complementary JavaScript code. 
+We filter wasmbench to retrieve all the binaries with \texttt{_start} functions that can be executed directly with wasmtime+WASI in less than 60 seconds. 
+This provides us with  134 real-world \Wasm binaries, which can be used to assess the performance implications of diversification. 
+%Importantly, by using this corpus, we also evaluate the ability of \tool to transform any \Wasm binary in the wild.
+As visible in the second row of \autoref{tab:corpus}, the programs have 12665 instructions as mean value.
 The size if the binaries ranges from 113 to 4304430 bytes. 
 \end{revision1}
 
-We answer \ref{rq:defensive} with four \Wasm programs and three Spectre attack scenarios, from the Swivel project \cite{Swivel}. 
-These programs are summarized in the final four rows of our corpus table.
-The first two programs are manually crafted and contain 16 functions, with instruction counts of 743 and 297, respectively. These binaries are specifically designed to perform the Spectre branch target attack.
-The third and fourth programs, documented in rows four and five, comefrom the Safeside project \cite{safeside}. 
-Unlike the first two, these binaries are significantly larger, each containing nearly 3000 functions and more than 300000 instructions. 
-They are utilized for conducting the Spectre Return Stack (RSB) and Spectre Pattern History (PHT) attacks \cite{Spectre}.
-
-There is a notable difference in the number of functions and instructions between the first pair of Swivel binaries and the latter pair. 
-This disparity can be attributed to the varying compilation processes applied to these \Wasm binaries. 
-% The first two were manually tailored to streamline the attack processes, whereas the other two programs were directly compiled from Safeside \cite{safeside}.
-The three attack scenarios are described in details in 
-\autoref{protocol:rq3}.
+We address \ref{rq:defensive} with four \Wasm programs and three Spectre attack scenarios sourcing from the Swivel and Safeside projects \cite{Swivel,safeside}. 
+The specifics of these programs are revealed in the final two rows of \autoref{tab:corpus}.
+The first two programs, containing 297 and 743 instructions respectively, are intentionally designed for the Spectre branch target attack (BTB).
+These programs have 954 and 1910 bytes in size. 
+The last two programs, presented in the final row, are derived from the Safeside project \cite{safeside}. 
+Unlike the first pair, these programs are substantially larger, containing more than 300000 instructions each and having sizes exceeding 1500000 bytes. 
+They are used to execute the Spectre Return Stack (RSB) and Spectre Pattern History (PHT) attacks \cite{Spectre}. 
+The significant difference in terms of number of instructions and sizes of the first two programs and the last pair is due to the contrasting compilation processes used for these \Wasm binaries. 
+% The first two were painstakingly tailored to streamline the attack processes, while the last two programs were directly compiled from Safeside \cite{safeside}.
+A detailed description of the three attack scenarios is provided in \autoref{protocol:rq3}.
 
 
 %% FROM CROW RQ1
@@ -959,66 +1015,41 @@ Refering to Algorithm \ref{toolinpractice}, we quantify the elapsed time between
 \begin{revision1}
 
 \subsection{Protocol for \ref{rq:performance}}
+We evaluate the performance implications of using \tool to generate variants. 
+To do this, we use programs from previous work \cite{hilbig2021empirical}. 
+We collect the subset of 134 real-world programs that can be executed with no input and no user interaction.
+For each program in the corpus, we generate a maximum of 50 unique variants, with every variant comprising 1000 stacked transformations. 
+The performance of these variants is determined by measuring both the binary size of the compiled program and the execution time for each program and its corresponding variants. 
+For binary size, we collect the  binary size after native code compilation by wasmtime.
+In total, we measure these parameters across a set of 6834 (134 + $134\times50$) programs. 
+To compare all programs and their variants, we apply the following relative metrics:
 
-We use \ref{rq:performance} to assess the performance implications of the variants produced by \tool. 
-A corpus of 134 real-world programs serves as our basis for this task. 
-We evaluate the performance of the generated variants by measuring the \Wasm program size, wasmtime-compiled binary size, compilation duration, and program execution time for each program and its variants. 
-We generate up to 50 unique variants for each program, each comprising 1000 stacked transformations diversified with 50 different seeds.
-To sum up, we measure such parameters for 6834(134 + $134\times50$) programs.
-To be able to compare all programs and all variants as a whole we use the following relative metrics:
 
-\begin{metric}{Relative Wasm binary size impact:}\label{metric:size} Given an original \Wasm program P and a variant V, the relative binary size is defined as:
+\begin{metric}{Relative Machine Code size impact:}\label{metric:mcize} Given an original \Wasm program P and a variant V, given MP and MV the machine code for P and V respectively, the relative machine code size is defined as:
 
 $$
-    RBS=\frac{len(V)}{len(P)}
+    \frac{|MV|}{|MP|}
 $$
 
-Here, the \textit{len} function returns the byte size of an input binary.
+Here, the \textit{| |} function returns the byte size of an input binary.     
 \end{metric}
 
-We apply the previous metric similarly to the machine code generated by wasmtime:
-
-\begin{metric}{Relative Machine Code size impact:}\label{metric:mcize} Given an original \Wasm program P and a variant V, with MP and MV representing the machine code for P and V respectively, the relative machine code size is defined as:
-
-$$
-    RMcS=\frac{len(MV)}{len(MP)}
-$$
-     
-\end{metric}
-
-We assess the implications of compiling the variants generated by \tool. 
-This method acts as a proxy to measure the compilation impact on other engines. 
-Many of our transformations aim to modify the original \Wasm without altering its execution. 
-These particular transformations, although they do not directly affect execution, could influence the cold start and instantiation of the variants. 
-The subsequent metric evaluates the relative impact of compiling a variant.
-
-\begin{metric}{Relative compiling time impact:}\label{metric:ct}
-Given a program P and a variant V, we define the relative compiling time as follows:
-
-$$
-    RCT=\frac{ct(V)}{ct(P)}
-$$
-
-\texttt{ct} represents the time required by the wasmtime compiler, cranelift, for JITing the \Wasm binary to machine code.
-
-\end{metric}
-
-Last but not least, we execute each program and variant, and measure their execution time. 
+Finally, we execute each program and variant, and measure their execution time. 
 We then compare the execution time of variants with respect its original program execution time.
 
 \begin{metric}{Relative execution time:}\label{metric:ex}
 Given a program P and a variant V, the relative execution time is defined as:
 
 $$
-    RExT=\frac{ex(V)}{ex(P)}
+    \frac{init(V)}{init(P)}
 $$
 
-\texttt{ex} measures the time of executing the \texttt{_start} function of an already JITed \Wasm binary.
+\texttt{init} measures the time of executing the \texttt{_start} function of an already JITed \Wasm binary.
 \end{metric}
 
-We collect \autoref{metric:ct} and \autoref{metric:ex} after running each program and variant 100 times.
-We discard the first 20 measurements to remove noise and to warm up the engine.
-Thus, for each program and variant we collect 80 compilation times and 80 execution times.
+We collect \autoref{metric:ex} after running each program and variant 100 times.
+We discard the first 20 measurements to remove noise and to warm up the JIT engine.
+Thus, for each program and variant we collect 80 execution times.
   
 \end{revision1}
 
@@ -1235,71 +1266,57 @@ Overall, these findings influence the diversity of execution traces among the ge
 \begin{revision1}
 \subsection{\rqperformance}
 
-\begin{figure*}
-    \centering
-    \includegraphics[width=\linewidth]{plots/rq4/plots.pdf}
-    \caption{Each plot corresponds to \autoref{metric:size}, \autoref{metric:ct}, \autoref{metric:mcize}, and \autoref{metric:ex}, from left to right.
-The Y-axis in each plot represents the density of the population of samples, while the X-axis represents a relative value. \tool has minimal impact on execution time with a worst case of variants that are two times slower than the original. }
-  \label{performance:impact}
-\end{figure*}
+
 
 To answer \ref{rq:performance}, we generate variants for 134 real-world programs selected from the wasmbench dataset \cite{hilbig2021empirical}.
 We produce 50 variants for each original program and execute them along with the original program, for a total of $(50 + 1)\times134$ variants.
-We collect several metrics: the variant \Wasm binary size, the machine code size after the \Wasm program is JITed by wasmtime, the compilation time, and the execution time of the variant.
-In \autoref{performance:impact}, we plot each collected metric.
-Each plot corresponds to \autoref{metric:size}, \autoref{metric:ct}, \autoref{metric:mcize}, and \autoref{metric:ex}, from left to right.
-The Y-axis in each plot represents the density of the population of samples, while the X-axis represents a relative value.
+We collect the machine code size after the \Wasm program is JITed by wasmtime and the execution time of each original program/variant.
 
 
-%We can say that the Wasm bin relative size is quite stochastic.
-The left-most plot of \autoref{performance:impact} shows the distribution of the relative sizes of the generated \Wasm variants.
-We have observed that in the worst-case scenario, a variant may be seven times the size of the original binary.
-On the other hand, \tool produces variants smaller than the original.
-A minimum observed size is 0.05 times the original.
-For each original program, \tool always generates variants that are smaller than the original program.
-Overall, 22\% of the generated variants across all programs are smaller than their original program.
-\tool can generate \Wasm variants across the entire size spectrum.
-Therefore, if necessary, practitioners could balance the number of generated variants with their size to avoid bandwidth issues with extremely large variants.
-
-% Adding garbage as we do, actually affect the compilation time (subplot 2), but it gets normalised in the end, and the worst case is x4 compilation time Wasm 2 MachineCode.
-The \tool variants influence the compilation time when processed through the wasmtime compiler. 
-We have noted that 96\% of these variants require more compilation time. 
-Yet, in the most severe scenario, the compilation time increases to four times the original. 
-Moreover, the production of smaller variants results in a decrease in their compilation time. 
-Specifically, the 4\% of the generated variants have a shorter compilation duration. 
-The primary cause of this phenomenon is that some of the transformations performed by \tool remove bloat from the original binary, e.g. unneeded functions and custom sections.
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{plots/rq4/mcsize.pdf}
+    \caption{Distribution of the relative machine code size.
+The Y-axis represents the count of variants, while the X-axis represents the relative size of the variants, in number of machine code bytes. \tool generates \Wasm variants that exhibit a broad range of binary sizes.}
+  \label{impact:mcsize}
+\end{figure} %this is a gift for the reviewers
 
 
 % The compiler removes a lot of garbage and makes optimisations, in subplot3 we see a more “normal” distribution but still very similar to plot 1. 75% of preservation is why, already discussed in RQ1 .
-The compiler optimizations yield a less diverse range of machine code sizes, in comparison to the spectrum of \Wasm binary sizes.
-This trend is shown in the third plot of \autoref{performance:impact} (from left to right).
-This is because the preservation of diversification, as addressed in the response to \autoref{rq:static}.
-In particular, some variants in \Wasm may be considerably large, but this size impact is subsequently reduced by the compiler.
-Besides, in extreme cases, the size of the generated machine code may increase up to 4.7 times.
-The size of the produced machine code could potentially affect the distribution of programs across the network.
-For example, FaaS platforms that use \Wasm typically favor the distribution of machine codes within their platform, instead of directly transmitting the \Wasm binary.
-This is primarily due to the uniformity of the machine spectrum within such platforms, e.g. a majority of x86 architecture machines in their platforms.
-However, we highlight that 2\% of the generated variants result in a smaller machine code size.
-Therefore, practitioners may opt to distribute only such a percentage of machine code, especially if its distribution presents a significant concern.
+In \autoref{impact:mcsize}, we plot the distribution of the relative machine code size.
+The Y-axis represents the count of variants, while the X-axis represents the relative value of the relative machine code size.
+The median relative machine code size is 1.6.
+The size of the generated machine has a maximum increase of 4.8 times the original size.
+Overall, the wasmtime compiler yields a diverse range of machine code sizes.
+The larger size of the produced machine code could potentially affect the distribution of programs across the network.
+Therefore, practitioners may opt to distribute only those variants that only have a small increase in binary size when bandwidth presents a significant concern.
+% For example, FaaS platforms that use \Wasm typically favor the distribution of machine codes within their platform, instead of directly transmitting the \Wasm binary. This is primarily due to the uniformity of the machine spectrum within such platforms, e.g. a majority of x86 architecture machines in their platforms.
+Also, we highlight that 2\% of the generated variants result in a smaller machine code size, showing that diversification is is sometimes serendipitous optimization.
 
 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{plots/rq4/ext.pdf}
+    \caption{Distribution of relative execution times for variants produced by \tool.
+The Y-axis represents the count of variants, while the X-axis represents the relative execution times of the variants. Relative execution times display a normal distribution, 29\% of the variants are faster while 70\% operating slower. }
+  \label{impact:time}
+\end{figure}
 
 %The last one is almost a perfect normal distribution around a relative execution time of 1.0
 %In the worst case we are x2 execution time. In the evasion paper we got x2 in the worst scenario as well with the cryptominers.
 % The cherry on the pie
-The right-most plot of \autoref{performance:impact} shows the distribution of relative execution times for variants produced by \tool.
-We have observed a normal tendency to generate variants with identical execution times (as shown in the normal distribution around the 1.0 value).
-We have noted that 45\% of the variants perform faster than the original, in contrast to 54\% that are slower.
+In \autoref{impact:time} we show the distribution of relative execution times for variants produced by \tool.
+The Y-axis represents the count of variants, while the X-axis represents the relative value of the relative execution time size.
+The median relative execution time is 1.1.
+Overall, we observe a gaussian like shape.
+We note that 29\% of the variants perform faster than the original, in contrast to 70\% that are slightly slower.
 In the worst-case scenario, \tool produces variants that perform twice as slowly as the original.
 On the other hand, in the best-case scenario, \tool produces variants that are five times faster than the original.
 We have identified two primary reasons for the minimal impact of \tool on variant execution times.
 First, \tool generates variants by injecting phantom code which, in practice, is not executed.
-This impacts the \Wasm variant sizes, compilation time, and machine code size, but not the execution time.
-Second, \tool produces variants by optimizing them.
-The real-world programs tested may not be compiled with the best optimization possible.
-This allows for the generation of faster variants through the application of optimizations during the diversification process of \tool.
-
-
+This impacts the machine code size, but not the execution time.
+Second, \tool produces variants by optimizing the original programs, in particular due to peep-hole diversification techniques.
+This allows for the generation of faster variants through the stacking of optimizations during the e-graph traversal by \tool.
 
 
 
@@ -1307,14 +1324,10 @@ This allows for the generation of faster variants through the application of opt
 \begin{tcolorbox}[boxrule=1pt,arc=.3em,boxsep=-1.3mm]
   \textbf{Answer to \ref{rq:performance}}: 
     \revision{
-    The \Wasm variants produced by \tool vary in size; some are up to seven times larger, while others are up to 20 times smaller than the original binary. 
-    Compilation times for these variants typically increase, with 96\% taking longer than the original to compile. 
-    Although the \Wasm binaries exhibit a broad size range, compiler optimizations lead to a narrower range of machine code sizes. 
-    A slight majority of these sizes may be larger. 
-    Execution times for \tool variants display a normal distribution, with some running up to five times faster due to optimizations, despite 54\% operating slower. 
-    In general, the impact of \tool remains within the same order of magnitude as the metrics taken from the original program. 
-    Moreover, the diversification process of \tool can be fine-tuned to evade extreme overhead cases. 
-    For instance, practitioners might choose only those variants that perform better than or equal to the original programs.
+    \tool generates \Wasm variants that tend to be larger than the original program. 
+    Execution times for \tool variants display a normal distribution close to the original performance.
+    In general, the impact of \tool remains within the same order of magnitude with a median value of 1.1 the original execution time. 
+    The diversification workflow of \tool can be expanded by practitioners to filter out extreme variants, such as the ones that are too big or too slow. 
     }
 \end{tcolorbox}
 
@@ -1357,10 +1370,9 @@ As depicted in the plots, the exfiltration bandwidth diminishes following the ap
 This success is explained by the fact that \tool synthesizes variants that effectively alter memory access patterns. 
 Specifically, it does so by amplifying spill/reload operations, injecting artificial global variables, and changing the frequency of pre-existing memory accesses. 
 These transformations influence the \wasm program's memory, causing disruption to cache predictors. 
-As a result, these alterations contribute to a reduction in exfiltration bandwidth.
 
 % More fine grained
-Furthermore, many attacks rely on a timer component to measure cache access time for memory, and disrupting this component  effectively impairs the attack's effectiveness. 
+Many attacks rely on a timer component to measure cache access time for memory, and disrupting this component  effectively impairs the attack's effectiveness. 
 This strategy of dynamic alteration has also been  employed in other scenarios. 
 For instance, to counter potential timing attacks, Firefox randomizes its built-in JavaScript timer \cite{10.1007/978-3-319-70972-7_13}. \tool applies the same strategy by interspersing instructions within the timing steps of \wasm variants. 
 In \autoref{example:timer} and \autoref{example:timer2}, we demonstrate \tool's impact on time measurements. 
@@ -1389,7 +1401,7 @@ In every program, we note that the exfiltration bandwidth tends to be greater th
 This indicates that, although the transformations generally contribute to the reduction of data leakage, the initial few might not consistently contribute positively towards this objective.
 We have identified several fundamental reasons, which we discuss below.
 
-Firstly, as emphasized in prior applications of \tool \cite{CABRERAARTEAGA2023103296}, uncontrolled diversification can be counterproductive if a specific objective, such as a cost function, is not established at the beginning of the diversification process.
+First, as emphasized in prior applications of \tool \cite{CABRERAARTEAGA2023103296}, uncontrolled diversification can be counterproductive if a specific objective, such as a cost function, is not established at the beginning of the diversification process.
 Secondly, while some transformations yield distinct \wasm binaries, their compilation produces identical machine code.
 Transformations that are not preserved undermine the effectiveness of diversification.
 For example, incorporating random \texttt{nop} operations directly into \wasm does not modify the final machine code as the \texttt{nop} operations are often removed by the compiler.
@@ -1404,15 +1416,6 @@ The former comprises more than 300k instructions, while the latter two include f
 Given that \tool applies precise, fine-grained transformations one at a time, the likelihood of impacting critical attack components, such as timing memory accesses, diminishes for larger binaries, particularly when limited to 1,000 transformations.
 Based on these observations, we believe that a greater number of stacked transformations would further contribute to eventually eliminating the attacks associated with ret2spec and pht.
 
-\revision{
-    - In the case of the vulnerable applications, we can find some variants that are slower. The reason is that the cache sampling needs more gathering. Since WASM-MUTATE is able of disrupting timers, that is why they are slower.
-    -Time overhead can be introduced at any location in the executed instructions. Yet, if the timer is affected, we have two options.
-    The threshold is reached with a wrong inference, the wrong secret is printed, which is slow naturally. Then the execution time is larger. In any case the printing forms part of the malicious part of the program.
-    The second option is that the timer is affected but the threshold comparison is never met, therefore, no printing, therefore, we have a decrease in the execution time overall !.
-    - But overall, the execution time overhead depends on the complexity of the program and is completely random. In some cases, there is no overhead. In others the overhead is x4.
-    - We should see this in RQ2. We can show that the execution times for the variants are completely random. 
-    Probably the most important insight: If the worst case in execution time is x2, that means that the decrease in exfiltration bandwidth is not because we are augmenting the execution time (recall that the bandwidth is the number of bytes divided by the execution time). Indeed we are exfiltrating the wrong bytes by perturbing the predictability of the cache side-channel. 
-}
 
 \begin{tcolorbox}[boxrule=1pt,arc=.3em,boxsep=-1.3mm]
   \textbf{Answer to \ref{rq:defensive}}:   Software diversification is effective at synthesizing \wasm binaries that mitigate Spectre-like attacks.  
@@ -1433,20 +1436,28 @@ Through the creation of semantically equivalent variants, the spill/reload compo
 
 
 
-\textbf{Mitigating Port Contention with \tool} 
+\textbf{Mitigating Port Contention with \tool:} 
 Rokicki et al. \cite{10.1145/3488932.3517411} showed the practicality of a covert side-channel attack using port contention within \Wasm code in the browser. This attack fundamentally relies on the precise prediction of WebAssembly instructions that trigger port contention.
 To combat this security concern, \tool could be conveniently implemented as a browser plugin. 
 \tool has the ability to replace the \wasm instructions used as port contention predictor with other instructions.
 This would inevitably remove the port contention in the specific port used to conduct the attack, hardening browsers against such attacks.
 
 
-{
-\color{blue}
+\begin{revision1}
+    
+    \textbf{Limitations of \tool:} We have observed several limitations of \tool.
+    First, the size of the variants, as demonstrated in the response to \ref{rq:performance}, is generally larger than the original. 
+    This results in the potential for increased compilation time, cold spawn, and memory usage by the machine code. 
+    Second, the rewriting rules of \tool are not easily extendable, excepting for manual addition and subsequent recompilation of the tool. 
+    Third, the mutation backtrack of \tool does not account for the state of the mutation, i.e., \tool does not retain parsing information, the CFG, or data flow graph for a previously observed binary. 
+    This leads to the need of parsing the same binary each time \tool conducts a transformation, which, as discussed in the response to \ref{rq:static}, slightly affects the number of generated variants. 
+    Fourth, the preservation of variants, as indicated in \ref{rq:static}, is comparatively low in relation to other diversification tools such as CROW \cite{arteaga2020crow}. 
+    This is primarily due to the fact that rewriting rules are manually crafted. 
+    Unlike the transformations that CROW can generate, these can be more easily removed by compiler optimizations.
+    Fifht, parsing of the Wasm binaries... 
+    
+\end{revision1}
 
-\textbf{Limitations of WASM-MUTATE}
-- Several of the real-world programs are not necessarily real-world. THey might belong to real-world projects, that does not mean that the binary is perse a real-world program. For example, we have found several programs that just print Hello world. 
-- Compilation time and cold spawn. 4 times the original, yet, in practica the compilation to machine code is cached. Therefore, the impact is really low. 
-}
 
 
 \section{Related Work}

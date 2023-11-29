@@ -50,7 +50,11 @@ jobs:
           cp -r ./ /sources
           cd /sources
           rm -rf .github
-          rm -rf *.pdf
+          rm  *.pdf
+          rm  *.abs
+          rm  *.aux
+          rm  *.log
+          rm  *.out
 
       - name: Upload sources to artifacts
         uses: actions/upload-artifact@v3

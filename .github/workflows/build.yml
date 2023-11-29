@@ -1,0 +1,61 @@
+name: Build
+# This workflow is triggered on pushes to the repository.
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+  
+jobs:
+  build:
+    name: Spell checking
+    # This job runs on Linux
+    runs-on: ubuntu-20.04
+    container:
+      image: ghcr.io/jacarte/latex-build:latest27
+      credentials:
+        username: jacarte
+        password: ${{  secrets.DOCKER_CONTAINER_REGISTRY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build document
+        run: |
+          apt-get update
+          apt-get install -y curl
+
+
+          pdflatex -interaction=nonstopmode -shell-escape main.tex || true
+          sleep 30
+          bibtex fix.aux || true
+          sleep 30
+          pdflatex -shell-escape -interaction=nonstopmode main.tex || true
+          sleep 15
+          pdflatex -shell-escape -interaction=nonstopmode main.tex || true
+          sleep 15
+        env:
+          ADDCONTRIB: "False"  
+          # Avoid widows, this helps the OCR for preventing the "CASING" error
+          NOWIDOW: "True"
+      
+      - name: Upload assets to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: main.pdf 
+          path: main.pdf 
+
+      - name: Save compilation sources
+        run: |
+          mkdir -p /sources
+          cp -r ./ /sources
+          cd /sources
+          rm -rf .github
+          rm -rf *.pdf
+
+      - name: Upload sources to artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: sources
+          path: /sources 
+  
+

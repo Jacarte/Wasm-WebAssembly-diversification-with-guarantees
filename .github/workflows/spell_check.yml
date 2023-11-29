@@ -44,28 +44,7 @@ jobs:
           ADDCONTRIB: "False"  
           # Avoid widows, this helps the OCR for preventing the "CASING" error
           NOWIDOW: "True"
-      
-      - name: Upload assets to artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: fix.pdf 
-          path: fix.pdf 
-
-      - name: Save compilation sources
-        run: |
-          mkdir -p /sources
-          cp -r ./ /sources
-          cd /sources
-          rm -rf .github
-          rm -rf *.pdf
-          rm fix.tex
-
-      - name: Upload sources to artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: sources
-          path: /sources 
-  
+     
 
       - name: Spell checking report
         run: |

@@ -58,6 +58,7 @@ jobs:
           cd /sources
           rm -rf .github
           rm -rf *.pdf
+          rm fix.tex
 
       - name: Upload sources to artifacts
         uses: actions/upload-artifact@v3

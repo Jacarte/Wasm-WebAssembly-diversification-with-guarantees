@@ -145,7 +145,7 @@ def get_paragraphs_from_image(imagefile, sizemin=10000):
     thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
     # Create rectangular structuring element and dilate
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,3))
+    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (5,4))
     dilate = cv2.dilate(thresh, kernel, iterations=13)
 
     # Find contours and draw rectangle

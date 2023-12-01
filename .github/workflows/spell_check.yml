@@ -49,8 +49,10 @@ jobs:
       - name: Spell checking report
         run: |
           mkdir -p ./.github/rois
-          pip3 install readability
+          pip3 install readability happytransformer
           python3 ./.github/spell_check.py fix.pdf dico.text
+        env:
+          TOKENIZERS_PARALLELISM: False
         
       - name: GIT
         run: git config --global user.email "action@github.com" && git config --global user.name "GitHub Action"

@@ -22,15 +22,26 @@
             position: absolute;
             z-index: 1000;
             opacity: 0;
-            width: 500px;
+            width: 100px;
             word-wrap: break-word;
             padding: 0;
             margin: 0; 
             overflow-y: scroll;
             height: 20px !important;
         }
+        .warning.ai-replace {
+            background: rgba(255, 255, 120, 0.8) !important;
+            width: 1600px !important;
+        }
+        .warning.ai-remove {
+            background: rgba(255, 120, 255, 0.5)!important;
+        }
+        .warning.ai-insert {
+            background: rgba(120, 255, 120, 0.5)!important;
+        }
         .warning:hover {
             opacity: 1;
+            width: 600px;
             background: rgba(125, 255, 255, 0.8);
             padding: 0;
             margin: 0;
@@ -44,6 +55,15 @@
             opacity: 1;
             padding: 0;
             margin: 0;
+        }
+        .high.ai-remove {
+            border: 3px solid blue !important;
+        }
+        .high.ai-replace {
+            border: 3px solid yellowgreen !important;
+        }
+        .high.ai-insert {
+            border: 3px solid orange !important;
         }
         .high:hover {
             position: absolute;
@@ -90,17 +110,20 @@
             <div class="page">
                 {% for ids in d %}
                     {% for match, place in ids.matches | zip(ids.places) %}
-                        <div class="high" style="left: {{ place.x }}px; top: {{place.y + 0}}px;  width: {{place.w}}px; height: {{place.h}}px">
+                        <div class="high {{match.category}}" style="left: {{ place.x }}px; top: {{place.y + 0}}px;  width: {{place.w}}px; height: {{place.h}}px">
                         </div> 
                         <div class="warning {{match.category}}" style="left: {{ place.x }}px; top: {{place.y + 0}}px">
                                
                             <div class="message">
-                                <p style="color: red">{{ ids.chunk }}</p>
+                                <p style="color: black; font-size: 50pt;">{{ ids.chunk }}</p>
                                 </hr>
                                 <p>{{ match.message }}
                                 </p>
                                 </hr>
-                                
+                                <h4>Happy suggestion</h4>
+                                <p>{{ match.happy }}
+                                </p>
+                                </hr>
                                 <p>{{ match.text }}</p>
                                 
 

@@ -6,11 +6,90 @@ import sys
 import os
 import pytesseract
 import json
+from happytransformer import  HappyTextToText, TTSettings
+from hashlib import md5
+import math
 
 import language_tool_python
-tool = language_tool_python.LanguageTool('en-UK')
+tool = language_tool_python.LanguageTool('en-UK', config={ 'cacheSize': 1000, 'pipelineCaching': True })
+
+model = HappyTextToText("T5", "vennify/t5-base-grammar-correction")
+beam_settings =  TTSettings(num_beams=5, min_length=1, max_length=10000000)
 
 OUT = os.path.abspath(os.path.dirname(__file__))
+
+
+def get_edit_path(D, tokens_original, tokens_corrected):
+    """
+    Returns a list of tuples of (original, corrected) words
+    """
+
+    i = len(tokens_original)
+    j = len(tokens_corrected)
+
+    edit_path = []
+
+    while (i > 0 or j > 0):
+        if (i > 0 and j > 0 and tokens_original[i - 1] == tokens_corrected[j - 1]):
+            edit_path.append((tokens_original[i - 1], i- 1, tokens_corrected[j - 1]))
+            i = i - 1
+            j = j - 1
+        elif (i > 0 and D[i][j] == D[i - 1][j] + 1):
+            edit_path.append((tokens_original[i - 1], i -1,  ""))
+            i = i - 1
+        elif (j > 0 and D[i][j] == D[i][j - 1] + 1):
+            edit_path.append(("", -1, tokens_corrected[j - 1]))
+            j = j - 1
+        else:
+            edit_path.append((tokens_original[i - 1], i-1, tokens_corrected[j - 1]))
+            i = i - 1
+            j = j - 1
+
+    edit_path = [ e for e in edit_path if e[0] != e[2] ]
+    return edit_path
+
+def get_levensthein_edit_path(original, corrected):
+    """
+    Returns a list of tuples of (original, corrected) words
+    """
+    tokens_original = original.split()
+    tokens_corrected = corrected.split()
+
+    distances = np.zeros((len(tokens_original) + 1, len(tokens_corrected) + 1))
+
+    a = 0
+    b = 0
+    c = 0
+
+    for t1 in range(len(tokens_original) + 1):
+        distances[t1][0] = t1
+
+    for t2 in range(len(tokens_corrected) + 1):
+        distances[0][t2] = t2
+
+    for t1 in range(1, len(tokens_original) + 1):
+        for t2 in range(1, len(tokens_corrected) + 1):
+            if (tokens_original[t1-1] == tokens_corrected[t2-1]):
+                distances[t1][t2] = distances[t1 - 1][t2 - 1]
+            else:
+                a = distances[t1][t2 - 1]
+                b = distances[t1 - 1][t2]
+                c = distances[t1 - 1][t2 - 1]
+
+            if (a <= b and a <= c):
+                distances[t1][t2] = a + 1
+            elif (b <= a and b <= c):
+                distances[t1][t2] = b + 1
+            else:
+                distances[t1][t2] = c + 1
+
+    D = distances[len(tokens_original)][len(tokens_corrected)]
+
+    # Now get the edit path
+
+    edit_path = get_edit_path(distances, tokens_original, tokens_corrected)
+    
+    return edit_path
 
 
 def get_by_template(imagefile, templatefile, th=0.6):
@@ -190,6 +269,113 @@ def get_terms(text):
     print(_3grams)
     return []
     
+def ai_spell_check(ID, text, imagedata,pagen, tesseractdata, rect, relative, words2ignore = []):
+
+    # TODO split the text by lines
+    lines = text.split("\n")
+
+    suggested = ""
+    for l in lines:
+
+        grammar = f"grammar: {l}"
+        happy_suggestions = model.generate_text(grammar, beam_settings)
+        happy_suggestions = happy_suggestions.text
+       
+        suggested += happy_suggestions + "\n"
+
+    edit_distance = get_levensthein_edit_path(text, suggested)
+    print(edit_distance)
+    print("=====================================")
+    print(suggested)
+    print("-------------------------------------")
+    print(text)
+    print("=====================================")
+    boxes = len(tesseractdata['level'])
+    obs = []
+    hashes = set()
+
+    if len(edit_distance) > 0:
+
+        for original, index, corrected in edit_distance:
+            obj = dict(
+                    # Unique id
+                    matches = []
+                )
+        
+            tpe="replace"
+            category = "ai-replace"
+            replacements = [corrected]
+            if corrected == "":
+                tpe = "delete"
+                category = "ai-remove"
+                replacements = []
+            if original == "":
+                tpe = "insert"
+                category = "ai-insert"
+                replacements = [corrected]
+
+            chunk = original
+            if chunk.lower() not in words2ignore:
+                obj['matches'].append(dict(
+                    message=f"{tpe} '{original}' by '{corrected}'",
+                    replacements=replacements,
+                    ruleId="AI",
+                    offsetInContext=text.index(original),
+                    category=category,
+                    offset=0,
+                    errorLength=len(original),
+                    text=text,
+                    happy=suggested
+                ))
+                obj['places'] = []
+                globalx, globaly, _, _ = rect
+                margin = 3
+                # check each box and collect the text again, if it is equal to the error chunk, then, that is the place
+                scores = []
+                for i in range(boxes):
+                    texti = tesseractdata['text'][i]
+                    score = get_score(texti, chunk)
+                    scores.append((score, i, index, tesseractdata['width'][i], tesseractdata['height'][i]))
+
+
+                # the smaller the rectangle the better
+                scores = sorted(scores, key=lambda x: x[2]*x[3])
+                # this should solve the location
+                scores = sorted(scores, key=lambda x: abs(x[1] - x[2]))
+                scores = sorted(scores, key=lambda x: x[0])
+                # then sort by position top, left
+
+                # Draw all rectangles with the same score
+                for sc, i, index, w, h in scores:
+                    x, y, w, h = tesseractdata['left'][i], tesseractdata['top'][i], tesseractdata['width'][i], tesseractdata['height'][i]
+                    if min(w, h)/max(w, h) < 1/6:
+                        continue
+                    cv2.rectangle(imagedata, (x + globalx - margin, y + globaly - margin), (x + w  + globalx + margin, y + h + globaly + margin), (255,36,12), 2)
+
+                    if len(obj['places']) == 0:
+                        # But only keep one ?
+                        obj['places'].append(dict(
+                            x=x + globalx ,
+                            y =  y + globaly,
+                            w = w,
+                            h = h
+                        ))
+                obj['pagefile'] = relative
+                obj['chunk'] = chunk
+                obj['pageannotatedfile'] = f"rois/annotated_{pagen}.png"
+                # Add a different color per rule and annotate the image
+
+                hashi = md5(json.dumps(obj).encode('utf-8')).hexdigest()
+                if hashi in hashes:
+                    continue
+                
+                obj['id'] = ID
+                ID += 1
+                obs.append(obj)
+                hashes.add(hashi)
+    
+    return obs, ID
+
 
 def spell_check(ID, text, imagedata,pagen, tesseractdata, rect, relative, words2ignore = []):
     matches = tool.check(text)
@@ -267,7 +453,7 @@ def spell_check(ID, text, imagedata,pagen, tesseractdata, rect, relative, words2
 
                 ID += 1
                 obs.append(obj)
-    return obs
+    return obs, ID
 
 def process_pdf(pdffile, ignore):
     words2ignore = open(ignore, 'r').readlines()
@@ -284,11 +470,12 @@ def process_pdf(pdffile, ignore):
     ID = 0
 
     STEP=5
-    DPI=250
+    DPI=300
     for page in range(1, maxPages+1, STEP):
         print("Processing pages", page, min(page + STEP - 1, maxPages))
         images = convert_from_path(pdffile, dpi=DPI, first_page=page, last_page=min(page + STEP - 1, maxPages))
 
+        TEXT_CACHE = set()
         for image in images:
             try:
                 # Save temp
@@ -305,7 +492,7 @@ def process_pdf(pdffile, ignore):
                 imagedata = cv2.imread(name)
 
                 # Detect missing references
-
+                ROI_COUNT = 0
                 for roi, s, rect in squares:
                     # Comment this, it is debugging
                     data = pytesseract.image_to_data(roi,output_type='dict')#, config=custom_config)
@@ -330,22 +517,35 @@ def process_pdf(pdffile, ignore):
                     text = text.replace(" .", ".")
                     text = text.replace("- ", "-")
                     text = text.replace(" )", ")")
+                    text = text.replace(" ]", "]")
+                    text = text.replace(" }", "}")
                     text = text.replace("( ", "(")
                     text = text.replace("https: ", "https:")
                     text = text.strip()
+
+                    if text in TEXT_CACHE:
+                        print("Text already in cache")
+                        continue
+
+                    TEXT_CACHE.add(text)
                     
                         
                     # Call language tool or any other
                     
                     # Sentiment analysis?
                     # scores = get_score(text)
-
-                    # This does spell check
-                    obs = spell_check(ID, text, imagedata, pagen, data, rect, relative, words2ignore)
-                    # here do different things
-                    REPORTPAGE += obs
-
+                    # call happy model here
                     
+                    # This does spell check
+
+                    obs_ai, IO = ai_spell_check(ID, text, imagedata, pagen, data, rect, relative, words2ignore)
+                    obs, _ = spell_check(IO, text, imagedata, pagen, data, rect, relative, words2ignore)
+                    # here do different things
+                    REPORTPAGE += obs_ai
+                    REPORTPAGE += obs
+                    print("Report count", len(REPORTPAGE))
+                    ROI_COUNT += 1
+
 
                 if len(REPORTPAGE) > 0:
                     cv2.imwrite(f"{OUT}/rois/annotated_{pagen}.png", imagedata)

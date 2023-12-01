@@ -355,7 +355,7 @@ def ai_spell_check(ID, text, imagedata,pagen, tesseractdata, rect, relative, wor
                 # Draw all rectangles with the same score
                 for sc, i, index, w, h in scores:
                     x, y, w, h = tesseractdata['left'][i], tesseractdata['top'][i], tesseractdata['width'][i], tesseractdata['height'][i]
-                    if min(w, h)/max(w, h) < 1/6:
+                    if h*w == 0 or min(w, h)/max(w, h) < 1/6:
                         continue
                     cv2.rectangle(imagedata, (x + globalx - margin, y + globaly - margin), (x + w  + globalx + margin, y + h + globaly + margin), (255,36,12), 2)
 

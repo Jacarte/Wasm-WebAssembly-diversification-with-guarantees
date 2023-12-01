@@ -258,11 +258,11 @@ It can also be used for fuzzing, an example of this was the discovery of a CVE i
 % 3rd paragraph: requirements on a tool
 %\todo{requirements: work for any source language (the solution we discuss in the next paragraph  is to wasm2wasm transforms), sound (preserve behavior),  fast (for MTD, e.g. MEWE), effective (able to mitigate serious attack vectors).}
 To develop an effective \wasm diversification engine, several key requirements must be met. 
-First, the engine should be language-agnostic, enabling diversification of any \Wasm code, regardless or the source programming language and compiler toolchain.
+First, the engine should be language-agnostic, enabling diversification of any \Wasm code, regardless of the source programming language and compiler toolchain.
 Second, it must have the capability to swiftly generate functionally equivalent variants of the original code. 
 The speed at which this diversification occurs holds potential for real-time applications, including  moving target defense \cite{MEWE}. 
 The engine should also possess the ability to harden potential attacks by producing sufficiently distinct code variants.
-This paper present an original system, \tool, that addresses all these requirements.
+This paper presents an original system, \tool, that addresses all these requirements.
 
 %\todo{Merge this and the foll paragraph into one, stress, take time on egraphs.}
 % pagraph about wasm-mutate
@@ -294,7 +294,7 @@ Consequently, the choice of e-graphs is the key to build a diversification tool 
 \end{revision1}
 
 
-Our results demonstrate that \tool can generate thousands of variants in minutes. These variants have unique machine code after compilation with Cranelift (static diversity) and the variants exhibit different traces at runtime (dynamic diversity).
+Our results demonstrate that \tool can generate thousands of variants in minutes. These variants have unique machine code after compilation with Cranelift\footnote{\url{https://cranelift.dev/}} (static diversity) and the variants exhibit different traces at runtime (dynamic diversity).
 \revision{Moreover, we empirically demonstrate that, in the worst scenario, the performance impact on the generated variants is maintained within the same order of magnitude as the original program.}
 Remarkably, our experiments provide evidence that the generated variants are hardened against Spectre attacks.
 %Therefore, \tool emerges as a potent strategy in combating Spectre and similar security threats, adding an extra layer of protection to complement existing security measures.
@@ -374,12 +374,13 @@ fn main() {
 
 WebAssembly is designed with isolation as a primary consideration. 
 For instance, a WebAssembly binary cannot access the memory of other binaries or cannot interact directly with browser's APIs, such as the DOM or the network. Instead, communication with these features is constrained to functions imported from the host engine, ensuring a secure and safe WebAssembly environment.
+Moreover, control flow in WebAssembly is managed through explicit labels and well-defined blocks, which means that jumps in the program can only occur inside blocks, unlike regular assembly code \cite{10.1145/3062341.3062363}.
 \revision{
+Besides, function tables are constructed statically.
 Overall, the "least privilege" principle is the fundamental security requirement. 
 This principle is reflected in the lack of certain features that are common in other programming environments.
 For example, reflection, a feature available in many high-level programming languages like Java and C\#, is not possible in \Wasm. 
 }
-Moreover, control flow in WebAssembly is managed through explicit labels and well-defined blocks, which means that jumps in the program can only occur inside blocks, unlike regular assembly code \cite{10.1145/3062341.3062363}. 
 %\todo{Change the example to Rust}
 
 
@@ -417,12 +418,6 @@ Based on our understanding, our research is one of the first to apply the concep
 This will expand the potential use cases of \tool. 
 Beyond its role as a diversification tool, it can also be used as a standard tool for conducting program transformations in WebAssembly.
 
-
-
-
-
-
-\todo{Cite first apparison of Cranelift}
 
 \section {Design of \tool}
 \label{tech}
@@ -602,13 +597,12 @@ For instance, \tool is designed to guarantee that instructions marked for replac
 We specifically exclude instructions that could potentially cause undefined behavior, such as function calls, from being mutated. 
 For this rewriting type, \tool only alters stack and memory operations, leaving the control frame labels unaffected.
 
-The peephole rewriting rules are meticulously designed and manually verified. 
-An instance of such streamlined transformation can is illustrated in \autoref{rewriting}, \texttt{(\ x\ i32.or\ x, x, \{\})} implies that the \texttt{LHS} 'x' is to be replaced by an idempotent bitwise \texttt{i32.or} operation with itself, in the absence of any specific conditions.
-Therefore, this category continues to uphold the benefits previously discussed under the \emph{Remove Dead Code} category.
 
-\todo{R3.13 * The claim "The peephole category rewriting rules are meticulously designed and manually verified." needs more examples. Simply referring to a simplified previous example is not confidence-bearing.}
+%\todo{R3.13 * The claim "The peephole category rewriting rules are meticulously designed and manually verified." needs more examples. Simply referring to a simplified previous example is not confidence-bearing.}
 
-%\todo{J: Maybe add here somekind of conclusion about how all RR aim for: security, obfuscation, testing and anti-debugging. WDYT?}
+\begin{revision1}
+    TODO       
+\end{revision1}
 
 \subsection{E-graphs for WebAssembly}
 \label{alg}
@@ -1460,9 +1454,12 @@ This would inevitably remove the port contention in the specific port used to co
     Fourth, the preservation of variants, as indicated in \ref{rq:static}, is comparatively low in relation to other diversification tools such as CROW \cite{arteaga2020crow}. 
     This is primarily due to the fact that rewriting rules are manually crafted. 
     Unlike the transformations that CROW can generate, these can be more easily removed by compiler optimizations.
-    Fifht, parsing of the Wasm binaries... 
+    Fifth, \tool and the tools upon which we built it may contain bugs. 
+    For instance, the construction of the e-graphs heavily depends on the parsing of the Wasm binaries, which in turn relies on multiple other components. 
+    However, to promote the auditing of our work and for the sake of open science, we have made the code freely available.
+    
 
-\todo{R3.18 2. The work relies on many other tools that are not discussed at all, and their limitations and shortcomings are not mentioned. It seems like several of these tools are from the same research group, and as such explanations are omitted. For example, any tool that reverse engineers a binary into an intermediate representation always comes with limitations and shortcomings, that affect the assumptions of the relying work. These limitations need to be discussed and their implications on the results studied.}
+%\todo{R3.18 2. The work relies on many other tools that are not discussed at all, and their limitations and shortcomings are not mentioned. It seems like several of these tools are from the same research group, and as such explanations are omitted. For example, any tool that reverse engineers a binary into an intermediate representation always comes with limitations and shortcomings, that affect the assumptions of the relying work. These limitations need to be discussed and their implications on the results studied.}
     
 \end{revision1}
 
@@ -1481,14 +1478,32 @@ The concept of software diversification owes much to the pioneering work of Cohe
 His suite of code transformations aimed to increase complexity and thereby enhance the difficulty of executing a successful attack against a broad user base \cite{cohen1993operating}. 
 \tool's rewriting rules draw significantly from Cohen and Forrest seminal contributions \cite{cohen1993operating, 595185}.
 
-Jackson and colleagues \cite{jackson2011compiler} proposed that the compiler can play a pivotal role in promoting static software diversification. 
-In the context of \wasm, CROW leverages compiler technology for diversification.
-It is a superdiversifier \cite{jacob2008superdiversifier},for \wasm that is built in the LLVM compilation tool chain. However, integrating the diversifier directly into the LLVM compiler, restricts the tool's applicability to \wasm binaries generated through LLVM. 
-This implies that any \wasm source code that lacks an LLVM frontend implementation cannot take advantage of CROW's capabilities.
-In contrast, \tool  provides a more versatile and faster \wasm to \wasm diversification solution, maintaining compatibility with any compiler. 
-Secondly, unlike CROW, \tool does not rely on an SMT solver to validate the generated variants. 
-Instead, it guarantees semantic equivalence by design, resulting in greater efficiency in generating \wasm variants, as discussed in \autoref{rq:static:results}.
-As a \wasm to \wasm diversification tool, \tool augments the range of tools capable of generating \wasm programs, a topic explored comprehensively throughout this work.
+\begin{revision1}
+As far as we know, Tigress is the only cutting-edge frontend diversifying virtualizer/obfuscator for the C language that supports \Wasm \cite{10.1145/3176258, 203634}.
+Tigress's approach transforms the C code, maintaining it suitable for compilation using Emscripten, a C-to-WASM compiler, resulting in a WebAssembly/html/Javascript package.
+Applying diversification at the frontend has limitations. First, it would require a unique diversification mechanism for each language compatible with the frontend component.
+Even though C/C++ code is the most frequently ported-to \Wasm language \cite{hilbig2021empirical}, our needs involve modifying any Wasm in existence.
+Second, source-based diversification tends to alter the code section of the final \Wasm binary more significantly.
+As a result, other sections of the \Wasm binaries receive less attention, or even remain untouched, during the diversification process.
+Yet, \tool, can modify any section of any \Wasm binary in existence.
+Third, source code diversification could unintentionally introduce compiler fingerprints into the compiled \Wasm \cite{CABRERAARTEAGA2023103296}.
+
+\end{revision1}
+
+Jackson and colleagues proposed the pivotal role of the compiler in promoting static software diversification \cite{jackson2011compiler}.
+Within the \wasm context, CROW is the only existing compiler-based diversifier \cite{arteaga2020crow}.
+It is recognized as a superdiversifier for \wasm, built within the LLVM compilation toolchain \cite{jacob2008superdiversifier}.
+However, the direct integration of the diversifier into the LLVM compiler restricts its applicability to \wasm binaries generated through LLVM.
+This limitation implies that \wasm source code without an LLVM frontend implementation cannot leverage CROW's capabilities.
+Conversely, \tool provides a more adaptable and expedited \wasm to \wasm diversification solution, ensuring compatibility with any compiler.
+Additionally, unlike CROW, \tool does not depend on an SMT solver to validate the generated variants.
+It instead guarantees semantic equivalence by design, leading to increased efficiency in generating \wasm variants, as discussed in \autoref{rq:static:results}.
+\revision{
+Consequently, CROW seems to provide variants that are more resilient to further compiler optimizations.
+\tool trades off the preservation of generated variants to create more variants.
+According to CROW reports, \tool generates more variants by at least one order of magnitude in the same amount of time. 
+}
+Overall, as a \wasm to \wasm diversification tool, \tool extends the range of tools capable of generating \wasm programs, a topic thoroughly explored in this work.
 
 % For example, a custom rewriting rule could be  )
 The process of diversifying a \Wasm program can be conceptualized as a three-stage procedure: parsing the program, transforming it, and finally re-encoding it back into \wasm. 
@@ -1534,6 +1549,8 @@ Consequently, \tool is capable of generating malware variants without negatively
 \tool is a fast and effective diversification tool for \wasm, with a 100\% diversification rate across the 303 programs of the considered benchmark. 
 With respect to speed, it creates over 9000 unique variants per hour.
 The \tool workflow ensures that all final variants offer different and unique execution traces. 
+\revision{Remarkably, \tool creates variants that are, on average, 1.6 times larger than the original machine code. 
+Despite this increase in size, they still have a minimal execution time overhead impact.}
 We have proven that \tool is able to mitigate Spectre attacks in \wasm, producing fully protected variants of two versions of the btb attack, and variants of ret2spec and pht that leak less data than the original ones.
 
 

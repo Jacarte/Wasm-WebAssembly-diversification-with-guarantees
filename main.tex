@@ -13,6 +13,7 @@
 \usepackage{xspace}
 \usepackage{tcolorbox}
 \usepackage{subcaption}
+\usepackage{xcolor}
 
 %\AtBeginDocument{%
 %  \providecommand\BibTeX{{%
@@ -198,21 +199,22 @@
 %%
 %% The abstract is a short summary of the work to be presented in the
 %% article.
-\begin{abstract}
-    \todo{ Rev3: The first sentence of the abstract claims that WebAssembly is known for its security. This is not true, as there are about 10 CVEs published for WebAssembly on average, per year, in the past several years.}
-    
-    \revision{WebAssembly, acknowledged as the fourth officially accepted Web language, stands out for its efficiency and emphasis on security. 
-    Yet, its rapidly growing ecosystem of compilers and tools lack of robust software diversification systems. 
-    We present \tool, a diversification engine designed specifically for WebAssembly. 
-    Our engine fulfills several crucial criteria: 
-    1) It can rapidly create semantically identical but behaviorally diverse WebAssembly variants, 
-    2) It can be applied universally to any WebAssembly programs, regardless of the source programming language, and 
-    3) It possesses the ability to counter side-channels. 
-    By utilizing an e-graph data structure, \tool demonstrates both speed and effectiveness.
-    Our experiments revealed that \tool is capable of generating tens of thousands of unique and efficient WebAssembly variants in minutes.
-    Importantly, \tool can protect \wasm binaries from timing side-channel attacks, particularly those of the Spectre type.}
 
-    \todo{Add number of programs.}
+%\todo{ Rev3: The first sentence of the abstract claims that WebAssembly is known for its security. This is not true, as there are about 10 CVEs published for WebAssembly on average, per year, in the past several years.}
+\definecolor{myblue}{RGB}{0,0,255}
+\begin{abstract}
+    $_.$\textcolor{blue}{WebAssembly is the fourth officially endorsed Web language.
+    It is recognized because of its efficiency and design, focused on security. 
+    Yet, its swiftly expanding ecosystem lacks robust software diversification systems. 
+    We introduce \tool, a diversification engine specifically designed for WebAssembly. 
+    Our engine meets several essential criteria: 
+    1) To quickly generate functionally identical, yet behaviorally diverse, WebAssembly variants, 
+    2) It need to be universally applied to any WebAssembly programs, irrespective of the source programming language, and 
+    3) Generated variants should counter side-channels. 
+    By leveraging an e-graph data structure, \tool is implemented to meet both speed and efficacy.
+    We evaluate \tool by conducting experiments on 404 programs, which include real-world applications.
+    Our results highlight that \tool can produce tens of thousands of unique and efficient WebAssembly variants within minutes.
+    Significantly, \tool can safeguard \wasm binaries against timing side-channel attacks, especially those of the Spectre type.}
 \end{abstract}
 
 %%
@@ -469,7 +471,7 @@ The tool guarantees functionally equivalent variants because each individual rew
 % \input{tables/rewriting_rules.tex}
 %\pagebreak
 
-\todo{Rev 3: It is mentioned that the tool adds unused functions to the code signature, and also removes dead code. First, both of these behaviors need perfect understanding and reconstruction of the program control flow (and sometimes data flow), i.e., if the control flow is not perfectly reconstructed, you can not know whether a function is ever used or not, and as such, cannot touch it without potential reprecussions.}
+%\todo{Rev 3: It is mentioned that the tool adds unused functions to the code signature, and also removes dead code. First, both of these behaviors need perfect understanding and reconstruction of the program control flow (and sometimes data flow), i.e., if the control flow is not perfectly reconstructed, you can not know whether a function is ever used or not, and as such, cannot touch it without potential reprecussions.}
 
 %Each row is annotated with the guarantees of the transformation.
 In total, there are 135 possible rewriting rules implemented in \tool, those rules are grouped under several categories, called hereafter meta-rules.
@@ -596,13 +598,16 @@ These conditions can be utilized interchangeably and combined to constrain trans
 For instance, \tool is designed to guarantee that instructions marked for replacement are deterministic. 
 We specifically exclude instructions that could potentially cause undefined behavior, such as function calls, from being mutated. 
 For this rewriting type, \tool only alters stack and memory operations, leaving the control frame labels unaffected.
+\revision{In the following, we show 15 peephole rewriting rules.}
 
+\begin{revision1}
+    
+    \input{snippets/peephole/rws}
+    
+\end{revision1}
 
 %\todo{R3.13 * The claim "The peephole category rewriting rules are meticulously designed and manually verified." needs more examples. Simply referring to a simplified previous example is not confidence-bearing.}
 
-\begin{revision1}
-    TODO       
-\end{revision1}
 
 \subsection{E-graphs for WebAssembly}
 \label{alg}
@@ -818,11 +823,17 @@ If this condition is not met, the transformation is stacked in line 19 and the l
 \end{revision1}
 
 \subsection{Implementation}
+% \todo{R3.14 * "We leverage the capabilities of the wasm-tools project of the byte-code alliance for parsing and transforming WebAssembly binary code." needs a citation and further explanation.}
 
-\tool is implemented in Rust, comprising approximately, 10,000 lines of Rust code. 
-We leverage the capabilities of the wasm-tools project of the bytecodealliance for parsing and transforming WebAssembly binary code. 
-\todo{R3.14 * "We leverage the capabilities of the wasm-tools project of the byte-code alliance for parsing and transforming WebAssembly binary code." needs a citation and further explanation.}
-Specifically, we utilize the wasmparser and wasm-encoder modules for parsing and encoding WebAssembly binaries, respectively.
+\tool is implemented in Rust, comprising approximately, 10000 lines of Rust code. 
+We leverage the capabilities of the wasm-tools project of the bytecode alliance for parsing and transforming WebAssembly binary code. 
+Specifically, we utilize the wasmparser, \url{https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasmparser} and wasm-encoder, \url{https://github.com/bytecodealliance/wasm-tools/tree/main/crates/wasm-encoder} modules for parsing and encoding WebAssembly binaries, respectively.
+\revision{
+The wasmparser crate provides quick, efficient decoding and parsing of WebAssembly binary files.
+Its primary advantage is a minimal memory footprint, achieved without creating AST or IR of WebAssembly data.
+Conversely, the wasm-encoder crate is a reliable library for encoding Wasm binaries.
+Additionally, the wasm-encoder crate offers static validation of the constructed binary, ensuring the integrity of a newly encoded Wasm binary.
+}
 The implementation of \tool is publicly available for future research and can be found at \repourl.
 
 
@@ -874,7 +885,7 @@ Our experiments are conducted in Standard F4s-v2(Skylake) Azure machines with 4 
         
 
      \begin{revision1}
-        \item \label{rq:performance}\textbf{\rqperformance} This research question evaluates the performance impact of \tool in creating variants from real-world programs. We compare the performance of the original programs and their variants.
+        \item \label{rq:performance}\textbf{\rqperformance} This research question evaluates the performance impact of \tool in creating variants from real-world programs. We compare the machine code size and the execution time of the original programs and their variants.
      \end{revision1}
      
     \item \label{rq:defensive}\textbf{\rqdefensive} Diversification being an option to prevent security issues,  we assess the impact of \tool in preventing one class of attacks: cache attacks (Spectre).
@@ -1276,11 +1287,19 @@ We collect the machine code size after the \Wasm program is JITed by wasmtime an
 \begin{figure}
     \centering
     \includegraphics[width=\linewidth]{plots/rq4/mcsize.pdf}
-    \caption{Distribution of the relative machine code size.
+    \caption{\color{blue}Distribution of the relative machine code size.
 The Y-axis represents the count of variants, while the X-axis represents the relative size of the variants, in number of machine code bytes. \tool generates \Wasm variants that exhibit a broad range of binary sizes.}
   \label{impact:mcsize}
 \end{figure} %this is a gift for the reviewers
 
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{plots/rq4/ext.pdf}
+    \caption{\color{blue}Distribution of relative execution times for variants produced by \tool.
+The Y-axis represents the count of variants, while the X-axis represents the relative execution times of the variants. Relative execution times display a normal distribution, 29\% of the variants are faster while 70\% operating slower. }
+  \label{impact:time}
+\end{figure}
 
 % The compiler removes a lot of garbage and makes optimisations, in subplot3 we see a more “normal” distribution but still very similar to plot 1. 75% of preservation is why, already discussed in RQ1 .
 In \autoref{impact:mcsize}, we plot the distribution of the relative machine code size.
@@ -1293,14 +1312,6 @@ Therefore, practitioners may opt to distribute only those variants that only hav
 % For example, FaaS platforms that use \Wasm typically favor the distribution of machine codes within their platform, instead of directly transmitting the \Wasm binary. This is primarily due to the uniformity of the machine spectrum within such platforms, e.g. a majority of x86 architecture machines in their platforms.
 Also, we highlight that 2\% of the generated variants result in a smaller machine code size, showing that our diversification engine also optimizes.
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\linewidth]{plots/rq4/ext.pdf}
-    \caption{Distribution of relative execution times for variants produced by \tool.
-The Y-axis represents the count of variants, while the X-axis represents the relative execution times of the variants. Relative execution times display a normal distribution, 29\% of the variants are faster while 70\% operating slower. }
-  \label{impact:time}
-\end{figure}
 
 %The last one is almost a perfect normal distribution around a relative execution time of 1.0
 %In the worst case we are x2 execution time. In the evasion paper we got x2 in the worst scenario as well with the cryptominers.
@@ -1319,7 +1330,7 @@ Second, \tool produces variants by optimizing the original programs, in particul
 This allows for the generation of faster variants through the stacking of optimizations during the e-graph traversal by \tool.
 
 
-
+\vspace{-0.1cm}
 
 \begin{tcolorbox}[boxrule=1pt,arc=.3em,boxsep=-1.3mm]
   \textbf{Answer to \ref{rq:performance}}: 
@@ -1479,9 +1490,10 @@ His suite of code transformations aimed to increase complexity and thereby enhan
 \tool's rewriting rules draw significantly from Cohen and Forrest seminal contributions \cite{cohen1993operating, 595185}.
 
 \begin{revision1}
-As far as we know, Tigress is the only cutting-edge frontend diversifying virtualizer/obfuscator for the C language that supports \Wasm \cite{10.1145/3176258, 203634}.
-Tigress's approach transforms the C code, maintaining it suitable for compilation using Emscripten, a C-to-WASM compiler, resulting in a WebAssembly/html/Javascript package.
-Applying diversification at the frontend has limitations. First, it would require a unique diversification mechanism for each language compatible with the frontend component.
+As far as we know, Tigress is the only cutting-edge frontend diversifying virtualizer/obfuscator for the C language that supports \Wasm \cite{10.1145/3176258}.
+Tigress's approach transforms the C code, maintaining it suitable for compilation using Emscripten, a C-to-Wasm compiler, resulting in a WebAssembly/html/Javascript package.
+In general, applying diversification at the frontend has limitations. 
+First, it would require a unique diversification mechanism for each language compatible with the frontend component.
 Even though C/C++ code is the most frequently ported-to \Wasm language \cite{hilbig2021empirical}, our needs involve modifying any Wasm in existence.
 Second, source-based diversification tends to alter the code section of the final \Wasm binary more significantly.
 As a result, other sections of the \Wasm binaries receive less attention, or even remain untouched, during the diversification process.

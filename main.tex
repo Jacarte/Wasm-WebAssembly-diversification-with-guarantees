@@ -246,10 +246,10 @@
 
 
 % Sota of Wasm
-\Wasm is the fourth official language of the web, complementing HTML, CSS and JavaScript as a fast, platform-independent bytecode  \cite{haas2017bringing, WebAssemblyCoreSpecification}. 
-Since its introduction in 2015, it has seen rapid adoption, with support from all major browsers. 
-\wasm has also been adopted outside of browsers, e.g., platforms like Fastly and Cloudflare use it as their core technology \cite{fastly}.
-In addition to major ones like LLVM, more and more compilers and tools can output \wasm binaries \cite{hilbig2021empirical, javy, kmm}. 
+\Wasm(Wasm) is the fourth official language of the web, complementing HTML, CSS and JavaScript as a fast, platform-independent bytecode  \cite{haas2017bringing, WebAssemblyCoreSpecification}. 
+Since its introduction in 2015, it has seen rapid adoption, with support from all major web browsers. 
+\wasm has also been adopted outside of browsers, e.g., platforms like Fastly and Cloudflare use Wasm as their core technology \cite{fastly}.
+Recently, in addition to major ones like LLVM, more compilers and tools can output \wasm binaries \cite{hilbig2021empirical, javy, kmm}. 
 With this prevalence, software protection techniques for \wasm are remarkably needed \cite{avengers}.
 
 % What is software diversification
@@ -264,7 +264,7 @@ First, the engine should be language-agnostic, enabling diversification of any \
 Second, it must have the capability to swiftly generate functionally equivalent variants of the original code. 
 The speed at which this diversification occurs holds potential for real-time applications, including moving target defense \cite{MEWE}. 
 The engine should also possess the ability to harden potential attacks by producing sufficiently distinct code variants.
-This paper presents an original system, \tool, that addresses all these requirements.
+This paper presents an original engine, \tool, that addresses all these requirements.
 
 %\todo{Merge this and the foll paragraph into one, stress, take time on egraphs.}
 % paragraph about wasm-mutate
@@ -287,10 +287,9 @@ Consequently, the choice of e-graphs is the key to build a diversification tool 
 \begin{revision1}
     
     We evaluate \tool by examining its ability to generate \Wasm variants.
-    These variants differ in code from the original and display diverse instruction and memory traces.
     We have based our empirical evaluation on an existing corpus from the diversification literature \cite{arteaga2020crow, hilbig2021empirical, Swivel}.
     Additionally, we measure the speed at which \tool can produce the first variant that demonstrates a trace different from the original.
-    Significantly, we present evidence of the performance impact on generated variants of real-world \Wasm programs \cite{hilbig2021empirical}.
+    Significantly, we evaluate the performance impact on generated variants of real-world \Wasm programs \cite{hilbig2021empirical}.
     Our security assessment of \tool involves determining the extent to which diversification can safeguard against Spectre attacks. 
     We carry out this assessment using \wasm programs previously identified as susceptible to Spectre attacks \cite{Swivel}.
 \end{revision1}

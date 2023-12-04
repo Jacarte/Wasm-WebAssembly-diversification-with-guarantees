@@ -899,17 +899,18 @@ Our experiments are conducted in Standard F4s-v2(Skylake) Azure machines with 4 
 
 \input{tables/dataset}
 
-We answer our research questions with a corpus \revision{ of 441 programs (303 + 134 + 4).}
-These programs are summarized in \autoref{tab:corpus}.
+We use a collection of programs comprised of four curated corpora to address our research questions. 
+Our corpora contains a total \revision{ of 441 programs (303 + 134 + 4).}
+The metadata of these programs is summarized in \autoref{tab:corpus}.
 Each row in the table corresponds to the programs in use for each research question. 
-The columns provide information on the following: the program's source, the number of programs, the research question addressed, and the mean number of instructions for the programs. 
+The columns provide information on the following: the corpus source, the number of programs, the research question addressed, and the mean number of instructions for the programs. 
 Additionally, a short note highlights the main property of the programs in the last column. 
 For instance, the notes in the last two rows indicate the attacks to which the programs are susceptible.
 
 We answer \ref{rq:static} and \ref{rq:dynamic} with a corpus of programs from Cabrera \etal \cite{arteaga2020crow}, which is shown in the first row of \autoref{tab:corpus}.
 The corpus contains \nProgramsRosetta programs.
 The programs in the corpus perform a range of tasks, from simple ones, such as sorting, to complex algorithms like a compiler lexer. 
-The number of total instructions ranges from 170 to 36023 with a median of 8451 instructions.
+The number of total instructions ranges from 170 to 36023 with a mean of 8451 instructions.
 All programs in the corpus: 
 1) do not require input from users, \ie do not functions like \texttt{scanf}, 2) terminate, 3) are deterministic, \ie given the same input, provide the same output and 4) compile to \wasm using \texttt{wasi-clang} to compile them.
 The size of the binaries ranges from 465 to 92114 bytes. 

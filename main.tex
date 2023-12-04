@@ -209,7 +209,7 @@
     We introduce \tool, a diversification engine specifically designed for WebAssembly. 
     Our engine meets several essential criteria: 
     1) To quickly generate functionally identical, yet behaviorally diverse, WebAssembly variants, 
-    2) It need to be universally applied to any WebAssembly programs, irrespective of the source programming language, and 
+    2) It needs to be universally applied to any WebAssembly programs, irrespective of the source programming language, and 
     3) Generated variants should counter side-channels. 
     By leveraging an e-graph data structure, \tool is implemented to meet both speed and efficacy.
     We evaluate \tool by conducting experiments on 404 programs, which include real-world applications.
@@ -269,7 +269,7 @@ This paper presents an original system, \tool, that addresses all these requirem
 %\todo{Merge this and the foll paragraph into one, stress, take time on egraphs.}
 % pagraph about wasm-mutate
 % Wasm-mutate guanrantees are based on two aspects: manually verified rw and usage of components such as battle tested parsing and encoding.
-\tool is a tool that automatically transforms a \wasm binary program in variants that preserve the original functionality. 
+\tool is a tool that automatically transforms a \wasm binary program into variants that preserve the original functionality. 
 The core of the diversification engine relies on an e-graph data structure \cite{10.1145/3434304}.
 To the best of our knowledge, this work is the first to use an e-graph  for software diversification in \Wasm. An e-graph offers one essential property for diversification:  every path through the e-graph represents a functionally equivalent variant of the input program \cite{10.1145/3434304, 10.1145/3385412.3386001}.  
 A random e-graph traversal is virtually costless, supporting the generation of tens of thousands of equivalent variants from a single seed program in minutes \cite{10.1145/3547622}. 
@@ -501,7 +501,7 @@ The following example illustrates this rewriting rule.
 
 \tool never adds a call instruction to this function.
 So in practice, the new function is never executed.
-Therefore, executing both, the original binary and the mutated one with the same input, leads to the same final state.
+Therefore, executing both, the original binary and the mutated one, with the same input, leads to the same final state.
 This strategy follows the work of Cohen, advocating the insertion of harmless `garbage' code into a program \cite{cohen1993operating}. 
 These transformations increase the static complexity of the generated variant.
 
@@ -1459,7 +1459,7 @@ This would inevitably remove the port contention in the specific port used to co
     \textbf{Limitations of \tool:} We have observed several limitations of \tool.
     First, the size of the variants, as demonstrated in the response to \ref{rq:performance}, is generally larger than the original. 
     This results in the potential for increased compilation time, cold spawn, and memory usage by the machine code. 
-    Second, the rewriting rules of \tool are not easily extendable, excepting for manual addition and subsequent recompilation of the tool. 
+    Second, the rewriting rules of \tool are not easily extendable, except for manual addition and subsequent recompilation of the tool. 
     Third, the mutation backtrack of \tool does not account for the state of the mutation, i.e., \tool does not retain parsing information, the CFG, or data flow graph for a previously observed binary. 
     This leads to the need of parsing the same binary each time \tool conducts a transformation, which, as discussed in the response to \ref{rq:static}, slightly affects the number of generated variants. 
     Fourth, the preservation of variants, as indicated in \ref{rq:static}, is comparatively low in relation to other diversification tools such as CROW \cite{arteaga2020crow}. 

@@ -419,7 +419,7 @@ Cond z = i32 random & y = x - z
 The implemented rewriting rules can be employed commutatively. 
 For example, the left-hand side (LHS) can function interchangeably as the right-hand side (RHS), and the reverse is also valid. 
 Consequently, observe the doubling of practical rewriting occurrences. 
-Due to their inherent simplicity, compilers can easily reverse general peephole rewriting rules.  
+Modern compilers can generally reverse peephole rewriting rules.  
 This also facilitates manual verification. 
 Despite the ability of the compiler to reverse these rules, it becomes significantly more challenging when utilizing an e-graph. 
 The primary cause of this difficulty is the interleaving of the rewriting rules within the e-graph.

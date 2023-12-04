@@ -1,7 +1,5 @@
-We include well-known identity reduction rewriting rules. 
-We exemplify them in the following four rewriting rules. 
-Observe that the primitive type of the rewriting rules can be changed to the other remaining types. 
-
+We include well-known identity reduction rewriting rules, we exemplify them in the following.
+Observe that the primitive type of the rewriting rules can be changed to the other primitive \Wasm data types. 
 
 \begin{minipage}{0.95\linewidth}
 \begin{minipage}{0.49\linewidth}
@@ -101,8 +99,8 @@ RHS ?x
 \end{minipage}
 
 
-We have also incorporated well-known commutative rewriting rules. 
-THe following three rules provide examples. 
+We have also incorporated commutative rewriting rules. 
+The following three rules provide examples. 
 As discussed earlier, observe that the subexpressions' type can be changed to any of the original four primitive \Wasm data types.
 
 \begin{minipage}{0.95\linewidth}
@@ -183,7 +181,8 @@ RHS i32.mul ?y ?x
 \end{minipage}
 
 
-In the following 2 rewriting rules, we exemplify two associative rewriting rules.
+The peephole meta-rule also includes associative rewriting rules.
+In the following, we exemplify two of them.
 
 
 \begin{minipage}{0.95\linewidth}
@@ -234,10 +233,10 @@ RHS i32.add (i32.add ?x ?y) ?z
 \end{minipage}    
 \end{minipage}
 
-We have also incorporated several strength reduction rewriting rules.
-We will exemplify them in the following text.
+We have also incorporated several strength reduction transformations.
+We exemplify them in the following three rewriting rules.
 Note that the extent of these rewriting rules can be adjusted as desired.
-For instance, although we only include reductions up to multiplication by 8, they can be extended to any power of 2.
+For instance, although we only include reductions up to multiplication by 8 (in the rightmost rewriting rule), they can be extended to any power of 2.
 
 \begin{minipage}{0.95\linewidth}
 \begin{minipage}{0.49\linewidth}
@@ -319,40 +318,10 @@ RHS i32.mul ?x i32.const.2
 
 
 
-
-\begin{minipage}{0.95\linewidth}
-\begin{minipage}{0.49\linewidth}
-    
-    \lstset{
-    language=ttt,
-    style=watcode,
-    basicstyle=\footnotesize\ttfamily,
-    columns=fullflexible,
-    breaklines=true}
-    \begin{lstlisting}[]
-LHS drop ?x
-            \end{lstlisting}\vspace{-0.5cm}
-    \noindent\hrulefill
-        \lstset{
-            language=ttt,
-            style=watcode,
-            basicstyle=\footnotesize\ttfamily,
-            columns=fullflexible,
-            breaklines=true}
-            \vspace{-0.2cm}
-            \begin{lstlisting}[numbers=none]{Name}
-RHS drop i32.rand
-    \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.49\linewidth}
-\end{minipage}    
-\end{minipage}
-
-
 As previously mentioned, our work is built on well-established diversification strategies. 
 In the subsequent rewriting rules, we exemplify the porting of two well-known strategies. 
-The leftmost part illustrates the injection of \texttt{nop} instructions. 
-The rightmost part demonstrates the "un-folding" of constants. 
+The leftmost part illustrates the injection of \texttt{nop} instructions \cite{10.1145/2086696.2086702}. 
+The rightmost part extend the peephole meta-rule with the "un-folding" of constants rewriting rule. 
 In the latter case, statically defined constants are substituted by the sum of two numbers. 
 This sum computes the original constant at runtime.
 
@@ -419,8 +388,4 @@ Cond z = i32 random & y = x - z
 The implemented rewriting rules can be employed commutatively. 
 For example, the left-hand side (LHS) can function interchangeably as the right-hand side (RHS), and the reverse is also valid. 
 Consequently, observe the doubling of practical rewriting occurrences. 
-Modern compilers can generally reverse peephole rewriting rules.  
-This also facilitates manual verification. 
-Despite the ability of the compiler to reverse these rules, it becomes significantly more challenging when utilizing an e-graph. 
-The primary cause of this difficulty is the interleaving of the rewriting rules within the e-graph.
-
+The same logic applies to numeric types, i.e., some rewriting rules could be duplicated and then changed to another \Wasm data type.

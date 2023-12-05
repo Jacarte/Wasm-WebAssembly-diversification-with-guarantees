@@ -24,6 +24,15 @@ jobs:
           apt-get update
           apt-get install -y curl
 
+          # remove color blues
+          
+          sed "s/\\\\color{blue}//g"  main.tex > fix.tex
+          rm main.tex
+          mv fix.tex main.tex
+
+          sed "s/\\\\textcolor{blue}{}/\\\\textcolor{}{}/g"  main.tex > fix.tex
+          rm main.tex
+          mv fix.tex main.tex
 
           pdflatex -interaction=nonstopmode -shell-escape main.tex || true
           sleep 30

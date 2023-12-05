@@ -390,16 +390,12 @@ keywords = {WebAssembly, Cryptojacking, Software diversification, Malware evasio
 abstract = {WebAssembly has become a crucial part of the modern web, offering a faster alternative to JavaScript in browsers. While boosting rich applications in browser, this technology is also very efficient to develop cryptojacking malware. This has triggered the development of several methods to detect cryptojacking malware. However, these defenses have not considered the possibility of attackers using evasion techniques. This paper explores how automatic binary diversification can support the evasion of WebAssembly cryptojacking detectors. We experiment with a dataset of 33 WebAssembly cryptojacking binaries and evaluate our evasion technique against two malware detectors: VirusTotal, a general-purpose detector, and MINOS, a WebAssembly-specific detector. Our results demonstrate that our technique can automatically generate variants of WebAssembly cryptojacking that evade the detectors in 90% of cases for VirusTotal and 100% for MINOS. Our results emphasize the importance of meta-antiviruses and diverse detection techniques and provide new insights into which WebAssembly code transformations are best suited for malware evasion. We also show that the variants introduce limited performance overhead, making binary diversification an effective technique for evasion.}
 }
 
-@misc{arteaga2020crow,
-    title={CROW: Code Diversification for WebAssembly},
-    author={Cabrera Arteaga,Javier  and Orestis Floros Malivitsis and Oscar Luis Vera Pérez and Benoit Baudry and Martin Monperrus},
-    abstract={The adoption of WebAssembly has rapidly increased in the last few years as it provides a fast and safe model for program execution. However, WebAssembly is not exempt from vulnerabilities that could be exploited by side channels attacks. This class of vulnerabilities that can be addressed by code diversification. In this paper, we present the first fully automated workflow for the diversification of WebAssembly binaries. We present CROW, an open-source tool implementing this workflow. We evaluate CROW's capabilities on 303 C programs and study its use on a real-life security-sensitive program: libsodium, a cryptographic library. Overall, CROW is able to generate diverse variants for 239 out of 303 (79%) small programs. On libsodium, the execution trace changes up to 83.4%. },
-    year={2021},
-    eprint={2008.07185},
-    archivePrefix={arXiv},
-    primaryClass={cs.SE},
-    url = {https://madweb.work/preprints/madweb21-paper4-pre_print_version.pdf},
-    abbr={MADWeb 2021},
+@inproceedings{arteaga2020crow,
+ title = {CROW: Code Diversification for WebAssembly},
+ author = {Javier Cabrera Arteaga and Orestis Floros Malivitsis and Oscar Luis Vera Pérez and Benoit Baudry and Martin Monperrus},
+ booktitle = {Proceedings of MadWEB},
+ year = {2021},
+ doi = {10.14722/madweb.2021.23xxx}
 }
 
 @inproceedings{bos2016differential,

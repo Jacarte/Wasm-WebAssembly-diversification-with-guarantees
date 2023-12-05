@@ -36,7 +36,7 @@ jobs:
 
           pdflatex -interaction=nonstopmode -shell-escape main.tex || true
           sleep 30
-          bibtex fix.aux || true
+          bibtex main.aux || true
           sleep 30
           pdflatex -shell-escape -interaction=nonstopmode main.tex || true
           sleep 15
